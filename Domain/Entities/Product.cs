@@ -7,6 +7,8 @@ namespace Domain.Entities
   {
     public string Name { get; set; }
     public string Code { get; set; }
+    public string Description { get; set; }
+    public List<Image> Images { get; set; }
     public int InStock { get; set; }
     public int Sold { get; set; }
     public ProductStatus Status { get; set; }

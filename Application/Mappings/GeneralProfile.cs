@@ -10,6 +10,7 @@ namespace Application.Mappings
     {
       CreateMap<Product, GetAllProductsViewModel>().ReverseMap();
       CreateMap<GetAllProductsQuery, GetAllProductsParameter>();
+      CreateMap<Image, GetAllProductsImageViewModel>();
     }
   }
 }

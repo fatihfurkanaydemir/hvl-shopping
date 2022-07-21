@@ -13,5 +13,15 @@ namespace Infrastructure.Persistence.Repositories
     {
       _products = dbContext.Products;
     }
+
+    public async Task<IReadOnlyList<Product>> GetPagedReponseWithRelationsAsync(int pageNumber, int pageSize)
+    {
+      return await _products
+          .Skip((pageNumber - 1) * pageSize)
+          .Take(pageSize)
+          .Include(p => p.Images)
+          .AsNoTracking()
+          .ToListAsync();
+    }
   }
 }
