@@ -1,7 +1,7 @@
 ﻿using Application.Interfaces.Repositories;
 using Domain.Entities;
 using Domain.Enums;
-
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,35 +14,34 @@ namespace Infrastructure.Persistence.Seeds
   {
     public static async Task<bool> SeedAsync(IProductRepositoryAsync productRepository)
     {
-      var product1 = new Product
-      {
-        Name = "Product 1",
-        Code = "#pr1",
-        InStock = 50,
-        Sold = 0,
-        Status = ProductStatus.Active,
-        Category = new Category { Name = "Category 1" },
-      };
+      var mockData = File.ReadAllText(Path.Combine(
+        Directory.GetCurrentDirectory(),
+        @"../Infrastructure.Persistence/Seeds/PRODUCT_MOCK_DATA.json"));
 
-      var productList = await productRepository.GetAllAsync();
-      var _product1 = productList.Where(c => c.Name.StartsWith(product1.Name)).Count();
+      var deserializedMockData = JsonConvert.DeserializeObject<List<Product>>(mockData);
 
-      if (_product1 > 0) // ALREADY SEEDED
+      var _item1 = deserializedMockData[0];
+
+      var itemList = await productRepository.GetAllAsync();
+      var _itemCount = itemList.Where(i => i.Name.StartsWith(_item1.Name)).Count();
+
+      if (_itemCount > 0) // ALREADY SEEDED
         return true;
 
-
-      if (_product1 == 0)
-        try
+      try
+      {
+        foreach (var deserializedItem in deserializedMockData)
         {
-          await productRepository.AddAsync(product1);
+          await productRepository.AddAsync(deserializedItem);
         }
-        catch (Exception ex)
-        {
-          Console.WriteLine(ex.Message);
-          throw;
-        }
+      }
+      catch (Exception ex)
+      {
+        Console.WriteLine(ex.Message);
+        throw;
+      }
 
-      return false; // NOT ALREADY SEEDED
+      return true; // NOT ALREADY SEEDED
     }
   }
 }
