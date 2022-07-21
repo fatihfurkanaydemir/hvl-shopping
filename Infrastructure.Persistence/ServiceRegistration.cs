@@ -12,7 +12,6 @@ namespace Infrastructure.Persistence
   {
     public static void AddPersistenceInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
-      Console.WriteLine(configuration.GetSection("UseInMemoryDatabase").Value);
       if (bool.Parse(configuration.GetSection("UseInMemoryDatabase").Value))
       {
         services.AddDbContext<ApplicationDbContext>(options =>
