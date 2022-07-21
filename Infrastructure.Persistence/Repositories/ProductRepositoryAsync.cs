@@ -23,5 +23,12 @@ namespace Infrastructure.Persistence.Repositories
           .AsNoTracking()
           .ToListAsync();
     }
+
+    public async Task<Product> GetByIdWithRelationsAsync(int id)
+    {
+      return await _products
+        .Include(p => p.Images)
+        .SingleOrDefaultAsync(p => p.Id == id);
+    }
   }
 }
