@@ -24,7 +24,7 @@ namespace Application.Features.Products.Queries.GetAllProducts
     public async Task<PagedResponse<IEnumerable<GetAllProductsViewModel>>> Handle(GetAllProductsQuery request, CancellationToken cancellationToken)
     {
       var validFilter = _mapper.Map<GetAllProductsParameter>(request);
-      var products = await _productRepository.GetPagedReponseAsync(request.PageNumber, request.PageSize);
+      var products = await _productRepository.GetPagedReponseWithRelationsAsync(request.PageNumber, request.PageSize);
 
       var productViewModels = new List<GetAllProductsViewModel>();
 
