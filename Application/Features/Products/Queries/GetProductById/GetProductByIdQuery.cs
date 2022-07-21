@@ -1,4 +1,5 @@
-﻿using Application.Interfaces.Repositories;
+﻿using Application.Exceptions;
+using Application.Interfaces.Repositories;
 using Application.Wrappers;
 using AutoMapper;
 using MediatR;
@@ -23,8 +24,9 @@ namespace Application.Features.Products.Queries.GetProductById
     public async Task<Response<GetProductByIdViewModel>> Handle(GetProductByIdQuery request, CancellationToken cancellationToken)
     {
       var product = await _productRepository.GetByIdWithRelationsAsync(request.Id);
-      var productViewModel = _mapper.Map<GetProductByIdViewModel>(product);
+      if(product == null) throw new ApiException($"Product Not Found.");
 
+      var productViewModel = _mapper.Map<GetProductByIdViewModel>(product);
 
       return new Response<GetProductByIdViewModel>(productViewModel);
     }

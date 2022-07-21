@@ -3,11 +3,11 @@ using Infrastructure.Persistence.Seeds;
 using Application;
 using Infrastructure.Persistence;
 using Microsoft.AspNetCore.Http.Features;
+using WebApi.Middlewares;
 
 var config = new ConfigurationBuilder()
   .AddJsonFile("appsettings.json")
   .Build();
-
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -56,11 +56,13 @@ using (var scope = app.Services.CreateScope())
   }
 }
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-  
-}
+//// Configure the HTTP request pipeline.
+//if (app.Environment.IsDevelopment())
+//{
+
+//}
+
+app.UseMiddleware<ErrorHandlerMiddleware>();
 
 app.UseCors();
 app.UseRouting();
