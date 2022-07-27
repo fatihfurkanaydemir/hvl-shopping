@@ -24,10 +24,12 @@ namespace Infrastructure.Persistence.Repositories
           .ToListAsync();
     }
 
-    public async Task<Product> GetByIdWithRelationsAsync(int id)
+    public async Task<Product?> GetByIdWithRelationsAsync(int id)
     {
       return await _products
         .Include(p => p.Images)
+        //.Include(p => p.Category)
+        .AsTracking()
         .SingleOrDefaultAsync(p => p.Id == id);
     }
   }
