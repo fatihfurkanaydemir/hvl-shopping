@@ -1,4 +1,6 @@
 ﻿using Application.Features.Products.Commands.CreateProduct;
+using Application.Features.Products.Commands.UpdateProduct;
+using Application.Features.Products.Commands.DeleteProduct;
 using Application.Features.Products.Queries.GetAllProducts;
 using Application.Features.Products.Queries.GetProductById;
 
@@ -29,6 +31,20 @@ namespace WebApi.Controllers.v1
     public async Task<IActionResult> GetById(int id)
     {
       return Ok(await Mediator.Send(new GetProductByIdQuery() { Id = id }));
+    }
+
+    // PATCH: api/<controller>
+    [HttpPatch]
+    public async Task<IActionResult> Patch(UpdateProductCommand command)
+    {
+      return Ok(await Mediator.Send(command));
+    }
+
+    // DELETE: api/<controller>
+    [HttpDelete]
+    public async Task<IActionResult> Delete(DeleteProductCommand command)
+    {
+      return Ok(await Mediator.Send(command));
     }
   }
 }
