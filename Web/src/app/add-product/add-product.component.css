@@ -2,8 +2,15 @@
     margin-bottom: 20px;
 }
 .form-group textarea{
-    height: 100px;
+    height: 80px;
 }
-.add-product-btn{
-    float: right;
+.add-product-btn-area{
+    display: flex;
+}
+label{
+    padding-left: 0px;
+}
+.close{
+    border: none;
+    background-color: transparent;
 }

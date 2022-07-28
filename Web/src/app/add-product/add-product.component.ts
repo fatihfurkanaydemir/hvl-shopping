@@ -12,6 +12,7 @@ export class AddProductComponent implements OnInit {
   title = 'appBootstrap';
    
   closeResult: string = '';
+  
 
   product : IProduct = {
     name: '',
@@ -23,7 +24,7 @@ export class AddProductComponent implements OnInit {
     images: [],
     // category: undefined
   }
-
+  
   submit(){
     console.log(this.product);
   }

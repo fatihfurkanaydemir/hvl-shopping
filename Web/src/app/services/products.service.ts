@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { IApiResponse } from '../models/IApiResponse';
+import { IProduct } from '../models/IProduct';
 
 @Injectable({ providedIn: 'root' })
 export class ProductsService {
@@ -15,5 +16,9 @@ export class ProductsService {
     return this.httpClient.get<IApiResponse>(
       `${environment.apiUrl}/Product?PageNumber=${pageNumber}&PageSize=${pageSize}`
     );
-  }
+  };
+  // sendProduct(
+  //   product: IProduct): Observable<IProduct> {
+  //   return this.httpClient.post<IProduct>(`${environment.apiUrl}/Product`, product);
+  // }
 }
