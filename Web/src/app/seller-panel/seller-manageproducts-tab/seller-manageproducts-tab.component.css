@@ -1,0 +1,5 @@
+.table-container {
+  flex-direction: column;
+  max-height: 75vh;
+  overflow: auto;
+}

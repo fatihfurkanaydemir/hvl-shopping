@@ -4,5 +4,6 @@ export interface IApiResponse {
   pageSize: number;
   succeeded: boolean;
   message: string;
+  dataCount: number;
   data: any[];
 }
