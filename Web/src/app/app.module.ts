@@ -1,19 +1,32 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
-import { AddProductComponent } from './add-product/add-product.component';
-import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
+import { SellerPanelComponent } from './seller-panel/seller-panel.component';
+import { HomePageComponent } from './home-page/home-page.component';
+import { AppRoutingModule } from 'src/app-routing.module';
+import { SidebarComponent } from './seller-panel/sidebar/sidebar.component';
+import { SellerManageordersTabComponent } from './seller-panel/seller-manageorders-tab/seller-manageorders-tab.component';
+import { SellerManageproductsTabComponent } from './seller-panel/seller-manageproducts-tab/seller-manageproducts-tab.component';
+import { SellerDashboardTabComponent } from './seller-panel/seller-dashboard-tab/seller-dashboard-tab.component';
+
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { AddProductComponent } from './add-product/add-product.component';
 @NgModule({
   declarations: [
     AppComponent,
-    AddProductComponent
+    SellerPanelComponent,
+    HomePageComponent,
+    SidebarComponent,
+    SellerManageordersTabComponent,
+    SellerManageproductsTabComponent,
+    SellerDashboardTabComponent,
+    AddProductComponent,
   ],
-  imports: [
-    BrowserModule, NgbModule
-  ],
+  imports: [BrowserModule, AppRoutingModule, HttpClientModule, NgbModule],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

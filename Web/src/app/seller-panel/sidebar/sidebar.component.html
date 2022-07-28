@@ -1,0 +1,40 @@
+<div class="d-flex flex-column flex-shrink-0 p-3 bg-light shadow-lg h-100">
+  <a
+    class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none"
+  >
+    <span class="fs-4">Kontrol Paneli</span>
+  </a>
+  <hr />
+  <ul class="nav nav-pills flex-column mb-auto">
+    <li class="nav-item">
+      <a
+        class="nav-link"
+        style="cursor: pointer"
+        [routerLink]="['dashboard']"
+        routerLinkActive="active"
+      >
+        Dashboard
+      </a>
+    </li>
+    <li>
+      <a
+        class="nav-link"
+        style="cursor: pointer"
+        [routerLink]="['manage-products']"
+        routerLinkActive="active"
+      >
+        Ürünleri Yönet
+      </a>
+    </li>
+    <li>
+      <a
+        class="nav-link"
+        style="cursor: pointer"
+        [routerLink]="['manage-orders']"
+        routerLinkActive="active"
+      >
+        Siparişleri Yönet
+      </a>
+    </li>
+  </ul>
+</div>
