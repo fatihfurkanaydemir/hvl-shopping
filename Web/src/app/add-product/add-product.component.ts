@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
+import { IProduct } from '../models/IProduct';
 
 @Component({
   selector: 'app-add-product',
@@ -11,6 +12,21 @@ export class AddProductComponent implements OnInit {
   title = 'appBootstrap';
    
   closeResult: string = '';
+
+  product : IProduct = {
+    name: '',
+    code: '',
+    description: '',
+    inStock: 0,
+    sold: 0,
+    status: '',
+    images: [],
+    // category: undefined
+  }
+
+  submit(){
+    console.log(this.product);
+  }
 
   constructor(private modalService: NgbModal) {}
   ngOnInit() {
@@ -44,5 +60,6 @@ export class AddProductComponent implements OnInit {
       return  `with: ${reason}`;
     }
   }
+
 }
 

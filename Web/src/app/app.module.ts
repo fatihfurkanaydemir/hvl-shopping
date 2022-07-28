@@ -14,6 +14,7 @@ import { SellerDashboardTabComponent } from './seller-panel/seller-dashboard-tab
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AddProductComponent } from './add-product/add-product.component';
+import { FormsModule } from '@angular/forms';
 @NgModule({
   declarations: [
     AppComponent,
@@ -25,7 +26,7 @@ import { AddProductComponent } from './add-product/add-product.component';
     SellerDashboardTabComponent,
     AddProductComponent,
   ],
-  imports: [BrowserModule, AppRoutingModule, HttpClientModule, NgbModule],
+  imports: [BrowserModule, AppRoutingModule, HttpClientModule, NgbModule, FormsModule],
   providers: [],
   bootstrap: [AppComponent],
 })
