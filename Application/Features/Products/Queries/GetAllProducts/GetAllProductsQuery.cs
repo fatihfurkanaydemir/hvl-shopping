@@ -24,6 +24,7 @@ namespace Application.Features.Products.Queries.GetAllProducts
     public async Task<PagedResponse<IEnumerable<GetAllProductsViewModel>>> Handle(GetAllProductsQuery request, CancellationToken cancellationToken)
     {
       var validFilter = _mapper.Map<GetAllProductsParameter>(request);
+      var dataCount = await _productRepository.GetDataCount();
       var products = await _productRepository.GetPagedReponseWithRelationsAsync(request.PageNumber, request.PageSize);
 
       var productViewModels = new List<GetAllProductsViewModel>();
@@ -34,7 +35,7 @@ namespace Application.Features.Products.Queries.GetAllProducts
         productViewModels.Add(community);
       }
 
-      return new PagedResponse<IEnumerable<GetAllProductsViewModel>>(productViewModels, validFilter.PageNumber, validFilter.PageSize);
+      return new PagedResponse<IEnumerable<GetAllProductsViewModel>>(productViewModels, validFilter.PageNumber, validFilter.PageSize, dataCount);
     }
   }
 }
