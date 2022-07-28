@@ -11,7 +11,8 @@ import { ProductsService } from 'src/app/services/products.service';
 export class SellerManageproductsTabComponent implements OnInit {
   products: IProduct[] = [];
   pageNumber: number = 1;
-  pageSize: number = 15;
+  pageSize: number = 12;
+  dataCount: number = 0;
 
   constructor(private productsService: ProductsService) {}
 
@@ -22,7 +23,14 @@ export class SellerManageproductsTabComponent implements OnInit {
   getProducts() {
     this.productsService
       .getAllProducts(this.pageNumber, this.pageSize)
-      .pipe(map((response) => response.data))
-      .subscribe((data) => (this.products = data));
+      .subscribe((response) => {
+        this.products = response.data;
+        this.dataCount = +response.dataCount;
+      });
+  }
+
+  onPageChange(newPageNumber: number) {
+    this.pageNumber = newPageNumber;
+    this.getProducts();
   }
 }
