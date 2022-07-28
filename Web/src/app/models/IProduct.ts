@@ -9,5 +9,5 @@ export interface IProduct {
   inStock: number;
   sold: number;
   status: string;
-  // category: ICategory;
+  category: ICategory;
 }

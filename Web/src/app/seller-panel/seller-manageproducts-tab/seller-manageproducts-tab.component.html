@@ -16,7 +16,7 @@
       <tr class="align-middle" *ngFor="let product of products">
         <th scope="row">{{ product.name }}</th>
         <td>{{ product.code }}</td>
-        <!-- <td>{{ product.category?.name }}</td> -->
+        <td>{{ product.category?.name }}</td>
         <td>{{ product.inStock }}</td>
         <td>{{ product.sold }}</td>
         <td>{{ product.status === "Active" ? "Aktif" : "Pasif" }}</td>

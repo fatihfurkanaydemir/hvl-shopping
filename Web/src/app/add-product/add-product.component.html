@@ -17,7 +17,7 @@
             <div class="form-group row">
                 <label for="product-name">Ürün ismi</label>
                 <input type="text" id="product-name" class="p-2 rounded border" [(ngModel)]="product.name"
-                 name="product-name" required  #name="ngModel">
+                 name="product-name" required >
             </div>
 
             <div class="form-group row">
@@ -35,7 +35,7 @@
                   <option>4</option>
                   <option>5</option>
                 </select>
-              </div>
+              </div> 
 
               <div class="form-group row">
                 <label for="product-stock">Stok</label>
@@ -50,7 +50,7 @@
 
             <div class="form-group row">
                 <label for="img">Select image:</label>
-                    <input type="file" id="img" name="img" accept="image/*" [(ngModel)]="product.images" required #images="ngModel" name="product-image">
+                    <input type="file" id="img" name="img" accept="image/*" [(ngModel)]="product.images" #images="ngModel" name="product-image">
             </div>
             
         </div>

@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 import { IProduct } from '../models/IProduct';
+import { ProductsService } from 'src/app/services/products.service';
+import { ICategory } from '../models/ICategory';
 
 @Component({
   selector: 'app-add-product',
@@ -12,6 +14,10 @@ export class AddProductComponent implements OnInit {
   title = 'appBootstrap';
    
   closeResult: string = '';
+
+  category: ICategory = {
+    name: '0',
+  }
   
 
   product : IProduct = {
@@ -20,18 +26,26 @@ export class AddProductComponent implements OnInit {
     description: '',
     inStock: 0,
     sold: 0,
-    status: '',
+    status: 'active',
     images: [],
-    // category: undefined
+    category: this.category
   }
   
-  submit(){
-    console.log(this.product);
-  }
 
-  constructor(private modalService: NgbModal) {}
+  constructor(private productsService : ProductsService , private modalService: NgbModal) {}
+
+  submit() {
+    console.log(this.product)
+    this.productsService.sendProduct(this.product)
+    .subscribe({
+      next: (response) => {
+        // this.router.navigate([])
+        alert("successfully added")
+      }
+    });
+  }
   ngOnInit() {
-  
+
   }
     
   /**

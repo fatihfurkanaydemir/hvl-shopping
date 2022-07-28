@@ -9,6 +9,8 @@ import { IProduct } from '../models/IProduct';
 export class ProductsService {
   constructor(private httpClient: HttpClient) {}
 
+  apiUrl: string = environment.apiUrl;
+
   getAllProducts(
     pageNumber: number,
     pageSize: number
@@ -17,8 +19,8 @@ export class ProductsService {
       `${environment.apiUrl}/Product?PageNumber=${pageNumber}&PageSize=${pageSize}`
     );
   };
-  // sendProduct(
-  //   product: IProduct): Observable<IProduct> {
-  //   return this.httpClient.post<IProduct>(`${environment.apiUrl}/Product`, product);
-  // }
+  sendProduct(
+    product: IProduct) : Observable<IProduct> { 
+    return this.httpClient.post<IProduct>(this.apiUrl + '/product', product);
+  }
 }
