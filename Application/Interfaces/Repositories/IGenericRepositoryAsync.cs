@@ -6,6 +6,7 @@
     Task<IReadOnlyList<T>> GetAllAsync();
     Task<IReadOnlyList<T>> GetPagedReponseAsync(int pageNumber, int pageSize);
     Task<T> AddAsync(T entity);
+    Task<int> GetDataCount();
     Task UpdateAsync(T entity);
     Task DeleteAsync(T entity);
   }

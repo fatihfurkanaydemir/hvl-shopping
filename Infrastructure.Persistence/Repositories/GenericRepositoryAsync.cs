@@ -54,5 +54,12 @@ namespace Infrastructure.Persistence.Repositories
            .Set<T>()
            .ToListAsync();
     }
+
+    public async Task<int> GetDataCount()
+    {
+      return await _dbContext
+        .Set<T>()
+        .CountAsync();
+    }
   }
 }
