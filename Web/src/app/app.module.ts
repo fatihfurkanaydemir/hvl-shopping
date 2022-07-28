@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
+
 import { SellerPanelComponent } from './seller-panel/seller-panel.component';
 import { HomePageComponent } from './home-page/home-page.component';
 import { AppRoutingModule } from 'src/app-routing.module';
@@ -12,6 +13,7 @@ import { SellerManageproductsTabComponent } from './seller-panel/seller-managepr
 import { SellerDashboardTabComponent } from './seller-panel/seller-dashboard-tab/seller-dashboard-tab.component';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { AddProductComponent } from './add-product/add-product.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -21,6 +23,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     SellerManageordersTabComponent,
     SellerManageproductsTabComponent,
     SellerDashboardTabComponent,
+    AddProductComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, HttpClientModule, NgbModule],
   providers: [],

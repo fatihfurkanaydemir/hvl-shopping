@@ -15,7 +15,9 @@ export class SellerManageproductsTabComponent implements OnInit {
 
   constructor(private productsService: ProductsService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.getProducts();
+  }
 
   getProducts() {
     this.productsService
