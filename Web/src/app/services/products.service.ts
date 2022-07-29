@@ -22,5 +22,12 @@ export class ProductsService {
   sendProduct(
     product: IProduct) : Observable<IProduct> { 
     return this.httpClient.post<IProduct>(this.apiUrl + '/product', product);
+  };
+  getProduct( id: number) : Observable<IProduct> { 
+    return this.httpClient.get<IProduct>(this.apiUrl + '/product/' + id);
+  };
+  updateProduct(id : number,
+    product: IProduct) : Observable<IProduct> { 
+    return this.httpClient.put<IProduct>(this.apiUrl + '/product/' + id, product);
   }
 }

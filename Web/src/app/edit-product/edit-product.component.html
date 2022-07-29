@@ -1,16 +1,10 @@
-<div id="add-product">
-    <div class="add-product-btn-area">
-        <input type="text"  class="rounded border form-control w-75" placeholder="Ürün Ara">
-        <button class="btn btn-mg btn-outline-dark add-product-btn">Ara</button>
-        <button class="btn btn-outline-dark add-product-btn" (click)="open(mymodal)">Ürün ekle</button>
+<ng-template #content let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Ürün Düzenle</h4>
+      <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
     </div>
-   
-<ng-template #mymodal let-modal>
-    <form class="p-4 rounded-lg border m-auto" #myForm="ngForm" (ngSubmit)="submit()">
-        <div class="modal-header">
-            <h1 class="modal-title" id="modal-basic-title">Ürün ekle</h1>
-            <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
-        </div>
+    <div class="modal-body">
+    <form class="p-4 rounded-lg border m-auto" #updateForm="ngForm" (ngSubmit)="submitUpdate()">
         <div class="modal-body">
             <div class="form-group row">
                 <label for="product-name">Ürün ismi</label>
@@ -71,10 +65,12 @@
             
         </div>
         <div class="modal-footer">
-            <input type="submit" class="btn btn-outline-dark" (click)="modal.close('Save click')" value="Ekle">
-        </div>
-
+            <input type="submit" class="btn btn-outline-dark" (click)="modal.close('Save click')" value="Düzenle">,
+          </div>
     </form>
-</ng-template>
+    </div>
+  </ng-template>
 
-</div>
+  <button type="button" class="btn btn-outline-primary" (click)="open(content)">
+    Düzenle
+  </button>
