@@ -22,6 +22,7 @@ namespace Application.Features.Products.Commands.UpdateProduct
     public string Code { get; set; }
     public string Description { get; set; }
     public List<ImageDTO>? Images { get; set; }
+    public int InStock { get; set; }
     public int CategoryId { get; set; }
   }
   public class UpdateProductCommandHandler : IRequestHandler<UpdateProductCommand, Response<int>>
@@ -50,6 +51,7 @@ namespace Application.Features.Products.Commands.UpdateProduct
       product.Code = requestProduct.Code;
       product.Description = requestProduct.Description;
       product.Images = requestProduct.Images;
+      product.InStock = requestProduct.InStock;
 
       await _categoryRepository.MarkUnchangedAsync(category);
       product.Category = category;

@@ -1,14 +1,11 @@
-import { ICategory } from './ICategory';
 import { IImage } from './IImage';
 
-export interface IProduct {
+export interface IProductUpdate {
   id: number;
   name: string;
   code: string;
   description: string;
   images: IImage[];
   inStock: number;
-  sold: number;
-  status: string;
-  category: ICategory;
+  categoryId: number;
 }

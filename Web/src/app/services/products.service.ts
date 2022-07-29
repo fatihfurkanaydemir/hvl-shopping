@@ -3,7 +3,10 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { IApiResponse } from '../models/IApiResponse';
+import { IApiResponseSingle } from '../models/IApiResponseSingle';
 import { IProduct } from '../models/IProduct';
+import { IProductCreate } from '../models/IProductCreate';
+import { IProductUpdate } from '../models/IProductUpdate';
 
 @Injectable({ providedIn: 'root' })
 export class ProductsService {
@@ -18,16 +21,25 @@ export class ProductsService {
     return this.httpClient.get<IApiResponse>(
       `${environment.apiUrl}/Product?PageNumber=${pageNumber}&PageSize=${pageSize}`
     );
-  };
-  sendProduct(
-    product: IProduct) : Observable<IProduct> { 
-    return this.httpClient.post<IProduct>(this.apiUrl + '/product', product);
-  };
-  getProduct( id: number) : Observable<IProduct> { 
-    return this.httpClient.get<IProduct>(this.apiUrl + '/product/' + id);
-  };
-  updateProduct(id : number,
-    product: IProduct) : Observable<IProduct> { 
-    return this.httpClient.put<IProduct>(this.apiUrl + '/product/' + id, product);
+  }
+
+  createProduct(product: IProductCreate): Observable<IApiResponse> {
+    return this.httpClient.post<IApiResponse>(
+      this.apiUrl + '/Product',
+      product
+    );
+  }
+
+  getProduct(id: number): Observable<IApiResponseSingle> {
+    return this.httpClient.get<IApiResponseSingle>(
+      this.apiUrl + '/Product/' + id
+    );
+  }
+
+  updateProduct(product: IProductUpdate): Observable<IApiResponse> {
+    return this.httpClient.patch<IApiResponse>(
+      this.apiUrl + '/Product/',
+      product
+    );
   }
 }
