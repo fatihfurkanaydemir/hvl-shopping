@@ -1,0 +1,164 @@
+<div class="btn-group btn-group-sm">
+  <button
+    type="button"
+    class="btn btn-outline-primary"
+    (click)="openModal(modal)"
+  >
+    Düzenle
+  </button>
+  <button
+    type="button"
+    class="btn btn-outline-danger"
+    [ngClass]="{
+      'btn-outline-danger': productStatus === 'Active',
+      'btn-outline-success': productStatus !== 'Active'
+    }"
+  >
+    {{ productStatus !== "Active" ? "Aktive Et" : "Deaktive Et" }}
+  </button>
+</div>
+
+<ng-template #modal let-modal>
+  <form
+    #updateProductForm="ngForm"
+    (ngSubmit)="onSubmit(updateProductForm, modal)"
+  >
+    <div class="modal-header">
+      <h1 class="modal-title" id="modal-basic-title">Ürün ekle</h1>
+      <button
+        type="button"
+        class="btn-close"
+        aria-label="Close"
+        (click)="modal.dismiss('Cross click')"
+      ></button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label for="product-name">Ürün ismi</label>
+        <input
+          type="text"
+          id="product-name"
+          class="form-control"
+          [(ngModel)]="product.name"
+          name="productname"
+          #productName="ngModel"
+          required
+        />
+      </div>
+
+      <p
+        *ngIf="
+          productName.invalid && (productName.dirty || productName.touched)
+        "
+        class="text-danger error-message"
+      >
+        Bu alan boş bırakılamaz.
+      </p>
+
+      <div class="form-group">
+        <label for="product-code">Ürün kodu</label>
+        <input
+          type="text"
+          id="product-code"
+          class="form-control"
+          [(ngModel)]="product.code"
+          name="product-code"
+          required
+          #productCode="ngModel"
+        />
+      </div>
+
+      <p
+        *ngIf="
+          productCode.invalid && (productCode.dirty || productCode.touched)
+        "
+        class="text-danger error-message"
+      >
+        Bu alan boş bırakılamaz.
+      </p>
+
+      <div class="form-group">
+        <label for="product-category">Kategori</label>
+        <select
+          id="product-category"
+          name="product-category"
+          class="form-control"
+          #categoryId="ngModel"
+          [ngModel]="product.categoryId"
+        >
+          <option *ngFor="let category of categories" [value]="category.id">
+            {{ category.name }}
+          </option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="product-stock">Stok</label>
+        <input
+          type="number"
+          id="product-stock"
+          class="form-control"
+          placeholder="0"
+          [(ngModel)]="product.inStock"
+          name="product-stock"
+          required
+          min="0"
+          #inStock="ngModel"
+        />
+      </div>
+
+      <p
+        *ngIf="inStock.invalid && (inStock.dirty || inStock.touched)"
+        class="text-danger error-message"
+      >
+        Bu alan boş bırakılamaz.
+      </p>
+
+      <div class="form-group">
+        <label for="product-detail">Ürün detayları</label>
+        <textarea
+          id="product-detail"
+          class="form-control"
+          placeholder="Ürün detayları"
+          [(ngModel)]="product.description"
+          name="product-description"
+          required
+          #description="ngModel"
+        ></textarea>
+      </div>
+
+      <p
+        *ngIf="
+          description.invalid && (description.dirty || description.touched)
+        "
+        class="text-danger error-message"
+      >
+        Bu alan boş bırakılamaz.
+      </p>
+
+      <div class="form-group">
+        <label for="imagesSelect">Ürün resimleri</label>
+        <input
+          type="file"
+          multiple
+          id="imagesSelect"
+          name="imagesSelect"
+          accept="image/*"
+          name="product-images"
+          class="form-control"
+          ngModel
+          #imagesSelect="ngModel"
+        />
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button
+        type="submit"
+        class="btn btn-primary w-100"
+        [disabled]="updateProductForm.invalid"
+      >
+        Kaydet
+      </button>
+    </div>
+  </form>
+</ng-template>

@@ -1,4 +1,4 @@
-<app-add-product></app-add-product>
+<app-add-product (OnProductAdded)="getProducts()"></app-add-product>
 <div class="table-container">
   <table class="table table-hover table-responsive">
     <thead>
@@ -16,24 +16,16 @@
       <tr class="align-middle" *ngFor="let product of products">
         <th scope="row">{{ product.name }}</th>
         <td>{{ product.code }}</td>
-        <td>{{ product.category?.name }}</td>
+        <td>{{ product.category.name }}</td>
         <td>{{ product.inStock }}</td>
         <td>{{ product.sold }}</td>
         <td>{{ product.status === "Active" ? "Aktif" : "Pasif" }}</td>
         <td>
-          <div class="btn-group btn-group-sm">
-            <app-edit-product></app-edit-product>
-            <button
-              type="button"
-              class="btn btn-outline-danger"
-              [ngClass]="{
-                'btn-outline-danger': product.status === 'Active',
-                'btn-outline-success': product.status !== 'Active'
-              }"
-            >
-              {{ product.status !== "Active" ? "Aktive Et" : "Deaktive Et" }}
-            </button>
-          </div>
+          <app-product-actions
+            [productId]="product.id"
+            [productStatus]="product.status"
+            (OnProductUpdated)="getProducts()"
+          ></app-product-actions>
         </td>
       </tr>
     </tbody>

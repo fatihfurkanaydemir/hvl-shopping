@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 import { NgForm } from '@angular/forms';
 import {
@@ -9,25 +9,32 @@ import {
 
 import { ProductsService } from 'src/app/services/products.service';
 import { ICategory } from '../models/ICategory';
+import { IProduct } from '../models/IProduct';
 import { IProductCreate } from '../models/IProductCreate';
+import { IProductUpdate } from '../models/IProductUpdate';
 import { CategoriesService } from '../services/categories.service';
 
 @Component({
-  selector: 'app-add-product',
-  templateUrl: './add-product.component.html',
-  styleUrls: ['./add-product.component.css'],
+  selector: 'app-product-actions',
+  templateUrl: './product-actions.component.html',
+  styleUrls: ['./product-actions.component.css'],
 })
-export class AddProductComponent implements OnInit {
-  @Output('OnProductAdded') productAddedEvent: EventEmitter<boolean> =
+export class ProductActionsComponent implements OnInit {
+  @Output('OnProductUpdated') productUpdatedEvent: EventEmitter<boolean> =
     new EventEmitter();
 
+  @Input() productId!: number;
+  @Input() productStatus!: string;
+
+  // to get categories
   pageNumber: number = 1;
   pageSize: number = 30;
 
   closeResult: string = '';
   categories: ICategory[] = [];
 
-  product: IProductCreate = {
+  product: IProductUpdate = {
+    id: 0,
     name: '',
     code: '',
     description: '',
@@ -42,19 +49,21 @@ export class AddProductComponent implements OnInit {
     private modalService: NgbModal
   ) {}
 
-  onSubmit(addProductForm: NgForm, modal: NgbActiveModal) {
-    if (addProductForm.invalid) return;
+  onSubmit(updateProductForm: NgForm, modal: NgbActiveModal) {
+    if (updateProductForm.invalid) return;
 
-    if (addProductForm.value['product-images'])
-      this.product.images.push({ url: addProductForm.value['product-images'] });
+    if (updateProductForm.value['product-images'])
+      this.product.images.push({
+        url: updateProductForm.value['product-images'],
+      });
 
-    this.product.categoryId = +addProductForm.value['product-category'];
+    this.product.categoryId = +updateProductForm.value['product-category'];
 
-    this.productsService.createProduct(this.product).subscribe((response) => {
+    this.productsService.updateProduct(this.product).subscribe((response) => {
       if (response.succeeded) {
         modal.dismiss();
-        addProductForm.reset();
-        this.productAddedEvent.emit(true);
+        updateProductForm.reset();
+        this.productUpdatedEvent.emit(true);
       }
     });
   }
@@ -67,7 +76,9 @@ export class AddProductComponent implements OnInit {
       });
   }
 
-  open(content: any) {
+  openModal(content: any) {
+    this.getProduct();
+
     this.modalService
       .open(content, { ariaLabelledBy: 'modal-basic-title' })
       .result.then(
@@ -78,6 +89,18 @@ export class AddProductComponent implements OnInit {
           this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
         }
       );
+  }
+
+  getProduct() {
+    this.productsService.getProduct(this.productId).subscribe((response) => {
+      this.product.id = response.data.id;
+      this.product.categoryId = response.data.category.id;
+      this.product.code = response.data.code;
+      this.product.description = response.data.description;
+      this.product.images = response.data.images;
+      this.product.name = response.data.name;
+      this.product.inStock = response.data.inStock;
+    });
   }
 
   private getDismissReason(reason: any): string {

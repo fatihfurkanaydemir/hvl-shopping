@@ -1,80 +1,156 @@
-<div id="add-product">
-    <div class="add-product-btn-area">
-        <input type="text"  class="rounded border form-control w-75" placeholder="Ürün Ara">
-        <button class="btn btn-mg btn-outline-dark add-product-btn">Ara</button>
-        <button class="btn btn-outline-dark add-product-btn" (click)="open(mymodal)">Ürün ekle</button>
+<div id="add-product" class="mt-2">
+  <form>
+    <div class="form-group row">
+      <div class="col-9">
+        <input type="text" class="form-control" placeholder="Ürün Ara" />
+      </div>
+
+      <div class="col-3 btn-group">
+        <button class="btn btn-primary">Ara</button>
+        <button class="btn btn-success" (click)="open(modal)">Ürün ekle</button>
+      </div>
     </div>
-   
-<ng-template #mymodal let-modal>
-    <form class="p-4 rounded-lg border m-auto" #myForm="ngForm" (ngSubmit)="submit()">
-        <div class="modal-header">
-            <h1 class="modal-title" id="modal-basic-title">Ürün ekle</h1>
-            <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
-        </div>
-        <div class="modal-body">
-            <div class="form-group row">
-                <label for="product-name">Ürün ismi</label>
-                <input type="text" id="product-name" class="p-2 rounded border" [(ngModel)]="product.name"
-                 name="productname" #productname="ngModel" required >
-            </div>
+  </form>
 
-            <div  *ngIf="productname.invalid && (productname.dirty || productname.touched)" class="text-danger error-message">
-                Bu alan boş bırakılamaz.
-              </div>
-
-            <div class="form-group row">
-                <label for="product-type">Ürün kodu</label>
-                <input type="text" id="product-type" class="p-2 rounded border" [(ngModel)]="product.code"
-                 name="product-type" required #code="ngModel">
-            </div>
-
-            <div  *ngIf="code.invalid && (code.dirty || code.touched)" class="text-danger error-message">
-                Bu alan boş bırakılamaz.
-            </div>
-
-            <div class="form-group row">
-                <label for="product-category">Katagori</label>
-                <select id="product-category" class="p-2 rounded border">
-                  <option>0</option>
-                  <option>1</option>
-                  <option>2</option>
-                  <option>3</option>
-                  <option>4</option>
-                  <option>5</option>
-                </select>
-              </div> 
-
-              <div class="form-group row">
-                <label for="product-stock">Stok</label>
-                <input type="text" id="product-stock" class="p-2 rounded border" placeholder="0" [(ngModel)]="product.inStock"
-                 name="product-stock" required #inStock="ngModel">
-            </div>
-
-            <div  *ngIf="inStock.invalid && (inStock.dirty || inStock.touched)" class="text-danger error-message">
-                Bu alan boş bırakılamaz.
-              </div>
-
-
-            <div class="form-group row">
-                <textarea id="product-detail" class="rounded border"  placeholder="Ürün detayları" [(ngModel)]="product.description" name="product-description"
-                  required #description="ngModel"></textarea>
-            </div>
-
-            <div  *ngIf="description.invalid && (description.dirty || description.touched)" class="text-danger error-message">
-                Bu alan boş bırakılamaz.
-              </div>
-
-            <div class="form-group row">
-                <label for="img">Select image:</label>
-                <input type="file" id="img" name="img" accept="image/*" [(ngModel)]="product.images" name="product-image" >
-            </div>
-            
-        </div>
-        <div class="modal-footer">
-            <input type="submit" class="btn btn-outline-dark" (click)="modal.close('Save click')" value="Ekle">
+  <ng-template #modal let-modal>
+    <form #addProductForm="ngForm" (ngSubmit)="onSubmit(addProductForm, modal)">
+      <div class="modal-header">
+        <h1 class="modal-title" id="modal-basic-title">Ürün ekle</h1>
+        <button
+          type="button"
+          class="btn-close"
+          aria-label="Close"
+          (click)="modal.dismiss('Cross click')"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label for="product-name">Ürün ismi</label>
+          <input
+            type="text"
+            id="product-name"
+            class="form-control"
+            [(ngModel)]="product.name"
+            name="productname"
+            #productName="ngModel"
+            required
+          />
         </div>
 
+        <p
+          *ngIf="
+            productName.invalid && (productName.dirty || productName.touched)
+          "
+          class="text-danger error-message"
+        >
+          Bu alan boş bırakılamaz.
+        </p>
+
+        <div class="form-group">
+          <label for="product-code">Ürün kodu</label>
+          <input
+            type="text"
+            id="product-code"
+            class="form-control"
+            [(ngModel)]="product.code"
+            name="product-code"
+            required
+            #productCode="ngModel"
+          />
+        </div>
+
+        <p
+          *ngIf="
+            productCode.invalid && (productCode.dirty || productCode.touched)
+          "
+          class="text-danger error-message"
+        >
+          Bu alan boş bırakılamaz.
+        </p>
+
+        <div class="form-group">
+          <label for="product-category">Kategori</label>
+          <select
+            id="product-category"
+            name="product-category"
+            class="form-control"
+            #categoryId="ngModel"
+            [ngModel]="1"
+          >
+            <option *ngFor="let category of categories" [value]="category.id">
+              {{ category.name }}
+            </option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="product-stock">Stok</label>
+          <input
+            type="number"
+            id="product-stock"
+            class="form-control"
+            placeholder="0"
+            [(ngModel)]="product.inStock"
+            name="product-stock"
+            required
+            min="0"
+            #inStock="ngModel"
+          />
+        </div>
+
+        <p
+          *ngIf="inStock.invalid && (inStock.dirty || inStock.touched)"
+          class="text-danger error-message"
+        >
+          Bu alan boş bırakılamaz.
+        </p>
+
+        <div class="form-group">
+          <label for="product-detail">Ürün detayları</label>
+          <textarea
+            id="product-detail"
+            class="form-control"
+            placeholder="Ürün detayları"
+            [(ngModel)]="product.description"
+            name="product-description"
+            required
+            #description="ngModel"
+          ></textarea>
+        </div>
+
+        <p
+          *ngIf="
+            description.invalid && (description.dirty || description.touched)
+          "
+          class="text-danger error-message"
+        >
+          Bu alan boş bırakılamaz.
+        </p>
+
+        <div class="form-group">
+          <label for="imagesSelect">Ürün resimleri</label>
+          <input
+            type="file"
+            multiple
+            id="imagesSelect"
+            name="imagesSelect"
+            accept="image/*"
+            name="product-images"
+            class="form-control"
+            ngModel
+            #imagesSelect="ngModel"
+          />
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="submit"
+          class="btn btn-primary w-100"
+          [disabled]="addProductForm.invalid"
+        >
+          Ekle
+        </button>
+      </div>
     </form>
-</ng-template>
-
+  </ng-template>
 </div>
