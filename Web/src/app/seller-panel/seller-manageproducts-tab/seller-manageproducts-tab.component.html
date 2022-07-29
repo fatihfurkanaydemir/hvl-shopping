@@ -22,9 +22,7 @@
         <td>{{ product.status === "Active" ? "Aktif" : "Pasif" }}</td>
         <td>
           <div class="btn-group btn-group-sm">
-            <button type="button" class="btn btn-outline-primary">
-              Düzenle
-            </button>
+            <app-edit-product></app-edit-product>
             <button
               type="button"
               class="btn btn-outline-danger"

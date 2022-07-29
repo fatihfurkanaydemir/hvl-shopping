@@ -21,6 +21,7 @@ export class AddProductComponent implements OnInit {
   
 
   product : IProduct = {
+    id: 0,
     name: '',
     code: '',
     description: '',
@@ -28,7 +29,7 @@ export class AddProductComponent implements OnInit {
     sold: 0,
     status: 'active',
     images: [],
-    category: this.category
+    category: this.category,
   }
   
 
