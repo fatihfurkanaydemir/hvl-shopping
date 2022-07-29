@@ -1,5 +1,6 @@
 ﻿using Application.Interfaces.Repositories;
 using Domain.Entities;
+using Newtonsoft.Json;
 
 namespace Infrastructure.Persistence.Seeds
 {
@@ -7,30 +8,34 @@ namespace Infrastructure.Persistence.Seeds
   {
     public static async Task<bool> SeedAsync(ICategoryRepositoryAsync categoryRepository)
     {
-      var category1 = new Category
-      {
-        Name = "Category 1",
-      };
+      var mockData = File.ReadAllText(Path.Combine(
+        Directory.GetCurrentDirectory(),
+        @"../Infrastructure.Persistence/Seeds/CATEGORY_MOCK_DATA.json"));
 
-      var categoryList = await categoryRepository.GetAllAsync();
-      var _category1 = categoryList.Where(c => c.Name.StartsWith(category1.Name)).Count();
+      var deserializedMockData = JsonConvert.DeserializeObject<List<Category>>(mockData);
 
-      if (_category1 > 0) // ALREADY SEEDED
+      var _item1 = deserializedMockData[0];
+
+      var itemList = await categoryRepository.GetAllAsync();
+      var _itemCount = itemList.Where(i => i.Name.StartsWith(_item1.Name)).Count();
+
+      if (_itemCount > 0) // ALREADY SEEDED
         return true;
 
-
-      if (_category1 == 0)
-        try
+      try
+      {
+        foreach (var deserializedItem in deserializedMockData)
         {
-          await categoryRepository.AddAsync(category1);
+          await categoryRepository.AddAsync(deserializedItem);
         }
-        catch (Exception ex)
-        {
-          Console.WriteLine(ex.Message);
-          throw;
-        }
+      }
+      catch (Exception ex)
+      {
+        Console.WriteLine(ex.Message);
+        throw;
+      }
 
-      return false; // NOT ALREADY SEEDED
+      return true; // NOT ALREADY SEEDED
     }
   }
 }

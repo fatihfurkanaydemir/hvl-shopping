@@ -15,11 +15,6 @@ namespace Application.Features.Products.Commands.UpdateProduct
     public string Url { get; set; }
   }
 
-  public class CategoryDTO
-  {
-    public string Name { get; set; }
-  }
-
   public class UpdateProductCommand : IRequest<Response<int>>
   {
     public int Id { get; set; }
@@ -27,15 +22,17 @@ namespace Application.Features.Products.Commands.UpdateProduct
     public string Code { get; set; }
     public string Description { get; set; }
     public List<ImageDTO>? Images { get; set; }
-    public CategoryDTO Category { get; set; }
+    public int CategoryId { get; set; }
   }
   public class UpdateProductCommandHandler : IRequestHandler<UpdateProductCommand, Response<int>>
   {
     private readonly IProductRepositoryAsync _productRepository;
+    private readonly ICategoryRepositoryAsync _categoryRepository;
     private readonly IMapper _mapper;
-    public UpdateProductCommandHandler(IProductRepositoryAsync productRepository, IMapper mapper)
+    public UpdateProductCommandHandler(IProductRepositoryAsync productRepository, ICategoryRepositoryAsync categoryRepository, IMapper mapper)
     {
       _productRepository = productRepository;
+      _categoryRepository = categoryRepository;
       _mapper = mapper;
     }
 
@@ -44,13 +41,18 @@ namespace Application.Features.Products.Commands.UpdateProduct
       var product = await _productRepository.GetByIdWithRelationsAsync(request.Id);
       if (product == null) throw new ApiException("Product not found");
 
+      var category = await _categoryRepository.GetByIdAsync(request.CategoryId);
+      if (category == null) throw new ApiException("Category not found");
+
       var requestProduct = _mapper.Map<Product>(request);
 
       product.Name = requestProduct.Name;
       product.Code = requestProduct.Code;
       product.Description = requestProduct.Description;
-      product.Category = requestProduct.Category;
       product.Images = requestProduct.Images;
+
+      await _categoryRepository.MarkUnchangedAsync(category);
+      product.Category = category;
 
       await _productRepository.UpdateAsync(product);
 

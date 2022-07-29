@@ -31,8 +31,8 @@ namespace Application.Features.Products.Queries.GetAllProducts
 
       foreach (var p in products)
       {
-        var community = _mapper.Map<GetAllProductsViewModel>(p);
-        productViewModels.Add(community);
+        var product = _mapper.Map<GetAllProductsViewModel>(p);
+        productViewModels.Add(product);
       }
 
       return new PagedResponse<IEnumerable<GetAllProductsViewModel>>(productViewModels, validFilter.PageNumber, validFilter.PageSize, dataCount);

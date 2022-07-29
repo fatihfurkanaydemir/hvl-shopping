@@ -1,18 +1,12 @@
 ﻿using Application.Interfaces.Repositories;
 using Domain.Entities;
-using Domain.Enums;
 using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Infrastructure.Persistence.Seeds
 {
   public class DefaultProducts
   {
-    public static async Task<bool> SeedAsync(IProductRepositoryAsync productRepository)
+    public static async Task<bool> SeedAsync(IProductRepositoryAsync productRepository, ICategoryRepositoryAsync categoryRepository)
     {
       var mockData = File.ReadAllText(Path.Combine(
         Directory.GetCurrentDirectory(),
@@ -32,6 +26,11 @@ namespace Infrastructure.Persistence.Seeds
       {
         foreach (var deserializedItem in deserializedMockData)
         {
+          var category = await categoryRepository.GetByIdAsync(deserializedItem.Category.Id);
+
+          await categoryRepository.MarkUnchangedAsync(category);
+          deserializedItem.Category = category;
+
           await productRepository.AddAsync(deserializedItem);
         }
       }
