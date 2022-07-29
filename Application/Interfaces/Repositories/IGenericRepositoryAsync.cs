@@ -9,5 +9,6 @@
     Task<int> GetDataCount();
     Task UpdateAsync(T entity);
     Task DeleteAsync(T entity);
+    Task MarkUnchangedAsync(T entity);
   }
 }

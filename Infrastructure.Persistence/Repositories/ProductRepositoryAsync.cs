@@ -20,6 +20,7 @@ namespace Infrastructure.Persistence.Repositories
           .Skip((pageNumber - 1) * pageSize)
           .Take(pageSize)
           .Include(p => p.Images)
+          .Include(p => p.Category)
           .AsNoTracking()
           .ToListAsync();
     }
@@ -28,7 +29,7 @@ namespace Infrastructure.Persistence.Repositories
     {
       return await _products
         .Include(p => p.Images)
-        //.Include(p => p.Category)
+        .Include(p => p.Category)
         .AsTracking()
         .SingleOrDefaultAsync(p => p.Id == id);
     }

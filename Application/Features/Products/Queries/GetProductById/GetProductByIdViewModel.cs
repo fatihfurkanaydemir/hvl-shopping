@@ -13,6 +13,6 @@ namespace Application.Features.Products.Queries.GetProductById
     public int InStock { get; set; }
     public int Sold { get; set; }
     public string Status { get; set; }
-    public Category Category { get; set; }
+    public GetProductByIdCategoryViewModel Category { get; set; }
   }
 }

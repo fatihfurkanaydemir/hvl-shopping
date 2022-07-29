@@ -53,8 +53,8 @@ using (var scope = app.Services.CreateScope())
     var productRepository = services.GetRequiredService<IProductRepositoryAsync>();
     var categoryRepository = services.GetRequiredService<ICategoryRepositoryAsync>();
 
-    await DefaultProducts.SeedAsync(productRepository);
     await DefaultCategories.SeedAsync(categoryRepository);
+    await DefaultProducts.SeedAsync(productRepository, categoryRepository);
 
   }
   catch (Exception ex)

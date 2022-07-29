@@ -26,8 +26,8 @@ namespace Infrastructure.Persistence
       //     b => b.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName)));
       //}
       services.AddScoped(typeof(IGenericRepositoryAsync<>), typeof(GenericRepositoryAsync<>));
-      services.AddScoped<IProductRepositoryAsync, ProductRepositoryAsync>();
       services.AddScoped<ICategoryRepositoryAsync, CategoryRepositoryAsync>();
+      services.AddScoped<IProductRepositoryAsync, ProductRepositoryAsync>();
     }
   }
 }

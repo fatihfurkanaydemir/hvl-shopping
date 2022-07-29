@@ -61,5 +61,10 @@ namespace Infrastructure.Persistence.Repositories
         .Set<T>()
         .CountAsync();
     }
+
+    public async Task MarkUnchangedAsync(T entity)
+    {
+      _dbContext.Entry(entity).State = EntityState.Unchanged;
+    }
   }
 }
