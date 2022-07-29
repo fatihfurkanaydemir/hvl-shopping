@@ -8,6 +8,7 @@ import {
 } from '@ng-bootstrap/ng-bootstrap';
 
 import { ProductsService } from 'src/app/services/products.service';
+import Swal from 'sweetalert2';
 import { ICategory } from '../models/ICategory';
 import { IProductCreate } from '../models/IProductCreate';
 import { CategoriesService } from '../services/categories.service';
@@ -52,6 +53,42 @@ export class AddProductComponent implements OnInit {
 
     this.productsService.createProduct(this.product).subscribe((response) => {
       if (response.succeeded) {
+        const Toast = Swal.mixin({
+          toast: true,
+          position: 'top-end',
+          showConfirmButton: false,
+          timer: 2000,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+          }
+        })
+        
+        Toast.fire({
+          icon: 'success',
+          title: 'Ürün başarılı bir şekilde eklendi.'
+        })
+        modal.dismiss();
+        addProductForm.reset();
+        this.productAddedEvent.emit(true);
+      }else{
+        const Toast = Swal.mixin({
+          toast: true,
+          position: 'top-end',
+          showConfirmButton: false,
+          timer: 2000,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+          }
+        })
+        
+        Toast.fire({
+          icon: 'error',
+          title: 'Ürün eklenirken hata oluştu.'
+        })
         modal.dismiss();
         addProductForm.reset();
         this.productAddedEvent.emit(true);

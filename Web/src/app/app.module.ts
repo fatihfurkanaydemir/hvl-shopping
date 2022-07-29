@@ -16,6 +16,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AddProductComponent } from './add-product/add-product.component';
 import { FormsModule } from '@angular/forms';
 import { ProductActionsComponent } from './product-actions/product-actions.component';
+import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import { ProductActionsComponent } from './product-actions/product-actions.compo
     HttpClientModule,
     NgbModule,
     FormsModule,
+    [SweetAlert2Module.forRoot()],
   ],
   providers: [],
   bootstrap: [AppComponent],
