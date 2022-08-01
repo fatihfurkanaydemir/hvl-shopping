@@ -12,8 +12,13 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./product-details.component.css']
 })
 export class ProductDetailsComponent implements OnInit {
-
-  //_id: string = '';
+  
+  _price: number = 50; //placeholder
+  tabId:string = "aciklama"
+  _desiredCount: number = 1;
+  isNavActive: string = 'active';
+  _urlCount: number = 0;
+  
   productCategory = {
     id: 0,
     name: ''
@@ -33,15 +38,54 @@ export class ProductDetailsComponent implements OnInit {
   constructor(private productsService: ProductsService, private activateRoute: ActivatedRoute) { }
 
   ngOnInit(): void {
-
     this.getProductByID();
   }
 
-  getProductByID() {
-    this.productsService.getProduct(2).subscribe((product) => {
+  getProductByID() {              
+    this.productsService.getProduct(2).subscribe((product) => { //placeholder
         this.product = product.data;
         console.log(this.product);
+        console.log("images length: " + this.product.images.length);
+        console.log("url count: " + this._urlCount);
     });
   }
 
+  incrementDesiredCount(){
+    if(this._desiredCount>this.product.inStock){
+      console.log("Reached the product stock.")
+    }else{
+      this._desiredCount += 1;
+    }
+  }
+
+  decrementDesiredCount(){
+    if(this._desiredCount<=0){
+      return;
+    }else{
+      this._desiredCount -= 1;
+    }
+  }
+
+  incrementUrlCount(){
+    console.log("url count: " + this._urlCount);
+    if(this._urlCount>=this.product.images.length-1){
+      this._urlCount=0;
+    }else{
+      this._urlCount += 1;
+    }
+    console.log("url count: " + this._urlCount);
+  }
+
+  decrementUrlCount(){
+    if(this._urlCount<=0){
+      this._urlCount=this.product.images.length-1;
+    }else {
+      this._urlCount -= 1;
+    }
+    console.log(this._urlCount);
+  }
+
+  tabChange(id: string){
+    this.tabId = id;
+  }
 }
