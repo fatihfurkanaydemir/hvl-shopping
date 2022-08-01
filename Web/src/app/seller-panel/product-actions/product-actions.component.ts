@@ -8,12 +8,13 @@ import {
 } from '@ng-bootstrap/ng-bootstrap';
 
 import { ProductsService } from 'src/app/services/products.service';
+import { ToastService } from 'src/app/services/toast.service';
 import Swal from 'sweetalert2';
-import { ICategory } from '../models/ICategory';
-import { IProduct } from '../models/IProduct';
-import { IProductCreate } from '../models/IProductCreate';
-import { IProductUpdate } from '../models/IProductUpdate';
-import { CategoriesService } from '../services/categories.service';
+import { ICategory } from '../../models/ICategory';
+import { IProduct } from '../../models/IProduct';
+import { IProductCreate } from '../../models/IProductCreate';
+import { IProductUpdate } from '../../models/IProductUpdate';
+import { CategoriesService } from '../../services/categories.service';
 
 @Component({
   selector: 'app-product-actions',
@@ -47,7 +48,8 @@ export class ProductActionsComponent implements OnInit {
   constructor(
     private productsService: ProductsService,
     private categoriesService: CategoriesService,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    private toastService: ToastService
   ) {}
 
   onSubmit(updateProductForm: NgForm, modal: NgbActiveModal) {
@@ -62,41 +64,19 @@ export class ProductActionsComponent implements OnInit {
 
     this.productsService.updateProduct(this.product).subscribe((response) => {
       if (response.succeeded) {
-        const Toast = Swal.mixin({
-          toast: true,
-          position: 'top-end',
-          showConfirmButton: false,
-          timer: 2000,
-          timerProgressBar: true,
-          didOpen: (toast) => {
-            toast.addEventListener('mouseenter', Swal.stopTimer)
-            toast.addEventListener('mouseleave', Swal.resumeTimer)
-          }
-        })
-        Toast.fire({
+        this.toastService.showToast({
           icon: 'success',
-          title: 'Ürün başarılı bir şekilde güncellendi.'
-        })
+          title: 'Ürün başarılı bir şekilde güncellendi.',
+        });
+
         modal.dismiss();
         updateProductForm.reset();
         this.productUpdatedEvent.emit(true);
-      }else{
-        const Toast = Swal.mixin({
-          toast: true,
-          position: 'top-end',
-          showConfirmButton: false,
-          timer: 2000,
-          timerProgressBar: true,
-          didOpen: (toast) => {
-            toast.addEventListener('mouseenter', Swal.stopTimer)
-            toast.addEventListener('mouseleave', Swal.resumeTimer)
-          }
-        })
-        
-        Toast.fire({
+      } else {
+        this.toastService.showToast({
           icon: 'error',
-          title: 'Ürün güncellenirken hata oluştu.'
-        })
+          title: 'Ürün güncellenirken hata oluştu.',
+        });
       }
     });
   }

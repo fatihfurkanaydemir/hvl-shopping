@@ -13,9 +13,9 @@ import { SellerManageproductsTabComponent } from './seller-panel/seller-managepr
 import { SellerDashboardTabComponent } from './seller-panel/seller-dashboard-tab/seller-dashboard-tab.component';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { AddProductComponent } from './add-product/add-product.component';
+import { AddProductComponent } from './seller-panel/add-product/add-product.component';
 import { FormsModule } from '@angular/forms';
-import { ProductActionsComponent } from './product-actions/product-actions.component';
+import { ProductActionsComponent } from './seller-panel/product-actions/product-actions.component';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 
 @NgModule({
