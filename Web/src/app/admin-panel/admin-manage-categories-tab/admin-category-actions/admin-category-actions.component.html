@@ -2,13 +2,21 @@
   <button
     type="button"
     class="btn btn-outline-primary"
-    (click)="openModal(modal)"
+    (click)="openModal(editCategoryModal)"
   >
     Düzenle
   </button>
+  <button
+    *ngIf="category.name !== 'Diğer'"
+    type="button"
+    class="btn btn-outline-danger"
+    (click)="openModal(confirmDeleteModal)"
+  >
+    Sil
+  </button>
 </div>
 
-<ng-template #modal let-modal>
+<ng-template #editCategoryModal let-modal>
   <form
     #updateCategoryForm="ngForm"
     (ngSubmit)="onSubmit(updateCategoryForm, modal)"
@@ -56,4 +64,44 @@
       </button>
     </div>
   </form>
+</ng-template>
+
+<ng-template #confirmDeleteModal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-title">Kategoriyi Sil</h4>
+    <button
+      type="button"
+      class="btn-close"
+      aria-describedby="modal-title"
+      (click)="modal.dismiss('Cross click')"
+    ></button>
+  </div>
+  <div class="modal-body">
+    <p>
+      <strong>
+        <span class="text-primary">{{ category.name }}</span>
+        Kategorisini silmek istediğinize emin misiniz?
+      </strong>
+    </p>
+    <p>
+      Bu kategorideki tüm ürünler kategori silindikten sonra
+      <strong class="text-danger">Diğer</strong> kategorisine taşınacaktır.
+    </p>
+  </div>
+  <div class="modal-footer">
+    <button
+      type="button"
+      class="btn btn-outline-secondary"
+      (click)="modal.dismiss('cancel click')"
+    >
+      İptal
+    </button>
+    <button
+      type="button"
+      class="btn btn-danger"
+      (click)="onDeleteCategory(modal)"
+    >
+      Sil
+    </button>
+  </div>
 </ng-template>

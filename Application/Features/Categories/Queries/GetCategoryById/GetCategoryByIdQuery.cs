@@ -13,10 +13,12 @@ namespace Application.Features.Categories.Queries.GetCategoryById
 
   public class GetCategoryByIdQueryHandler : IRequestHandler<GetCategoryByIdQuery, Response<GetCategoryByIdViewModel>>
   {
+    private readonly IProductRepositoryAsync _productRepository;
     private readonly ICategoryRepositoryAsync _categoryRepository;
     private readonly IMapper _mapper;
-    public GetCategoryByIdQueryHandler(ICategoryRepositoryAsync categoryRepository, IMapper mapper)
+    public GetCategoryByIdQueryHandler(ICategoryRepositoryAsync categoryRepository, IProductRepositoryAsync productRepository, IMapper mapper)
     {
+      _productRepository = productRepository;
       _categoryRepository = categoryRepository;
       _mapper = mapper;
     }
@@ -26,7 +28,10 @@ namespace Application.Features.Categories.Queries.GetCategoryById
       var category = await _categoryRepository.GetByIdAsync(request.Id);
       if(category == null) throw new ApiException($"Category Not Found.");
 
+      var productCount = await _productRepository.GetDataCountByCategoryIdAsync(category.Id);
+
       var categoryViewModel = _mapper.Map<GetCategoryByIdViewModel>(category);
+      categoryViewModel.ProductCount = productCount;
 
       return new Response<GetCategoryByIdViewModel>(categoryViewModel);
     }

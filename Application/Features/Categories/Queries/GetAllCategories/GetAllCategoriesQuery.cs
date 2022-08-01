@@ -13,10 +13,12 @@ namespace Application.Features.Categories.Queries.GetAllCategories
 
   public class GetAllCategoriesQueryHandler : IRequestHandler<GetAllCategoriesQuery, PagedResponse<IEnumerable<GetAllCategoriesViewModel>>>
   {
+    private readonly IProductRepositoryAsync _productRepository;
     private readonly ICategoryRepositoryAsync _categoryRepository;
     private readonly IMapper _mapper;
-    public GetAllCategoriesQueryHandler(ICategoryRepositoryAsync categoryRepository, IMapper mapper)
+    public GetAllCategoriesQueryHandler(ICategoryRepositoryAsync categoryRepository, IProductRepositoryAsync productRepository, IMapper mapper)
     {
+      _productRepository = productRepository;
       _categoryRepository = categoryRepository;
       _mapper = mapper;
     }
@@ -27,15 +29,18 @@ namespace Application.Features.Categories.Queries.GetAllCategories
       var dataCount = await _categoryRepository.GetDataCount();
       var Categories = await _categoryRepository.GetPagedReponseAsync(request.PageNumber, request.PageSize);
 
-      var productViewModels = new List<GetAllCategoriesViewModel>();
+      var categoryViewModels = new List<GetAllCategoriesViewModel>();
 
-      foreach (var p in Categories)
+      foreach (var c in Categories)
       {
-        var category = _mapper.Map<GetAllCategoriesViewModel>(p);
-        productViewModels.Add(category);
+        var productCount = await _productRepository.GetDataCountByCategoryIdAsync(c.Id);
+        var category = _mapper.Map<GetAllCategoriesViewModel>(c);
+        category.ProductCount = productCount;
+
+        categoryViewModels.Add(category);
       }
 
-      return new PagedResponse<IEnumerable<GetAllCategoriesViewModel>>(productViewModels, validFilter.PageNumber, validFilter.PageSize, dataCount);
+      return new PagedResponse<IEnumerable<GetAllCategoriesViewModel>>(categoryViewModels, validFilter.PageNumber, validFilter.PageSize, dataCount);
     }
   }
 }

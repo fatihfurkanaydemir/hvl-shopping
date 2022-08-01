@@ -42,4 +42,10 @@ export class CategoriesService {
       this.apiUrl + '/Category/' + id
     );
   }
+
+  deleteCategory(id: number): Observable<IApiResponse> {
+    return this.httpClient.delete<IApiResponse>(
+      this.apiUrl + '/Category/' + id
+    );
+  }
 }

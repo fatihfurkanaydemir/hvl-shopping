@@ -11,5 +11,6 @@ namespace Domain.Entities
   public class Category: AuditableBaseEntity
   {
     public string Name { get; set; }
+    public List<Product> Products { get; set; }
   }
 }

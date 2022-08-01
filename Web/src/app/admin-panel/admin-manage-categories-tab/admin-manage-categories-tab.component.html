@@ -7,6 +7,8 @@
       <tr>
         <th scope="col">Id</th>
         <th scope="col">İsim</th>
+        <th scope="col">Ürün Sayısı</th>
+        <th scope="col">İşlemler</th>
       </tr>
     </thead>
     <tbody class="table-group-divider">
@@ -14,7 +16,11 @@
         <th scope="row">{{ category.id }}</th>
         <td>{{ category.name }}</td>
         <td>
+          <strong>{{ category.productCount }}</strong>
+        </td>
+        <td>
           <app-admin-category-actions
+            *ngIf="category.name !== 'Diğer'"
             [categoryId]="category.id"
             (OnCategoryUpdated)="getCategories()"
           ></app-admin-category-actions>

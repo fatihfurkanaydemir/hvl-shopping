@@ -1,29 +1,28 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+
 import { NgForm } from '@angular/forms';
 import {
+  NgbModal,
   ModalDismissReasons,
   NgbActiveModal,
-  NgbModal,
 } from '@ng-bootstrap/ng-bootstrap';
-import { ICategoryUpdate } from 'src/app/models/ICategoryUpdate';
-import { CategoriesService } from 'src/app/services/categories.service';
+import { ICategoryCreate } from 'src/app/models/ICategoryCreate';
+
 import { ToastService } from 'src/app/services/toast.service';
+import { CategoriesService } from '../../../services/categories.service';
 
 @Component({
-  selector: 'app-admin-category-actions',
-  templateUrl: './admin-category-actions.component.html',
-  styleUrls: ['./admin-category-actions.component.css'],
+  selector: 'app-admin-add-category',
+  templateUrl: './admin-add-category.component.html',
+  styleUrls: ['./admin-add-category.component.css'],
 })
-export class AdminCategoryActionsComponent implements OnInit {
-  @Output('OnCategoryUpdated') categoryUpdatedEvent: EventEmitter<boolean> =
+export class AdminAddCategoryComponent implements OnInit {
+  @Output('OnCategoryAdded') categoryAddedEvent: EventEmitter<boolean> =
     new EventEmitter();
-
-  @Input() categoryId!: number;
 
   closeResult: string = '';
 
-  category: ICategoryUpdate = {
-    id: 0,
+  category: ICategoryCreate = {
     name: '',
   };
 
@@ -33,35 +32,37 @@ export class AdminCategoryActionsComponent implements OnInit {
     private toastService: ToastService
   ) {}
 
-  onSubmit(updateProductForm: NgForm, modal: NgbActiveModal) {
-    if (updateProductForm.invalid) return;
+  onSubmit(addCategoryForm: NgForm, modal: NgbActiveModal) {
+    if (addCategoryForm.invalid) return;
 
     this.categoriesService
-      .updateCategory(this.category)
+      .createCategory(this.category)
       .subscribe((response) => {
         if (response.succeeded) {
           this.toastService.showToast({
             icon: 'success',
-            title: 'Kategori başarılı bir şekilde güncellendi.',
+            title: 'Kategori başarılı bir şekilde eklendi.',
           });
 
           modal.dismiss();
-          updateProductForm.reset();
-          this.categoryUpdatedEvent.emit(true);
+          addCategoryForm.reset();
+          this.categoryAddedEvent.emit(true);
         } else {
           this.toastService.showToast({
             icon: 'error',
-            title: 'Kategori güncellenirken hata oluştu.',
+            title: 'Ürün eklenirken hata oluştu.',
           });
+
+          modal.dismiss();
+          addCategoryForm.reset();
+          this.categoryAddedEvent.emit(true);
         }
       });
   }
 
   ngOnInit() {}
 
-  openModal(content: any) {
-    this.getCategory();
-
+  open(content: any) {
     this.modalService
       .open(content, { ariaLabelledBy: 'modal-basic-title' })
       .result.then(
@@ -72,15 +73,6 @@ export class AdminCategoryActionsComponent implements OnInit {
           this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
         }
       );
-  }
-
-  getCategory() {
-    this.categoriesService
-      .getCategory(this.categoryId)
-      .subscribe((response) => {
-        this.category.id = response.data.id;
-        this.category.name = response.data.name;
-      });
   }
 
   private getDismissReason(reason: any): string {

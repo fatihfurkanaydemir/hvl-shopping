@@ -23,8 +23,8 @@ import { AdminDashboardTabComponent } from './admin-panel/admin-dashboard-tab/ad
 import { AdminManageClientsTabComponent } from './admin-panel/admin-manage-clients-tab/admin-manage-clients-tab.component';
 import { AdminManageSellersTabComponent } from './admin-panel/admin-manage-sellers-tab/admin-manage-sellers-tab.component';
 import { AdminManageCategoriesTabComponent } from './admin-panel/admin-manage-categories-tab/admin-manage-categories-tab.component';
-import { AdminAddCategoryComponent } from './admin-panel/admin-add-category/admin-add-category.component';
-import { AdminCategoryActionsComponent } from './admin-panel/admin-category-actions/admin-category-actions.component';
+import { AdminAddCategoryComponent } from './admin-panel/admin-manage-categories-tab/admin-add-category/admin-add-category.component';
+import { AdminCategoryActionsComponent } from './admin-panel/admin-manage-categories-tab/admin-category-actions/admin-category-actions.component';
 
 @NgModule({
   declarations: [

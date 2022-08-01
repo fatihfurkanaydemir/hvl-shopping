@@ -13,5 +13,21 @@ namespace Infrastructure.Persistence.Repositories
     {
       _categories = dbContext.Categories;
     }
+
+    public async Task<Category?> GetByIdWithRelationsAsync(int id)
+    {
+      return await _categories
+        .Include(c => c.Products)
+        .AsNoTracking()
+        .SingleOrDefaultAsync(c => c.Id == id);
+    }
+
+    public async Task<Category?> GetByNameAsync(string name)
+    {
+      return await _categories
+        .AsNoTracking()
+        .Include(c => c.Products)
+        .SingleOrDefaultAsync(c => c.Name == name);
+    }
   }
 }
