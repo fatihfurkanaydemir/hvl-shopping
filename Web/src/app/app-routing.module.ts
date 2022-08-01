@@ -5,8 +5,10 @@ import { SellerDashboardTabComponent } from './seller-panel/seller-dashboard-tab
 import { SellerManageordersTabComponent } from './seller-panel/seller-manageorders-tab/seller-manageorders-tab.component';
 import { SellerManageproductsTabComponent } from './seller-panel/seller-manageproducts-tab/seller-manageproducts-tab.component';
 import { SellerPanelComponent } from './seller-panel/seller-panel.component';
+import { ProductDetailsComponent } from './product-details/product-details.component';
 
 const appRoutes: Routes = [
+  { path: 'product-details', component:ProductDetailsComponent},
   { path: '', component: HomePageComponent, pathMatch: 'full' },
   {
     path: 'seller-panel',
