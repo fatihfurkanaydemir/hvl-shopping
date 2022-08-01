@@ -1,0 +1,20 @@
+.form-group{
+    margin-bottom: 10px;
+}
+
+.form-group textarea{
+    height: 80px;
+}
+
+label{
+    padding-left: 0px;
+}
+
+.close{
+    border: none;
+    background-color: transparent;
+}
+
+.error-message{
+    margin-bottom: 20px;
+}

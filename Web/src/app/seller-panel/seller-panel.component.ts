@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ProductsService } from '../services/products.service';
-
 @Component({
   selector: 'app-seller-panel',
   templateUrl: './seller-panel.component.html',

@@ -1,0 +1,33 @@
+<app-admin-add-category
+  (OnCategoryAdded)="getCategories()"
+></app-admin-add-category>
+<div class="table-container">
+  <table class="table table-hover table-responsive">
+    <thead>
+      <tr>
+        <th scope="col">Id</th>
+        <th scope="col">İsim</th>
+      </tr>
+    </thead>
+    <tbody class="table-group-divider">
+      <tr class="align-middle" *ngFor="let category of categories">
+        <th scope="row">{{ category.id }}</th>
+        <td>{{ category.name }}</td>
+        <td>
+          <app-admin-category-actions
+            [categoryId]="category.id"
+            (OnCategoryUpdated)="getCategories()"
+          ></app-admin-category-actions>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<div class="d-flex mt-4 justify-content-center">
+  <ngb-pagination
+    [collectionSize]="dataCount"
+    [(page)]="pageNumber"
+    [pageSize]="pageSize"
+    (pageChange)="onPageChange($event)"
+  ></ngb-pagination>
+</div>

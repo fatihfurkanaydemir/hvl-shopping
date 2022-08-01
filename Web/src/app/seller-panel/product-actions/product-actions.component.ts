@@ -9,10 +9,7 @@ import {
 
 import { ProductsService } from 'src/app/services/products.service';
 import { ToastService } from 'src/app/services/toast.service';
-import Swal from 'sweetalert2';
 import { ICategory } from '../../models/ICategory';
-import { IProduct } from '../../models/IProduct';
-import { IProductCreate } from '../../models/IProductCreate';
 import { IProductUpdate } from '../../models/IProductUpdate';
 import { CategoriesService } from '../../services/categories.service';
 

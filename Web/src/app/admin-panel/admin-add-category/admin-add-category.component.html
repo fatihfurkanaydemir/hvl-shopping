@@ -1,0 +1,65 @@
+<div id="add-product" class="mt-2">
+  <form>
+    <div class="form-group row">
+      <div class="col-9">
+        <input type="text" class="form-control" placeholder="Kategori Ara" />
+      </div>
+
+      <div class="col-3 btn-group">
+        <button class="btn btn-primary">Ara</button>
+        <button class="btn btn-success" (click)="open(modal)">
+          Kategori ekle
+        </button>
+      </div>
+    </div>
+  </form>
+
+  <ng-template #modal let-modal>
+    <form
+      #addCategoryForm="ngForm"
+      (ngSubmit)="onSubmit(addCategoryForm, modal)"
+    >
+      <div class="modal-header">
+        <h1 class="modal-title" id="modal-basic-title">Ürün ekle</h1>
+        <button
+          type="button"
+          class="btn-close"
+          aria-label="Close"
+          (click)="modal.dismiss('Cross click')"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label for="category-name">Kategori ismi</label>
+          <input
+            type="text"
+            id="category-name"
+            class="form-control"
+            [(ngModel)]="category.name"
+            name="categoryname"
+            #categoryName="ngModel"
+            required
+          />
+        </div>
+
+        <p
+          *ngIf="
+            categoryName.invalid && (categoryName.dirty || categoryName.touched)
+          "
+          class="text-danger error-message"
+        >
+          Bu alan boş bırakılamaz.
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="submit"
+          class="btn btn-primary w-100"
+          [disabled]="addCategoryForm.invalid"
+        >
+          Ekle
+        </button>
+      </div>
+    </form>
+  </ng-template>
+</div>
