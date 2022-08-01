@@ -1,12 +1,12 @@
 ﻿using Application.Features.Products.Commands.CreateProduct;
 using Application.Features.Products.Commands.UpdateProduct;
-using Application.Features.Products.Commands.DeleteProduct;
+using Application.Features.Products.Commands.ActivateProduct;
+using Application.Features.Products.Commands.DeactivateProduct;
 using Application.Features.Products.Queries.GetAllProducts;
 using Application.Features.Products.Queries.GetProductById;
 
 
 using Microsoft.AspNetCore.Mvc;
-
 
 namespace WebApi.Controllers.v1
 {
@@ -40,9 +40,16 @@ namespace WebApi.Controllers.v1
       return Ok(await Mediator.Send(command));
     }
 
-    // DELETE: api/<controller>
-    [HttpDelete]
-    public async Task<IActionResult> Delete(DeleteProductCommand command)
+    // POST: api/<controller>/deactivate
+    [HttpPost("deactivate")]
+    public async Task<IActionResult> Deactivate(DeactivateProductCommand command)
+    {
+      return Ok(await Mediator.Send(command));
+    }
+
+    // POST: api/<controller>/activate
+    [HttpPost("activate")]
+    public async Task<IActionResult> Activate(ActivateProductCommand command)
     {
       return Ok(await Mediator.Send(command));
     }
