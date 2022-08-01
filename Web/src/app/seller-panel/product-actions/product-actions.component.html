@@ -13,6 +13,7 @@
       'btn-outline-danger': productStatus === 'Active',
       'btn-outline-success': productStatus !== 'Active'
     }"
+    (click)="onProductStatusChangeClicked(productStatus)"
   >
     {{ productStatus !== "Active" ? "Aktive Et" : "Deaktive Et" }}
   </button>

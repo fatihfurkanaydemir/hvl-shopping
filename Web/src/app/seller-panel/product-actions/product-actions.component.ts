@@ -104,6 +104,22 @@ export class ProductActionsComponent implements OnInit {
       );
   }
 
+  onProductStatusChangeClicked(currentStatus: string) {
+    if (currentStatus === 'Active') {
+      this.productsService
+        .deactivateProduct(this.productId)
+        .subscribe((response) => {
+          this.productUpdatedEvent.emit(true);
+        });
+    } else if (currentStatus === 'Passive') {
+      this.productsService
+        .activateProduct(this.productId)
+        .subscribe((response) => {
+          this.productUpdatedEvent.emit(true);
+        });
+    }
+  }
+
   getProduct() {
     this.productsService.getProduct(this.productId).subscribe((response) => {
       this.product.id = response.data.id;

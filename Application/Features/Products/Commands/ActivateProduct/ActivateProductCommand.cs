@@ -2,18 +2,17 @@
 using Application.Interfaces.Repositories;
 using Application.Wrappers;
 using AutoMapper;
-using Domain.Entities;
 using Domain.Enums;
 using MediatR;
 
-namespace Application.Features.Products.Commands.DeleteProduct
+namespace Application.Features.Products.Commands.ActivateProduct
 {
 
-  public class DeleteProductCommand : IRequest<Response<int>>
+  public class ActivateProductCommand : IRequest<Response<int>>
   {
     public int Id { get; set; }
   }
-  public class DeleteProductCommandHandler : IRequestHandler<DeleteProductCommand, Response<int>>
+  public class DeleteProductCommandHandler : IRequestHandler<ActivateProductCommand, Response<int>>
   {
     private readonly IProductRepositoryAsync _productRepository;
     private readonly IMapper _mapper;
@@ -23,13 +22,16 @@ namespace Application.Features.Products.Commands.DeleteProduct
       _mapper = mapper;
     }
 
-    public async Task<Response<int>> Handle(DeleteProductCommand request, CancellationToken cancellationToken)
+    public async Task<Response<int>> Handle(ActivateProductCommand request, CancellationToken cancellationToken)
     {
       var product = await _productRepository.GetByIdAsync(request.Id);
       if (product == null) throw new ApiException("Product not found");
 
-      product.Status = ProductStatus.Passive;
-      await _productRepository.UpdateAsync(product);
+      if(product.Status == ProductStatus.Passive)
+      {
+        product.Status = ProductStatus.Active;
+        await _productRepository.UpdateAsync(product);
+      }
 
       return new Response<int>(product.Id);
     }

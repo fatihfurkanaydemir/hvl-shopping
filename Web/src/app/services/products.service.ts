@@ -42,4 +42,18 @@ export class ProductsService {
       product
     );
   }
+
+  deactivateProduct(id: number): Observable<IApiResponseSingle> {
+    return this.httpClient.post<IApiResponseSingle>(
+      this.apiUrl + '/Product/deactivate',
+      { id }
+    );
+  }
+
+  activateProduct(id: number): Observable<IApiResponseSingle> {
+    return this.httpClient.post<IApiResponseSingle>(
+      this.apiUrl + '/Product/activate',
+      { id }
+    );
+  }
 }
