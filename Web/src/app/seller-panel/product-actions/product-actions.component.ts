@@ -59,8 +59,8 @@ export class ProductActionsComponent implements OnInit {
 
     this.product.categoryId = +updateProductForm.value['product-category'];
 
-    this.productsService.updateProduct(this.product).subscribe((response) => {
-      if (response.succeeded) {
+    this.productsService.updateProduct(this.product).subscribe({
+      next: (response) => {
         this.toastService.showToast({
           icon: 'success',
           title: 'Ürün başarılı bir şekilde güncellendi.',
@@ -69,12 +69,13 @@ export class ProductActionsComponent implements OnInit {
         modal.dismiss();
         updateProductForm.reset();
         this.productUpdatedEvent.emit(true);
-      } else {
+      },
+      error: (error) => {
         this.toastService.showToast({
           icon: 'error',
           title: 'Ürün güncellenirken hata oluştu.',
         });
-      }
+      },
     });
   }
 

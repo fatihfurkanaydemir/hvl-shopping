@@ -36,25 +36,28 @@ export class AdminCategoryActionsComponent implements OnInit {
   onSubmit(updateProductForm: NgForm, modal: NgbActiveModal) {
     if (updateProductForm.invalid) return;
 
-    this.categoriesService
-      .updateCategory(this.category)
-      .subscribe((response) => {
-        if (response.succeeded) {
-          this.toastService.showToast({
-            icon: 'success',
-            title: 'Kategori başarılı bir şekilde güncellendi.',
-          });
+    this.categoriesService.updateCategory(this.category).subscribe({
+      next: (response) => {
+        this.toastService.showToast({
+          icon: 'success',
+          title: 'Kategori başarılı bir şekilde güncellendi.',
+        });
 
-          modal.dismiss();
-          updateProductForm.reset();
-          this.categoryUpdatedEvent.emit(true);
-        } else {
-          this.toastService.showToast({
-            icon: 'error',
-            title: 'Kategori güncellenirken hata oluştu.',
-          });
-        }
-      });
+        modal.dismiss();
+        updateProductForm.reset();
+        this.categoryUpdatedEvent.emit(true);
+      },
+      error: (error) => {
+        modal.dismiss();
+        updateProductForm.reset();
+        this.categoryUpdatedEvent.emit(true);
+
+        this.toastService.showToast({
+          icon: 'error',
+          title: 'Kategori güncellenirken hata oluştu.',
+        });
+      },
+    });
   }
 
   ngOnInit() {}
@@ -75,23 +78,25 @@ export class AdminCategoryActionsComponent implements OnInit {
   }
 
   onDeleteCategory(modal: NgbActiveModal) {
-    this.categoriesService
-      .deleteCategory(this.category.id)
-      .subscribe((response) => {
-        if (response.succeeded) {
-          this.toastService.showToast({
-            icon: 'success',
-            title: 'Kategori başarılı bir şekilde silindi.',
-          });
-          modal.close();
-          this.categoryUpdatedEvent.emit(true);
-        } else {
-          this.toastService.showToast({
-            icon: 'error',
-            title: 'Kategori silinirken hata oluştu.',
-          });
-        }
-      });
+    this.categoriesService.deleteCategory(this.category.id).subscribe({
+      next: (response) => {
+        this.toastService.showToast({
+          icon: 'success',
+          title: 'Kategori başarılı bir şekilde silindi.',
+        });
+        modal.close();
+        this.categoryUpdatedEvent.emit(true);
+      },
+      error: (error) => {
+        modal.dismiss();
+        this.categoryUpdatedEvent.emit(true);
+
+        this.toastService.showToast({
+          icon: 'error',
+          title: 'Kategori silinirken hata oluştu.',
+        });
+      },
+    });
   }
 
   getCategory() {

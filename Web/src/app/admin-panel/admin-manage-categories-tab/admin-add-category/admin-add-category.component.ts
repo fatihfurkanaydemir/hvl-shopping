@@ -35,29 +35,28 @@ export class AdminAddCategoryComponent implements OnInit {
   onSubmit(addCategoryForm: NgForm, modal: NgbActiveModal) {
     if (addCategoryForm.invalid) return;
 
-    this.categoriesService
-      .createCategory(this.category)
-      .subscribe((response) => {
-        if (response.succeeded) {
-          this.toastService.showToast({
-            icon: 'success',
-            title: 'Kategori başarılı bir şekilde eklendi.',
-          });
+    this.categoriesService.createCategory(this.category).subscribe({
+      next: (response) => {
+        this.toastService.showToast({
+          icon: 'success',
+          title: 'Kategori başarılı bir şekilde eklendi.',
+        });
 
-          modal.dismiss();
-          addCategoryForm.reset();
-          this.categoryAddedEvent.emit(true);
-        } else {
-          this.toastService.showToast({
-            icon: 'error',
-            title: 'Ürün eklenirken hata oluştu.',
-          });
+        modal.dismiss();
+        addCategoryForm.reset();
+        this.categoryAddedEvent.emit(true);
+      },
+      error: (error) => {
+        this.toastService.showToast({
+          icon: 'error',
+          title: 'Ürün eklenirken hata oluştu.',
+        });
 
-          modal.dismiss();
-          addCategoryForm.reset();
-          this.categoryAddedEvent.emit(true);
-        }
-      });
+        modal.dismiss();
+        addCategoryForm.reset();
+        this.categoryAddedEvent.emit(true);
+      },
+    });
   }
 
   ngOnInit() {}
