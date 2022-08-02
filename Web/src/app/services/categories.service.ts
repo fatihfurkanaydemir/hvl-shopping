@@ -43,6 +43,16 @@ export class CategoriesService {
     );
   }
 
+  getCategoryProducts(
+    id: number,
+    pageNumber: number,
+    pageSize: number
+  ): Observable<IApiResponse> {
+    return this.httpClient.get<IApiResponse>(
+      `${this.apiUrl}/Category/${id}/products?PageNumber=${pageNumber}&PageSize=${pageSize}`
+    );
+  }
+
   deleteCategory(id: number): Observable<IApiResponse> {
     return this.httpClient.delete<IApiResponse>(
       this.apiUrl + '/Category/' + id

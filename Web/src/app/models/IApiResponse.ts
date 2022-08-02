@@ -5,5 +5,5 @@ export interface IApiResponse {
   succeeded: boolean;
   message: string;
   dataCount: number;
-  data: any[];
+  data: any;
 }

@@ -25,6 +25,7 @@ import { AdminManageSellersTabComponent } from './admin-panel/admin-manage-selle
 import { AdminManageCategoriesTabComponent } from './admin-panel/admin-manage-categories-tab/admin-manage-categories-tab.component';
 import { AdminAddCategoryComponent } from './admin-panel/admin-manage-categories-tab/admin-add-category/admin-add-category.component';
 import { AdminCategoryActionsComponent } from './admin-panel/admin-manage-categories-tab/admin-category-actions/admin-category-actions.component';
+import { CategoriesPageComponent } from './categories-page/categories-page.component';
 
 @NgModule({
   declarations: [
@@ -45,6 +46,7 @@ import { AdminCategoryActionsComponent } from './admin-panel/admin-manage-catego
     AdminManageCategoriesTabComponent,
     AdminAddCategoryComponent,
     AdminCategoryActionsComponent,
+    CategoriesPageComponent,
   ],
   imports: [
     BrowserModule,

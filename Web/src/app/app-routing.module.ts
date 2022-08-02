@@ -5,6 +5,7 @@ import { AdminManageCategoriesTabComponent } from './admin-panel/admin-manage-ca
 import { AdminManageClientsTabComponent } from './admin-panel/admin-manage-clients-tab/admin-manage-clients-tab.component';
 import { AdminManageSellersTabComponent } from './admin-panel/admin-manage-sellers-tab/admin-manage-sellers-tab.component';
 import { AdminPanelComponent } from './admin-panel/admin-panel.component';
+import { CategoriesPageComponent } from './categories-page/categories-page.component';
 import { HomePageComponent } from './home-page/home-page.component';
 import { SellerDashboardTabComponent } from './seller-panel/seller-dashboard-tab/seller-dashboard-tab.component';
 import { SellerManageordersTabComponent } from './seller-panel/seller-manageorders-tab/seller-manageorders-tab.component';
@@ -35,6 +36,7 @@ const appRoutes: Routes = [
       },
     ],
   },
+  { path: ':name', component: CategoriesPageComponent },
 ];
 
 @NgModule({
