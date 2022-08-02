@@ -18,6 +18,7 @@ import { FormsModule } from '@angular/forms';
 import { ProductActionsComponent } from './seller-panel/product-actions/product-actions.component';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { ProductDetailsComponent } from './product-details/product-details.component';
+import { CategoriesPageComponent } from './categories-page/categories-page.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { ProductDetailsComponent } from './product-details/product-details.compo
     AddProductComponent,
     ProductActionsComponent,
     ProductDetailsComponent,
+    CategoriesPageComponent,
   ],
   imports: [
     BrowserModule,
