@@ -5,7 +5,11 @@
         *ngFor="let category of categories; let i = index"
         class="d-inline nav-item"
       >
-        <a class="nav-link" [routerLink]="['/', category.name]">
+        <a
+          class="nav-link"
+          [routerLink]="['/', category.name]"
+          routerLinkActive="active"
+        >
           {{
             category.name +
               (i === categories.length - 1 ? "" : "&nbsp;&nbsp;&nbsp;|")
