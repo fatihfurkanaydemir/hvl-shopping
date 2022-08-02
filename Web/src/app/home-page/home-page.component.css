@@ -32,3 +32,8 @@ ngb-carousel {
 .carousel-indicators{
     z-index: 20;
 }
+
+#search-bar, #btn-search {
+    border-width: 2px;
+}
+

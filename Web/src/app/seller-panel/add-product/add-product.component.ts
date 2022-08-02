@@ -53,8 +53,8 @@ export class AddProductComponent implements OnInit {
 
     this.product.categoryId = +addProductForm.value['product-category'];
 
-    this.productsService.createProduct(this.product).subscribe((response) => {
-      if (response.succeeded) {
+    this.productsService.createProduct(this.product).subscribe({
+      next: (response) => {
         this.toastService.showToast({
           icon: 'success',
           title: 'Ürün başarılı bir şekilde eklendi.',
@@ -63,7 +63,8 @@ export class AddProductComponent implements OnInit {
         modal.dismiss();
         addProductForm.reset();
         this.productAddedEvent.emit(true);
-      } else {
+      },
+      error: (error) => {
         this.toastService.showToast({
           icon: 'error',
           title: 'Ürün eklenirken hata oluştu.',
@@ -72,7 +73,7 @@ export class AddProductComponent implements OnInit {
         modal.dismiss();
         addProductForm.reset();
         this.productAddedEvent.emit(true);
-      }
+      },
     });
   }
 

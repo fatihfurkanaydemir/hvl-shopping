@@ -1,7 +1,9 @@
 ﻿using Application.Features.Categories.Commands.CreateCategory;
+using Application.Features.Categories.Commands.DeleteCategory;
 using Application.Features.Categories.Commands.UpdateCategory;
 using Application.Features.Categories.Queries.GetAllCategories;
 using Application.Features.Categories.Queries.GetCategoryById;
+using Application.Features.Categories.Queries.GetCategoryProductsById;
 using Microsoft.AspNetCore.Mvc;
 
 
@@ -30,6 +32,13 @@ namespace WebApi.Controllers.v1
       return Ok(await Mediator.Send(new GetCategoryByIdQuery() { Id = id }));
     }
 
+    // GET: api/<controller>/id/products
+    [HttpGet("{id}/products")]
+    public async Task<IActionResult> GetCategoryProductsById(int id, [FromQuery] GetCategoryProductsByIdParameter filter)
+    {
+      return Ok(await Mediator.Send(new GetCategoryProductsByIdQuery() { Id = id, PageNumber = filter.PageNumber, PageSize = filter.PageSize }));
+    }
+
     // PATCH: api/<controller>
     [HttpPatch]
     public async Task<IActionResult> Patch(UpdateCategoryCommand command)
@@ -37,11 +46,11 @@ namespace WebApi.Controllers.v1
       return Ok(await Mediator.Send(command));
     }
 
-    //// DELETE: api/<controller>
-    //[HttpDelete]
-    //public async Task<IActionResult> Delete(DeleteProductCommand command)
-    //{
-    //  return Ok(await Mediator.Send(command));
-    //}
+    // DELETE: api/<controller>
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> Delete(int id)
+    {
+      return Ok(await Mediator.Send(new DeleteCategoryCommand { Id = id }));
+    }
   }
 }

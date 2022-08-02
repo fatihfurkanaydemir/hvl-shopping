@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
 import { ICategory } from '../models/ICategory';
 import { IProduct } from '../models/IProduct';
 import { CategoriesService } from '../services/categories.service';
 import { ProductsService } from '../services/products.service';
-import {NgbRatingConfig} from '@ng-bootstrap/ng-bootstrap';
+import { NgbRatingConfig } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-home-page',
@@ -13,15 +12,17 @@ import {NgbRatingConfig} from '@ng-bootstrap/ng-bootstrap';
 })
 export class HomePageComponent implements OnInit {
   categories: ICategory[] = [];
-  pageNumber: number = 1;
-  pageSize: number = 12;
-  dataCount: number = 0;
+  categoriesPageNumber: number = 1;
+  categoriesPageSize: number = 30;
+
   products: IProduct[] = [];
+  productsPageNumber: number = 1;
+  productsPageSize: number = 15;
 
   constructor(
     private categoriesService: CategoriesService,
     private productsService: ProductsService,
-    private config: NgbRatingConfig,
+    private config: NgbRatingConfig
   ) {}
 
   ngOnInit(): void {
@@ -33,18 +34,16 @@ export class HomePageComponent implements OnInit {
 
   getCategory() {
     this.categoriesService
-      .getAllCategories(this.pageNumber, this.pageSize)
+      .getAllCategories(this.categoriesPageNumber, this.categoriesPageSize)
       .subscribe((response) => {
         this.categories = response.data;
-        this.dataCount = +response.dataCount;
       });
   }
   getProducts() {
     this.productsService
-      .getAllProducts(this.pageNumber, this.pageSize)
+      .getAllProducts(this.productsPageNumber, this.productsPageSize)
       .subscribe((response) => {
         this.products = response.data;
-        this.dataCount = +response.dataCount;
       });
   }
 }

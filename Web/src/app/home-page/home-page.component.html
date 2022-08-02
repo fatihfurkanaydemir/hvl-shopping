@@ -1,12 +1,19 @@
 <nav class="navbar navbar-expand navbar-light bg-light">
   <div class="collapse navbar-collapse justify-content-center">
     <ul class="navbar-nav mr-auto">
-      <li *ngFor="let category of categories" class="d-inline nav-item">
+      <li
+        *ngFor="let category of categories; let i = index"
+        class="d-inline nav-item"
+      >
         <a
           class="nav-link"
           [routerLink]="['/', category.name]"
+          routerLinkActive="active"
           [state]="category"
-          >| &nbsp;{{ category.name }}
+          >{{
+            category.name +
+              (i === categories.length - 1 ? "" : "&nbsp;&nbsp;&nbsp;|")
+          }}
         </a>
       </li>
     </ul>
@@ -15,12 +22,17 @@
 <div class="d-flex justify-content-center">
   <form class="d-flex m-3 mb-5 w-50">
     <input
-      class="form-control"
+      class="form-control p-3 border-primary"
       type="search"
+      id="search-bar"
       placeholder="Ürün, kategori veya marka ara"
       aria-label="Search"
     />
-    <button class="btn btn btn-outline-primary my-2 my-sm-0" type="submit">
+    <button
+      class="btn btn btn-outline-success my-2 my-sm-0 ms-2 px-5"
+      id="btn-search"
+      type="submit"
+    >
       Ara
     </button>
   </form>
@@ -28,7 +40,7 @@
 <ngb-carousel>
   <ng-template ngbSlide>
     <div class="picsum-img-wrapper">
-      <img src="https://picsum.photos/500/100" alt="Angular Carousel 1" />
+      <img src="https://picsum.photos/500/200" alt="Angular Carousel 1" />
     </div>
     <div class="carousel-caption">
       <h3>Title Goes Here</h3>
@@ -37,7 +49,7 @@
   </ng-template>
   <ng-template ngbSlide>
     <div class="picsum-img-wrapper">
-      <img src="https://picsum.photos/500/100" alt="Angular Carousel 2" />
+      <img src="https://picsum.photos/500/200" alt="Angular Carousel 2" />
     </div>
     <div class="carousel-caption">
       <h3>Title Goes Here</h3>
@@ -49,7 +61,7 @@
   <h3>Dikkat çeken ürünler</h3>
   <div class="row">
     <div class="col-2 m-3 mb-5" *ngFor="let product of products">
-      <a href="#" class="nav-link card h-100">
+      <a [routerLink]="['/product', product.id]" class="nav-link card h-100">
         <img
           class="card-img-top h-75"
           [src]="product.images[0].url"

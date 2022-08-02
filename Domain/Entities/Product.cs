@@ -11,6 +11,7 @@ namespace Domain.Entities
     public List<Image> Images { get; set; }
     public int InStock { get; set; }
     public int Sold { get; set; }
+    // TODO: Fiyat eklenecek
     public ProductStatus Status { get; set; }
     public virtual Category Category { get; set; }
   }

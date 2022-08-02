@@ -4,7 +4,6 @@ import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { IApiResponse } from '../models/IApiResponse';
 import { IApiResponseSingle } from '../models/IApiResponseSingle';
-import { IProduct } from '../models/IProduct';
 import { IProductCreate } from '../models/IProductCreate';
 import { IProductUpdate } from '../models/IProductUpdate';
 
