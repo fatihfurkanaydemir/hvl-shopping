@@ -1,0 +1,117 @@
+<div class="container">
+  <div class="row" style="margin-top: 20px">
+    <div class="col-6">
+      <div class="row d-flex w-100">
+        <div
+          class="d-flex justif-content-start align-items-center flex-row w-100"
+        >
+          <i
+            (click)="decrementUrlCount()"
+            class="fa fa-arrow-left p-2"
+            style="font-size: 2em; cursor: pointer"
+          ></i>
+          <img
+            style="border-radius: 5px; height: 400px; width: 500px"
+            src="{{ product.images[_urlCount].url }}"
+            class="img-thumbnail"
+          />
+          <i
+            (click)="incrementUrlCount()"
+            class="fa fa-arrow-right p-2"
+            style="font-size: 2em; cursor: pointer"
+          ></i>
+        </div>
+      </div>
+    </div>
+    <div class="col-6">
+      <h3 style="font-size: 3em">{{ product.name }}</h3>
+      <h6 class="disabled">{{ product.category.name }}</h6>
+      <p style="font-size: 1.3em">${{ _desiredCount * _price }}</p>
+
+      <div clas="d-flex justify-content-start align-items-center">
+        <i
+          (click)="decrementDesiredCount()"
+          class="fa fa-minus-circle text-warning me-2"
+          style="cursor: pointer; font-size: 2em"
+        ></i>
+        <span class="font-weight-bold" style="font-size: 2em">{{
+          _desiredCount
+        }}</span>
+        <i
+          (click)="incrementDesiredCount()"
+          class="fa fa-plus-circle text-warning mx-2"
+          style="cursor: pointer; font-size: 2em"
+        ></i>
+        <button class="btn btn-outline-secondary btn-lg ml-4 ms-3">
+          Sepete Ekle
+        </button>
+      </div>
+      <h5>Stok: {{ product.inStock - _desiredCount }}</h5>
+    </div>
+
+    <div class="container mt-2">
+      <ul class="nav nav-tabs">
+        <li
+          class="nav-item-active"
+          id="aciklama"
+          (click)="tabChange('aciklama')"
+        >
+          <button
+            class="nav-link"
+            data-bs-toggle="tab"
+            id="aciklama-tab"
+            role="tab"
+            aria-controls="aciklama"
+            aria-selected="true"
+          >
+            Ürün Açıklaması
+          </button>
+        </li>
+        <li class="nav-item" id="bilgiler" (click)="tabChange('bilgiler')">
+          <button
+            class="nav-link"
+            data-bs-toggle="tab"
+            id="bilgiler-tab"
+            type="button"
+            data-bs-target="#bilgiler"
+            role="tab"
+            aria-controls="bilgiler"
+            aria-selected="true"
+          >
+            Ürün Bilgileri
+          </button>
+        </li>
+
+        <li class="nav-item" id="iletisim" (click)="tabChange('iletisim')">
+          <button
+            class="nav-link"
+            data-bs-toggle="tab"
+            id="iletisim-tab"
+            type="button"
+            data-bs-target="#iletisim"
+            role="tab"
+            aria-controls="iletisim"
+            aria-selected="true"
+          >
+            Satıcı İletişim
+          </button>
+        </li>
+      </ul>
+
+      <div class="content" id="myTabControl">
+        <div class="content-value" *ngIf="tabId === 'aciklama'">
+          <h3 class="d-flex justify-content-center mt-3">{{ product.name }}</h3>
+          <p>{{ product.description }}</p>
+        </div>
+        <div class="content-value" *ngIf="tabId === 'bilgiler'">
+          <h3 class="d-flex justify-content-center mt-3">Ürün Bilgileri</h3>
+          <p>bilgiler</p>
+        </div>
+        <div class="content-value" *ngIf="tabId === 'iletisim'">
+          <h3 class="d-flex justify-content-center mt-3">Satıcı İletişim</h3>
+          <p>iletisim</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -21,6 +21,7 @@
     "@ng-bootstrap/ng-bootstrap": "^12.1.2",
     "@sweetalert2/ngx-sweetalert2": "^11.0.0",
     "bootstrap": "^5.2.0",
+    "font-awesome": "^4.7.0",
     "rxjs": "~7.5.0",
     "sweetalert2": "^11.4.24",
     "tslib": "^2.3.0",
