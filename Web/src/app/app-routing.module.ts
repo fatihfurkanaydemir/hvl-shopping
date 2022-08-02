@@ -8,7 +8,7 @@ import { SellerPanelComponent } from './seller-panel/seller-panel.component';
 import { ProductDetailsComponent } from './product-details/product-details.component';
 
 const appRoutes: Routes = [
-  { path: 'product-details', component:ProductDetailsComponent},
+  { path: 'shop/:id', component:ProductDetailsComponent},
   { path: '', component: HomePageComponent, pathMatch: 'full' },
   {
     path: 'seller-panel',

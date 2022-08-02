@@ -4,6 +4,7 @@ import { IProduct } from '../models/IProduct';
 import { IImage } from '../models/IImage';
 import { ICategory } from '../models/ICategory';
 import { ActivatedRoute } from '@angular/router';
+import { identifierName } from '@angular/compiler';
 
 
 @Component({
@@ -13,6 +14,7 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class ProductDetailsComponent implements OnInit {
   
+  _id:number = 0;
   _price: number = 50; //placeholder
   tabId:string = "aciklama"
   _desiredCount: number = 1;
@@ -38,11 +40,12 @@ export class ProductDetailsComponent implements OnInit {
   constructor(private productsService: ProductsService, private activateRoute: ActivatedRoute) { }
 
   ngOnInit(): void {
+    this._id = Number(this.activateRoute.snapshot.paramMap.get('id'));
     this.getProductByID();
   }
 
   getProductByID() {              
-    this.productsService.getProduct(2).subscribe((product) => { //placeholder
+    this.productsService.getProduct(this._id).subscribe((product) => { //placeholder
         this.product = product.data;
         console.log(this.product);
         console.log("images length: " + this.product.images.length);
@@ -87,5 +90,9 @@ export class ProductDetailsComponent implements OnInit {
 
   tabChange(id: string){
     this.tabId = id;
+  }
+
+  activeButtonChange(){
+    
   }
 }
