@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { CategoriesPageComponent } from './categories-page/categories-page.component';
 import { HomePageComponent } from './home-page/home-page.component';
 import { SellerDashboardTabComponent } from './seller-panel/seller-dashboard-tab/seller-dashboard-tab.component';
 import { SellerManageordersTabComponent } from './seller-panel/seller-manageorders-tab/seller-manageorders-tab.component';
@@ -17,6 +18,7 @@ const appRoutes: Routes = [
       { path: 'manage-orders', component: SellerManageordersTabComponent },
     ],
   },
+  { path: ':id', component: CategoriesPageComponent},
 ];
 
 @NgModule({

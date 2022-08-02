@@ -1,5 +1,5 @@
 <nav class="navbar navbar-dark bg-primary">
-  <a class="navbar-brand ms-3">
+  <a [routerLink]="['/']" class="navbar-brand ms-3">
     <img
       src="../favicon.ico"
       alt=""
@@ -9,6 +9,10 @@
     />
     <span class="ms-md-2">Havelsan Shopping</span>
   </a>
-  <button type="button" class="btn btn-light me-3">Çıkış Yap</button>
+
+ <div class="d-inline">
+  <button type="button" class="btn btn-light me-3">Üye ol</button>
+  <button type="button" class="btn btn-light me-3">Giriş Yap</button>
+ </div>
 </nav>
-<router-outlet></router-outlet>
+<router-outlet ></router-outlet>

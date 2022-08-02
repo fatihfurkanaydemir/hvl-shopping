@@ -1,0 +1,43 @@
+<nav class="navbar navbar-expand navbar-light bg-light">
+  <div class="collapse navbar-collapse justify-content-center">
+    <ul class="navbar-nav mr-auto">
+      <li *ngFor="let category of categories" class="d-inline nav-item">
+        <a class="nav-link" [routerLink]="['/', category.name]"
+          > | &nbsp; {{ category.name }}
+        </a>
+      </li>
+    </ul>
+  </div>
+</nav>
+<div class="d-flex justify-content-center">
+  <form class="d-flex m-3 mb-5 w-50">
+    <input
+      class="form-control"
+      type="search"
+      placeholder="Ara"
+      aria-label="Search"
+    />
+    <button class="btn btn btn-outline-success my-2 my-sm-0" type="submit">
+      Ara
+    </button>
+  </form>
+</div>
+<div class="container">
+  <div class="row">
+    <div class="col-2 m-3 mb-5" *ngFor="let product of dataProducts">
+      <a href="#" class="nav-link card h-100">
+        <img
+          class="card-img-top h-75"
+          [src]="product.images[0].url"
+          alt="Card image cap"
+        />
+        <div class="card-body">
+          <h5 class="card-title">{{ product.name }}</h5>
+          <p class="card-text overflow-hidden" style="height: 50px">{{product.description}}</p>
+          <p>{{product.category.name}}</p>
+          <ngb-rating [rate]="3"></ngb-rating>
+        </div>
+      </a>
+    </div>
+  </div>
+</div>
