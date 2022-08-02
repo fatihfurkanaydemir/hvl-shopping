@@ -17,6 +17,7 @@ import { AddProductComponent } from './seller-panel/add-product/add-product.comp
 import { FormsModule } from '@angular/forms';
 import { ProductActionsComponent } from './seller-panel/product-actions/product-actions.component';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
+import { ProductDetailsComponent } from './product-details/product-details.component';
 import { CategoriesPageComponent } from './categories-page/categories-page.component';
 
 @NgModule({
@@ -30,6 +31,7 @@ import { CategoriesPageComponent } from './categories-page/categories-page.compo
     SellerDashboardTabComponent,
     AddProductComponent,
     ProductActionsComponent,
+    ProductDetailsComponent,
     CategoriesPageComponent,
   ],
   imports: [
