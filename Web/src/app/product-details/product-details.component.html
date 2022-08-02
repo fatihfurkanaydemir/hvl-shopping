@@ -19,7 +19,7 @@
             <div class="row d-flex w-100">
                 <div class="d-flex justif-content-start align-items-center flex-row w-100">
                     <i (click)="decrementUrlCount()" class="fa fa-arrow-left p-2" style="font-size: 2em; cursor: pointer;"></i>
-                    <img style="border-radius: 5px; height: 400px; width: 500px;" src="{{product.images[_urlCount].url}}">
+                    <img style="border-radius: 5px; height: 400px; width: 500px;" src="{{product.images[_urlCount].url}}" class="img-thumbnail">
                     <i (click)="incrementUrlCount()"  class="fa fa-arrow-right p-2" style="font-size: 2em; cursor: pointer;"></i>
                 </div>
             </div>
@@ -63,15 +63,15 @@
     
                 <div class="content" id="myTabControl">
                     <div class="content-value" *ngIf = "tabId === 'aciklama'">
-                        <h3 class="d-flex justify-content-center">{{product.name}}</h3>
+                        <h3 class="d-flex justify-content-center mt-3">{{product.name}}</h3>
                         <p>{{product.description}}</p>
                     </div>
                     <div class="content-value" *ngIf = "tabId === 'bilgiler'">
-                        <h3 class="d-flex justify-content-center">Ürün Bilgileri</h3>
+                        <h3 class="d-flex justify-content-center mt-3">Ürün Bilgileri</h3>
                         <p>bilgiler</p>
                     </div>
                     <div class="content-value" *ngIf = "tabId === 'iletisim'">
-                        <h3 class="d-flex justify-content-center">Satıcı İletişim</h3>
+                        <h3 class="d-flex justify-content-center mt-3">Satıcı İletişim</h3>
                         <p>iletisim</p>
                     </div>
                 </div>
