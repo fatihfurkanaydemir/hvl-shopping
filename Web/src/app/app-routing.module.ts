@@ -12,8 +12,10 @@ import { SellerManageordersTabComponent } from './seller-panel/seller-manageorde
 import { SellerManageproductsTabComponent } from './seller-panel/seller-manageproducts-tab/seller-manageproducts-tab.component';
 import { SellerPanelComponent } from './seller-panel/seller-panel.component';
 import { ProductDetailsComponent } from './product-details/product-details.component';
+import { UserProfileComponent } from './user-profile/user-profile.component';
 
 const appRoutes: Routes = [
+  { path: 'user-profile', component: UserProfileComponent},
   { path: 'product/:id', component: ProductDetailsComponent },
   { path: '', component: HomePageComponent, pathMatch: 'full' },
   {
