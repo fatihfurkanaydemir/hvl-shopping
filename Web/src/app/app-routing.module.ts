@@ -12,8 +12,14 @@ import { SellerManageordersTabComponent } from './seller-panel/seller-manageorde
 import { SellerManageproductsTabComponent } from './seller-panel/seller-manageproducts-tab/seller-manageproducts-tab.component';
 import { SellerPanelComponent } from './seller-panel/seller-panel.component';
 import { ProductDetailsComponent } from './product-details/product-details.component';
+import { LoginPageComponent } from './login-page/login-page.component';
+import { RegisterPageComponent } from './register-page/register-page.component';
+import { SellerLoginComponent } from './seller-panel/seller-login/seller-login.component';
 
 const appRoutes: Routes = [
+  { path: 'seller-login', component:SellerLoginComponent},
+  { path: 'login', component: LoginPageComponent},
+  { path: 'register', component: RegisterPageComponent},
   { path: 'product/:id', component: ProductDetailsComponent },
   { path: '', component: HomePageComponent, pathMatch: 'full' },
   {

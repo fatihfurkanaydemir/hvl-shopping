@@ -27,6 +27,9 @@ import { AdminAddCategoryComponent } from './admin-panel/admin-manage-categories
 import { AdminCategoryActionsComponent } from './admin-panel/admin-manage-categories-tab/admin-category-actions/admin-category-actions.component';
 import { ProductDetailsComponent } from './product-details/product-details.component';
 import { CategoriesPageComponent } from './categories-page/categories-page.component';
+import { LoginPageComponent } from './login-page/login-page.component';
+import { RegisterPageComponent } from './register-page/register-page.component';
+import { SellerLoginComponent } from './seller-panel/seller-login/seller-login.component';
 
 @NgModule({
   declarations: [
@@ -49,6 +52,9 @@ import { CategoriesPageComponent } from './categories-page/categories-page.compo
     AdminCategoryActionsComponent,
     ProductDetailsComponent,
     CategoriesPageComponent,
+    LoginPageComponent,
+    RegisterPageComponent,
+    SellerLoginComponent,
   ],
   imports: [
     BrowserModule,
