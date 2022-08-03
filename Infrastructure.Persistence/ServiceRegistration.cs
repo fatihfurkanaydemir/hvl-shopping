@@ -17,14 +17,15 @@ namespace Infrastructure.Persistence
         services.AddDbContext<ApplicationDbContext>(options =>
             options.UseInMemoryDatabase("ApplicationDb"));
       }
-      //else
-      //{
+      else
+      {
 
-      //  services.AddDbContext<ApplicationDbContext>(options =>
-      // options.UseNpgsql(
-      //     configuration.GetConnectionString("DefaultConnection"),
-      //     b => b.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName)));
-      //}
+        services.AddDbContext<ApplicationDbContext>(options =>
+        options.UseNpgsql(
+           configuration.GetConnectionString("DefaultConnection"),
+           b => b.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName)));
+      }
+
       services.AddScoped(typeof(IGenericRepositoryAsync<>), typeof(GenericRepositoryAsync<>));
       services.AddScoped<ICategoryRepositoryAsync, CategoryRepositoryAsync>();
       services.AddScoped<IProductRepositoryAsync, ProductRepositoryAsync>();
