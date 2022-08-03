@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ICategory } from '../models/ICategory';
 import { IProduct } from '../models/IProduct';
 import { CategoriesService } from '../services/categories.service';
@@ -25,7 +25,8 @@ export class CategoriesPageComponent implements OnInit {
   constructor(
     private activatedRoute: ActivatedRoute,
     private categoriesService: CategoriesService,
-    private config: NgbRatingConfig
+    private config: NgbRatingConfig,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -44,6 +45,9 @@ export class CategoriesPageComponent implements OnInit {
           this.categories = response.data;
 
           const categoryId = this.getCategoryIdByName(categoryName!);
+          if(categoryId === undefined){
+            this.router.navigate([""])
+          }else{
           this.categoriesService
             .getCategoryProducts(
               categoryId!,
@@ -55,7 +59,7 @@ export class CategoriesPageComponent implements OnInit {
                 this.products = response.data.products;
                 this.productsDataCount = +response.dataCount;
               },
-            });
+            })};
         });
     });
   }
