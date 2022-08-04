@@ -71,6 +71,40 @@
                 <input
                   type="text"
                   class="form-control"
+                  id="floatingName"
+                  placeholder="İsim"
+                />
+                <label for="floatingName">İsim</label>
+              </div>
+              <div class="form-floating mb-3">
+                <input
+                  type="text"
+                  class="form-control"
+                  id="floatingSurname"
+                  placeholder="Soyisim"
+                />
+                <label for="floatingSurname">Soyisim</label>
+              </div>
+
+              <div>
+                <select class="form-select mb-3">
+                  <option value=" " selected disabled hidden>Şehir</option>
+                  <option *ngFor="let city of cities" value="{{city}}">{{city}}</option>
+                </select>
+              </div>
+              <div class="form-floating mb-3">
+                <input
+                  type="text"
+                  class="form-control"
+                  id="floatingShop"
+                  placeholder="Dükkan adı"
+                />
+                <label for="floatingShop">Dükkan adı</label>
+              </div>
+              <div class="form-floating mb-3">
+                <input
+                  type="text"
+                  class="form-control"
                   id="floatingInput"
                   placeholder="Kullanıcı adı"
                 />
