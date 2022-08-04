@@ -4,6 +4,7 @@ using AuthServer.Extensions;
 using Microsoft.AspNetCore.Identity;
 using AuthServer.Models;
 using AuthServer.Seeds;
+using AuthServer.Wrappers;
 
 var config = new ConfigurationBuilder()
   .AddJsonFile("appsettings.json")
@@ -11,7 +12,14 @@ var config = new ConfigurationBuilder()
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllers();
+builder.Services.AddControllers().ConfigureApiBehaviorOptions(options =>
+{
+  options.InvalidModelStateResponseFactory = actionContext =>
+  {
+    return Response<string>.ModelValidationErrorResponse(actionContext);
+  };
+});
+
 builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddSwaggerGen(c => {
@@ -22,11 +30,6 @@ builder.Services.AddSwaggerGen(c => {
 });
 
 builder.Services.AddIdentityService(config);
-
-builder.Services.Configure<IdentityOptions>(options =>
-{
-  options.User.AllowedUserNameCharacters = "abcçdefgðhýijklmnoöprsþtuüvyzxqwABCÇDEFGÐHIÝJKLMNOÖPRSÞTUÜVYZXQW-._@+1234567890";
-});
 
 builder.Services.AddCors(options =>
 {

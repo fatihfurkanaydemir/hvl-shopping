@@ -11,6 +11,10 @@ using Application.Features.Products.Commands.UpdateProduct;
 using Application.Features.Products.Queries.GetAllProducts;
 using Application.Features.Products.Queries.GetProductById;
 
+// Customers
+using Application.Features.Customers.Commands.CreateCustomer;
+using Application.Features.Customers.Queries.GetAllCustomers;
+
 using AutoMapper;
 using Domain.Entities;
 
@@ -45,6 +49,10 @@ namespace Application.Mappings
       CreateMap<Category, GetCategoryProductsByIdViewModel>();
       CreateMap<GetAllCategoriesQuery, GetAllCategoriesParameter>();
       CreateMap<GetCategoryProductsByIdQuery, GetCategoryProductsByIdParameter>();
+
+      CreateMap<Customer, CreateCustomerCommand>().ReverseMap();
+      CreateMap<Customer, GetAllCustomersViewModel>().ReverseMap();
+      CreateMap<GetAllCustomersQuery, GetAllCustomersParameter>();
     }
   }
 }
