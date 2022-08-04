@@ -21,7 +21,6 @@ public class AccountService : IAccountService
   private readonly JWTSettings _jwtSettings;
 
   public AccountService(UserManager<ApplicationUser> userManager,
-        RoleManager<IdentityRole> roleManager,
         IOptions<JWTSettings> jwtSettings,
         SignInManager<ApplicationUser> signInManager)
   {
@@ -39,26 +38,27 @@ public class AccountService : IAccountService
     };
 
     var userWithSameEmail = await _userManager.FindByEmailAsync(request.Email);
-    if (userWithSameEmail == null)
+    if (userWithSameEmail != null) throw new ApiException($"Email {request.Email} is already registered.");
+    
+    var result = await _userManager.CreateAsync(user, request.Password);
+    if (result.Succeeded)
     {
-      var result = await _userManager.CreateAsync(user, request.Password);
-      if (result.Succeeded)
-      {
-        if(request.isCustomer)
-          await _userManager.AddToRoleAsync(user, Roles.Customer.ToString());
-        else
-          await _userManager.AddToRoleAsync(user, Roles.Seller.ToString());
-
-        return new Response<string>(user.Id, message: "User Registered.");
-      }
+      if (request.isCustomer)
+        await _userManager.AddToRoleAsync(user, Roles.Customer.ToString());
       else
-      {
-        throw new ApiException($"{result.Errors}");
-      }
+        await _userManager.AddToRoleAsync(user, Roles.Seller.ToString());
+
+      return new Response<string>(user.Id, message: "User Registered.");
     }
     else
     {
-      throw new ApiException($"Email {request.Email} is already registered.");
+      var errors = new List<string>();
+      foreach (var error in result.Errors)
+      {
+        errors.Add(error.Description);
+      }
+
+      return new Response<string> { Errors = errors, Succeeded = false, Message = "Register failed due to errors." };
     }
   }
 
@@ -99,7 +99,6 @@ public class AccountService : IAccountService
     {
       roleClaims.Add(new Claim("roles", roles[i]));
     }
-
 
     var claims = new[]
     {

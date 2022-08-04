@@ -19,7 +19,14 @@ var config = new ConfigurationBuilder()
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddControllers();
+builder.Services.AddControllers().ConfigureApiBehaviorOptions(options =>
+{
+  options.InvalidModelStateResponseFactory = actionContext =>
+  {
+    return Response<string>.ModelValidationErrorResponse(actionContext);
+  };
+});
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 
@@ -30,7 +37,7 @@ builder.Services.AddSwaggerGen(c => {
   c.CustomSchemaIds(type => type.FullName);
 });
 
-builder.Services.AddApplicationLayer();
+builder.Services.AddApplicationLayer(config);
 builder.Services.AddPersistenceInfrastructure(config);
 builder.Services.AddSwaggerExtension();
 
@@ -108,9 +115,11 @@ using (var scope = app.Services.CreateScope())
   {
     var productRepository = services.GetRequiredService<IProductRepositoryAsync>();
     var categoryRepository = services.GetRequiredService<ICategoryRepositoryAsync>();
+    var customerRepository = services.GetRequiredService<ICustomerRepositoryAsync>();
 
     await DefaultCategories.SeedAsync(categoryRepository);
     await DefaultProducts.SeedAsync(productRepository, categoryRepository);
+    //await DefaultCustomers.SeedAsync(customerRepository);
 
   }
   catch (Exception ex)

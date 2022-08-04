@@ -28,7 +28,6 @@ namespace WebApi.Controllers.v1
     }
 
     // GET: api/<controller>/id
-    [Authorize(Roles = "Admin")]
     [HttpGet("{id}")]
     public async Task<IActionResult> GetById(int id)
     {
