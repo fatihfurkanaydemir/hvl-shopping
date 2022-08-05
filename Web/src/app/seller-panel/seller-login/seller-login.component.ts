@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-seller-login',
@@ -7,11 +9,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SellerLoginComponent implements OnInit {
 
-  constructor() { }
-  tabId: string = 'login';
+  registerForm!: FormGroup;
+  loginForm!: FormGroup;
+  
+  constructor(private formBuilder : FormBuilder, private authService: AuthService) { }
 
-  ngOnInit(): void {
-  }
+  tabId: string = 'login';
   tabChange(id: string) {
     this.tabId = id;
     console.log(id);
@@ -26,4 +29,39 @@ export class SellerLoginComponent implements OnInit {
   'Samsun', 'Siirt', 'Sinop', 'Sivas', 'Tekirdağ', 'Tokat', 'Trabzon', 'Tunceli', 'Şanlıurfa', 'Uşak',
   'Van', 'Yozgat', 'Zonguldak', 'Aksaray', 'Bayburt', 'Karaman', 'Kırıkkale', 'Batman', 'Şırnak',
   'Bartın', 'Ardahan', 'Iğdır', 'Yalova', 'Karabük', 'Kilis', 'Osmaniye', 'Düzce'];
+
+
+  ngOnInit(): void {
+    this.registerForm = this.formBuilder.group({
+      email: new FormControl(""),
+      password: new FormControl(""),
+      confirmPassword: new FormControl(""),
+      firstName: new FormControl(""),
+      lastName: new FormControl(""),
+      phoneNumber: new FormControl(""),
+      address: new FormControl(""),
+      storeName: new FormControl(""),
+      city: new FormControl(""),
+    }),
+    this.loginForm = this.formBuilder.group({
+      email: new FormControl(""),
+      password: new FormControl(""),
+    });
+  }
+  register(){
+    this.authService
+      .createUser(this.registerForm.getRawValue())
+      .subscribe((response) => {
+        this.registerForm = response.data;
+        console.log(response)
+      });
+  }
+  login(){
+    this.authService
+      .loginUser(this.loginForm.getRawValue())
+      .subscribe((response) => {
+        this.loginForm = response.data;
+        console.log(response)
+      });
+  }
 }

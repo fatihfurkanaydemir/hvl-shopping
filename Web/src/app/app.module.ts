@@ -15,7 +15,7 @@ import { SellerDashboardTabComponent } from './seller-panel/seller-dashboard-tab
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AddProductComponent } from './seller-panel/add-product/add-product.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ProductActionsComponent } from './seller-panel/product-actions/product-actions.component';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { AdminPanelComponent } from './admin-panel/admin-panel.component';
@@ -62,6 +62,7 @@ import { SellerLoginComponent } from './seller-panel/seller-login/seller-login.c
     HttpClientModule,
     NgbModule,
     FormsModule,
+    ReactiveFormsModule,
     [SweetAlert2Module.forRoot()],
   ],
   providers: [],
