@@ -1,5 +1,6 @@
 ﻿using Application.Features.Sellers.Commands.CreateSeller;
 using Application.Features.Sellers.Queries.GetAllSellers;
+using Application.Features.Sellers.Queries.GetSellerProductsByIdentityId;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 
@@ -21,12 +22,12 @@ namespace WebApi.Controllers.v1
       return Ok(await Mediator.Send(new GetAllSellersQuery() { PageSize = filter.PageSize, PageNumber = filter.PageNumber }));
     }
 
-    //// GET: api/<controller>/id
-    //[HttpGet("{id}")]
-    //public async Task<IActionResult> GetById(int id)
-    //{
-    //  return Ok(await Mediator.Send(new GetCustomerByIdQuery() { Id = id }));
-    //}
+    // GET: api/<controller>/id/products
+    [HttpGet("{identityId}/Products")]
+    public async Task<IActionResult> GetProductsByIdentityId(string identityId, [FromQuery] GetSellerProductsByIdentityIdParameter filter)
+    {
+      return Ok(await Mediator.Send(new GetSellerProductsByIdentityIdQuery() { IdentityId = identityId, PageSize = filter.PageSize, PageNumber = filter.PageNumber }));
+    }
 
     //// PATCH: api/<controller>
     //[HttpPatch]

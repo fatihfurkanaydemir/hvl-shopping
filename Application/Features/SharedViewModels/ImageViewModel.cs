@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace Application.Features.SharedViewModels
 {
-  public class AddressViewModel
+  public class ImageViewModel
   {
-    public string AddressDescription { get; set; }
-    public string City { get; set; }
+    public string Url { get; set; }
   }
 }

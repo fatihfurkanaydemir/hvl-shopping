@@ -11,6 +11,7 @@ using System.Text;
 using Application.Wrappers;
 using Newtonsoft.Json;
 using WebApi.Settings;
+using Application.Services;
 
 var config = new ConfigurationBuilder()
   .AddJsonFile("appsettings.json")
@@ -116,9 +117,12 @@ using (var scope = app.Services.CreateScope())
     var productRepository = services.GetRequiredService<IProductRepositoryAsync>();
     var categoryRepository = services.GetRequiredService<ICategoryRepositoryAsync>();
     var customerRepository = services.GetRequiredService<ICustomerRepositoryAsync>();
+    var sellerRepository = services.GetRequiredService<ISellerRepositoryAsync>();
+    var authService = services.GetRequiredService<AuthService>();
 
     await DefaultCategories.SeedAsync(categoryRepository);
-    await DefaultProducts.SeedAsync(productRepository, categoryRepository);
+    await DefaultSellers.SeedAsync(sellerRepository, authService);
+    await DefaultProducts.SeedAsync(productRepository, categoryRepository, sellerRepository);
     //await DefaultCustomers.SeedAsync(customerRepository);
 
   }

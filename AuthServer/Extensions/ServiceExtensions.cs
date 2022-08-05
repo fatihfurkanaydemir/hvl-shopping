@@ -17,28 +17,28 @@ public static class ServiceExtensions
 {
     public static void AddIdentityService(this IServiceCollection services, IConfiguration configuration)
     {
-        if (configuration.GetValue<bool>("UseInMemoryDatabase"))
-        {
-            services.AddDbContext<IdentityContext>(options =>
-                options.UseInMemoryDatabase("IdentityDb"));
-        }
-        else
-        {
-            services.AddDbContext<IdentityContext>(options =>
-            options.UseNpgsql(
-                configuration.GetConnectionString("IdentityConnection"),
-                b => b.MigrationsAssembly(typeof(IdentityContext).Assembly.FullName)));
-        }
+      if (configuration.GetValue<bool>("UseInMemoryDatabase"))
+      {
+          services.AddDbContext<IdentityContext>(options =>
+              options.UseInMemoryDatabase("IdentityDb"));
+      }
+      else
+      {
+          services.AddDbContext<IdentityContext>(options =>
+          options.UseNpgsql(
+              configuration["ConnectionStrings:DefaultConnection"],
+              b => b.MigrationsAssembly(typeof(IdentityContext).Assembly.FullName)));
+      }
 
-        services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<IdentityContext>().AddDefaultTokenProviders();
-        services.AddTransient<IAccountService, AccountService>();
+      services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<IdentityContext>().AddDefaultTokenProviders();
+      services.AddTransient<IAccountService, AccountService>();
 
-        services.Configure<JWTSettings>(configuration.GetSection("JWTSettings"));
+      services.Configure<JWTSettings>(configuration.GetSection("JWTSettings"));
 
-        services.Configure<IdentityOptions>(options =>
-        {
-          options.User.AllowedUserNameCharacters = "abcçdefgğhıijklmnoöprsştuüvyzxqwABCÇDEFGĞHIİJKLMNOÖPRSŞTUÜVYZXQW-._@+1234567890";
-        });
+      services.Configure<IdentityOptions>(options =>
+      {
+        options.User.AllowedUserNameCharacters = "abcçdefgğhıijklmnoöprsştuüvyzxqwABCÇDEFGĞHIİJKLMNOÖPRSŞTUÜVYZXQW-._@+1234567890";
+      });
 
     //services.AddAuthentication(options =>
     //{

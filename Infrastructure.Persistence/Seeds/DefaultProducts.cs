@@ -6,7 +6,7 @@ namespace Infrastructure.Persistence.Seeds
 {
   public class DefaultProducts
   {
-    public static async Task<bool> SeedAsync(IProductRepositoryAsync productRepository, ICategoryRepositoryAsync categoryRepository)
+    public static async Task<bool> SeedAsync(IProductRepositoryAsync productRepository, ICategoryRepositoryAsync categoryRepository, ISellerRepositoryAsync sellerRepository)
     {
       var mockData = File.ReadAllText(Path.Combine(
         Directory.GetCurrentDirectory(),
@@ -24,12 +24,16 @@ namespace Infrastructure.Persistence.Seeds
 
       try
       {
+        var sellers = await sellerRepository.GetAllAsync();
         foreach (var deserializedItem in deserializedMockData)
         {
-          var category = await categoryRepository.GetByIdAsync(deserializedItem.Category.Id);
-
+          var category = await categoryRepository.GetByIdAsync(deserializedItem.Category.Id);   
           await categoryRepository.MarkUnchangedAsync(category);
           deserializedItem.Category = category;
+
+          var seller = sellers[new Random().Next(0, sellers.Count)];
+          await sellerRepository.MarkUnchangedAsync(seller);
+          deserializedItem.Seller = seller;
 
           await productRepository.AddAsync(deserializedItem);
         }

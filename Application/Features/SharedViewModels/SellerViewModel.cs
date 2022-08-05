@@ -1,11 +1,6 @@
-﻿using Domain.Entities;
-using Domain.Enums;
-using Application.DTOs;
-using Application.Features.SharedViewModels;
-
-namespace Application.Features.Sellers.Queries.GetAllSellers
+﻿namespace Application.Features.SharedViewModels
 {
-  public class GetAllSellersViewModel
+  public class SellerViewModel
   {
     public int Id { get; set; }
     public string IdentityId { get; set; }

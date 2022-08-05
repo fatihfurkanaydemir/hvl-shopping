@@ -18,11 +18,12 @@ using Application.Features.Customers.Queries.GetAllCustomers;
 // Sellers
 using Application.Features.Sellers.Commands.CreateSeller;
 using Application.Features.Sellers.Queries.GetAllSellers;
+using Application.Features.Sellers.Queries.GetSellerProductsByIdentityId;
 
 using AutoMapper;
 using Domain.Entities;
 using Application.DTOs;
-using Application.SharedViewModels;
+using Application.Features.SharedViewModels;
 
 namespace Application.Mappings
 {
@@ -61,10 +62,16 @@ namespace Application.Mappings
 
       CreateMap<Seller, CreateSellerCommand>().ReverseMap();
       CreateMap<Seller, GetAllSellersViewModel>();
+      CreateMap<Seller, GetSellerProductsByIdentityIdViewModel>();
       CreateMap<GetAllSellersQuery, GetAllSellersParameter>();
+      CreateMap<GetSellerProductsByIdentityIdQuery, GetSellerProductsByIdentityIdParameter>();
 
       CreateMap<Address, AddressDTO>().ReverseMap();
       CreateMap<Address, AddressViewModel>().ReverseMap();
+      CreateMap<Product, ProductViewModel>().ReverseMap();
+      CreateMap<Category, CategoryViewModel>().ReverseMap();
+      CreateMap<Image, ImageViewModel>().ReverseMap();
+      CreateMap<Seller, SellerViewModel>().ReverseMap();
     }
   }
 }

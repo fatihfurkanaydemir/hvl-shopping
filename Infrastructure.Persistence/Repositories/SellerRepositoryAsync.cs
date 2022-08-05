@@ -17,6 +17,7 @@ namespace Infrastructure.Persistence.Repositories
     public async Task<Seller?> GetByIdentityIdAsync(string id)
     {
       return await _sellers
+        .Include(s => s.Address)
         .AsNoTracking()
         .SingleOrDefaultAsync(s => s.IdentityId == id);
     }
