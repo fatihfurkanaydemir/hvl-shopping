@@ -16,13 +16,14 @@
         <div class="card border-0 shadow rounded-3">
           <div class="card-body p-4 p-sm-5">
             <h1 class="card-title text-center mb-5 fs-5">GİRİŞ YAP</h1>
-            <form>
+            <form [formGroup]="loginForm" (submit)="login()">
               <div class="form-floating mb-3">
                 <input
                   type="text"
                   class="form-control"
                   id="floatingemail"
                   placeholder="E-Mail"
+                  formControlName="email"
                 />
                 <label for="floatingemail">E-Mail</label>
               </div>
@@ -32,6 +33,7 @@
                   class="form-control"
                   id="floatingPassword"
                   placeholder="Şifre"
+                  formControlName="password"
                 />
                 <label for="floatingPassword">Şifre</label>
               </div>
@@ -66,15 +68,14 @@
         <div class="card border-0 shadow rounded-3">
           <div class="card-body p-4 p-sm-5">
             <h1 class="card-title text-center mb-5 fs-5">KAYIT OL</h1>
-            <form>
-
-
+            <form [formGroup]="registerForm" (submit)="register()">
               <div class="form-floating mb-3">
                 <input
                   type="text"
                   class="form-control"
                   id="floatingEmail"
                   placeholder="E-Mail"
+                  formControlName="email"
                 />
                 <label for="floatingEmail">E-Mail</label>
               </div>
@@ -84,6 +85,7 @@
                   class="form-control"
                   id="floatingPassword"
                   placeholder="Şifre"
+                  formControlName="password"
                 />
                 <label for="floatingPassword">Şifre</label>
               </div>
@@ -93,6 +95,7 @@
                   class="form-control"
                   id="floatingPasswordConfirm"
                   placeholder="Şifre"
+                  formControlName="confirmPassword"
                 />
                 <label for="floatingPasswordConfirm">Şifre Tekrar</label>
               </div>
@@ -104,6 +107,7 @@
                   class="form-control"
                   id="floatingName"
                   placeholder="İsim"
+                  formControlName="firstName"
                 />
                 <label for="floatingName">İsim</label>
               </div>
@@ -113,6 +117,7 @@
                   class="form-control"
                   id="floatingSurname"
                   placeholder="Soyisim"
+                  formControlName="lastName"
                 />
                 <label for="floatingSurname">Soyisim</label>
               </div>
@@ -123,12 +128,13 @@
                   class="form-control"
                   id="floatingPhone"
                   placeholder="Telefon"
+                  formControlName="phoneNumber"
                 />
                 <label for="floatingPhone">Telefon</label>
               </div>
 
               <div>
-                <select class="form-select mb-3">
+                <select class="form-select mb-3" formControlName="city">
                   <option value=" " selected disabled hidden>Şehir</option>
                   <option *ngFor="let city of cities" value="{{city}}">{{city}}</option>
                 </select>
@@ -141,6 +147,7 @@
                   class="form-control"
                   id="floatingAddress"
                   placeholder="Adres"
+                  formControlName="address"
                 />
                 <label for="floatingAddress">Adres</label>
               </div>
@@ -151,6 +158,7 @@
                   class="form-control"
                   id="floatingShop"
                   placeholder="Dükkan Adı"
+                  formControlName="storeName"
                 />
                 <label for="floatingShop">Dükkan Adı</label>
               </div>
