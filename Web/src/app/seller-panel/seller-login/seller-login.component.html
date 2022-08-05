@@ -21,10 +21,10 @@
                 <input
                   type="text"
                   class="form-control"
-                  id="floatingInput"
-                  placeholder="Kullanıcı adı"
+                  id="floatingemail"
+                  placeholder="E-Mail"
                 />
-                <label for="floatingInput">Kullanıcı adı</label>
+                <label for="floatingemail">E-Mail</label>
               </div>
               <div class="form-floating mb-3">
                 <input
@@ -67,48 +67,16 @@
           <div class="card-body p-4 p-sm-5">
             <h1 class="card-title text-center mb-5 fs-5">KAYIT OL</h1>
             <form>
-              <div class="form-floating mb-3">
-                <input
-                  type="text"
-                  class="form-control"
-                  id="floatingName"
-                  placeholder="İsim"
-                />
-                <label for="floatingName">İsim</label>
-              </div>
-              <div class="form-floating mb-3">
-                <input
-                  type="text"
-                  class="form-control"
-                  id="floatingSurname"
-                  placeholder="Soyisim"
-                />
-                <label for="floatingSurname">Soyisim</label>
-              </div>
 
-              <div>
-                <select class="form-select mb-3">
-                  <option value=" " selected disabled hidden>Şehir</option>
-                  <option *ngFor="let city of cities" value="{{city}}">{{city}}</option>
-                </select>
-              </div>
+
               <div class="form-floating mb-3">
                 <input
                   type="text"
                   class="form-control"
-                  id="floatingShop"
-                  placeholder="Dükkan adı"
+                  id="floatingEmail"
+                  placeholder="E-Mail"
                 />
-                <label for="floatingShop">Dükkan adı</label>
-              </div>
-              <div class="form-floating mb-3">
-                <input
-                  type="text"
-                  class="form-control"
-                  id="floatingInput"
-                  placeholder="Kullanıcı adı"
-                />
-                <label for="floatingInput">Kullanıcı adı</label>
+                <label for="floatingEmail">E-Mail</label>
               </div>
               <div class="form-floating mb-3">
                 <input
@@ -128,6 +96,65 @@
                 />
                 <label for="floatingPasswordConfirm">Şifre Tekrar</label>
               </div>
+
+
+              <div class="form-floating mb-3">
+                <input
+                  type="text"
+                  class="form-control"
+                  id="floatingName"
+                  placeholder="İsim"
+                />
+                <label for="floatingName">İsim</label>
+              </div>
+              <div class="form-floating mb-3">
+                <input
+                  type="text"
+                  class="form-control"
+                  id="floatingSurname"
+                  placeholder="Soyisim"
+                />
+                <label for="floatingSurname">Soyisim</label>
+              </div>
+
+              <div class="form-floating mb-3">
+                <input
+                  type="text"
+                  class="form-control"
+                  id="floatingPhone"
+                  placeholder="Telefon"
+                />
+                <label for="floatingPhone">Telefon</label>
+              </div>
+
+              <div>
+                <select class="form-select mb-3">
+                  <option value=" " selected disabled hidden>Şehir</option>
+                  <option *ngFor="let city of cities" value="{{city}}">{{city}}</option>
+                </select>
+              </div>
+
+
+              <div class="form-floating mb-3">
+                <input
+                  type="text"
+                  class="form-control"
+                  id="floatingAddress"
+                  placeholder="Adres"
+                />
+                <label for="floatingAddress">Adres</label>
+              </div>
+
+              <div class="form-floating mb-3">
+                <input
+                  type="text"
+                  class="form-control"
+                  id="floatingShop"
+                  placeholder="Dükkan Adı"
+                />
+                <label for="floatingShop">Dükkan Adı</label>
+              </div>
+              
               <div class="d-grid">
                 <button class="btn btn-primary btn-lg btn-login" type="submit">
                   Kayıt ol
