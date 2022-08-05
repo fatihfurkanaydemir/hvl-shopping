@@ -24,12 +24,12 @@ namespace Infrastructure.Persistence.Repositories
           .ToListAsync();
     }
 
-    public async Task<Customer?> GetByIdWithRelationsAsync(int id)
+    public async Task<Customer?> GetByIdentityIdWithRelationsAsync(string id)
     {
       return await _customers
         .Include(p => p.Addresses)
         .AsTracking()
-        .SingleOrDefaultAsync(p => p.Id == id);
+        .SingleOrDefaultAsync(p => p.IdentityId == id);
     }
   }
 }
