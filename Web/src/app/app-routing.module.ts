@@ -15,8 +15,10 @@ import { ProductDetailsComponent } from './product-details/product-details.compo
 import { LoginPageComponent } from './login-page/login-page.component';
 import { RegisterPageComponent } from './register-page/register-page.component';
 import { SellerLoginComponent } from './seller-panel/seller-login/seller-login.component';
+import { MyOrdersComponent } from './my-orders/my-orders.component';
 
 const appRoutes: Routes = [
+  { path: 'my-orders', component:MyOrdersComponent},
   { path: 'seller-login', component:SellerLoginComponent},
   { path: 'login', component: LoginPageComponent},
   { path: 'register', component: RegisterPageComponent},

@@ -17,7 +17,7 @@ export class SellerLoginComponent implements OnInit {
   tabId: string = 'login';
   tabChange(id: string) {
     this.tabId = id;
-    console.log(id);
+    //console.log(id);
   }
 
   cities = ['Adana', 'Adıyaman', 'Afyon', 'Ağrı', 'Amasya', 'Ankara', 'Antalya', 'Artvin',
