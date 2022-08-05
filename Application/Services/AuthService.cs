@@ -31,4 +31,23 @@ public class AuthService
     
     return response;
   }
+
+  public async Task<Response<string>> RegisterSeller(string email, string password, string confirmPassword)
+  {
+    var requestData = new
+    {
+      email,
+      password,
+      confirmPassword,
+      isCustomer = false
+    };
+
+    var registerSellerJson = new StringContent(JsonConvert.SerializeObject(requestData), Encoding.UTF8, System.Net.Mime.MediaTypeNames.Application.Json);
+
+    using var httpResponseMessage = await _httpClient.PostAsync("/api/Account/register", registerSellerJson);
+
+    var response = JsonConvert.DeserializeObject<Response<string>>(await httpResponseMessage.Content.ReadAsStringAsync());
+
+    return response;
+  }
 }
