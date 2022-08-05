@@ -30,6 +30,7 @@ import { CategoriesPageComponent } from './categories-page/categories-page.compo
 import { LoginPageComponent } from './login-page/login-page.component';
 import { RegisterPageComponent } from './register-page/register-page.component';
 import { SellerLoginComponent } from './seller-panel/seller-login/seller-login.component';
+import { MyOrdersComponent } from './my-orders/my-orders.component';
 
 @NgModule({
   declarations: [
@@ -55,6 +56,7 @@ import { SellerLoginComponent } from './seller-panel/seller-login/seller-login.c
     LoginPageComponent,
     RegisterPageComponent,
     SellerLoginComponent,
+    MyOrdersComponent,
   ],
   imports: [
     BrowserModule,

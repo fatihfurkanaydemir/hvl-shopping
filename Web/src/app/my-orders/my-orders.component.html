@@ -1,0 +1,178 @@
+<div class="container">
+    <div class="row" style="margin-top: 20px">
+        <div class="container mt-2">
+            <ul class="nav nav-tabs">
+              <li
+                class="nav-item-active"
+                id="tumu"
+                (click)="tabChange('tumu')"
+              >
+                <button
+                  class="nav-link"
+                  data-bs-toggle="tab"
+                  id="tumu-tab"
+                  role="tab"
+                  aria-controls="tumu"
+                  aria-selected="true"
+                >
+                  Tümü
+                </button>
+              </li>
+              <li class="nav-item" id="devameden" (click)="tabChange('devameden')">
+                <button
+                  class="nav-link"
+                  data-bs-toggle="tab"
+                  id="devameden-tab"
+                  type="button"
+                  data-bs-target="#devameden"
+                  role="tab"
+                  aria-controls="devameden"
+                  aria-selected="true"
+                >
+                  Devam Eden Siparişler
+                </button>
+              </li>
+      
+              <li class="nav-item" id="iade" (click)="tabChange('iade')">
+                <button
+                  class="nav-link"
+                  data-bs-toggle="tab"
+                  id="iade-tab"
+                  type="button"
+                  data-bs-target="#iade"
+                  role="tab"
+                  aria-controls="iade"
+                  aria-selected="true"
+                >
+                  İadeler
+                </button>
+              </li>
+            </ul>
+
+            <div class="content" id="myTabControl">
+                <div class="content-value" *ngIf="tabId === 'tumu'">
+                  <!--<h3 class="d-flex justify-content-center mt-3">Tümü</h3>-->
+                  <div class=" mx-auto" *ngFor = "let order of orders">
+                    <div class="card border-0 shadow rounded-3 mt-3">
+                        <div class="card-body p-4 p-sm-5">
+                            <div class="d-inline-block ms-5 me-5">
+                                <h1 class="d-inline card-title fs-5">Sipariş Tarihi</h1>
+                                <p>{{order.date}}</p>
+                            </div>
+                            <div class="d-inline-block ms-5 me-5">
+                                <h1 class="d-inline card-title fs-5">Sipariş Özeti</h1>
+                                <p>{{order.summary}}</p>
+                            </div>
+                            <div class="d-inline-block ms-5 me-5">
+                                <h1 class="d-inline card-title fs-5">Alıcı</h1>
+                                <p>{{order.receiver}}</p>
+                            </div>
+                            <div class="d-inline-block ms-5 me-5">
+                                <h1 class="d-inline card-title fs-5">Tutar</h1>
+                                <p>{{order.price}}</p>
+                            </div>
+                            <div class="d-inline-block ms-5 me-5">
+                                <h1 class="d-inline card-title fs-5">Adres</h1>
+                                <p>{{order.address}}</p>
+                            </div>
+                            <div class="float-end">
+                                <button type="button" class="btn btn-dark">Sipariş Detayı</button>
+                            </div>
+
+
+                            <h1 class="card-title fs-5 ms-5 mt-4" *ngIf="order.returned==false">
+                                {{order.completed ? 'Siparişiniz teslim edilmiştir.' : 'Siparişiniz devam etmektedir.'}} 
+                            </h1>
+
+                            <h1 class="card-title fs-5 ms-5 mt-4" *ngIf="order.returned==true">
+                                Siparişiniz iade edilmiştir.
+                            </h1>
+
+                            <div class="float-end">
+                                <button type="button" class="btn btn-dark" *ngIf="order.completed==false">Kargom nerede?</button>
+                            </div>
+                        </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="content-value" *ngIf="tabId === 'devameden'">
+                  <!-- <h3 class="d-flex justify-content-center mt-3">Devam Eden Siparişler</h3>-->
+                  <div class=" mx-auto" *ngFor = "let order of orders" >
+                    <div class="card border-0 shadow rounded-3 mt-3" *ngIf="order.completed == true">
+                        <div class="card-body p-4 p-sm-5">
+                            <div class="d-inline-block ms-5 me-5">
+                                <h1 class="d-inline card-title fs-5">Sipariş Tarihi</h1>
+                                <p>{{order.date}}</p>
+                            </div>
+                            <div class="d-inline-block ms-5 me-5">
+                                <h1 class="d-inline card-title fs-5">Sipariş Özeti</h1>
+                                <p>{{order.summary}}</p>
+                            </div>
+                            <div class="d-inline-block ms-5 me-5">
+                                <h1 class="d-inline card-title fs-5">Alıcı</h1>
+                                <p>{{order.receiver}}</p>
+                            </div>
+                            <div class="d-inline-block ms-5 me-5">
+                                <h1 class="d-inline card-title fs-5">Tutar</h1>
+                                <p>{{order.price}}</p>
+                            </div>
+                            <div class="d-inline-block ms-5 me-5">
+                                <h1 class="d-inline card-title fs-5">Adres</h1>
+                                <p>{{order.address}}</p>
+                            </div>
+                            <div class="float-end">
+                                <button type="button" class="btn btn-dark">Sipariş Detayı</button>
+                            </div>
+
+
+                            <h1 class="card-title fs-5 ms-5 mt-4">
+                                {{order.completed ? 'Siparişiniz teslim edilmiştir.' : 'Siparişiniz devam etmektedir.'}} 
+                            </h1>
+                            
+                        </div>
+                    </div>
+                  </div>
+
+                </div>
+
+                <div class="content-value" *ngIf="tabId === 'iade'">
+                    <div class=" mx-auto" *ngFor = "let order of orders" >
+                        <div class="card border-0 shadow rounded-3 mt-3" *ngIf="order.returned == true">
+                            <div class="card-body p-4 p-sm-5">
+                                <div class="d-inline-block ms-5 me-5">
+                                    <h1 class="d-inline card-title fs-5">Sipariş Tarihi</h1>
+                                    <p>{{order.date}}</p>
+                                </div>
+                                <div class="d-inline-block ms-5 me-5">
+                                    <h1 class="d-inline card-title fs-5">Sipariş Özeti</h1>
+                                    <p>{{order.summary}}</p>
+                                </div>
+                                <div class="d-inline-block ms-5 me-5">
+                                    <h1 class="d-inline card-title fs-5">Alıcı</h1>
+                                    <p>{{order.receiver}}</p>
+                                </div>
+                                <div class="d-inline-block ms-5 me-5">
+                                    <h1 class="d-inline card-title fs-5">Tutar</h1>
+                                    <p>{{order.price}}</p>
+                                </div>
+                                <div class="d-inline-block ms-5 me-5">
+                                    <h1 class="d-inline card-title fs-5">Adres</h1>
+                                    <p>{{order.address}}</p>
+                                </div>
+                                <div class="float-end">
+                                    <button type="button" class="btn btn-dark">Sipariş Detayı</button>
+                                </div>
+    
+    
+                                <h1 class="card-title fs-5 ms-5 mt-4">
+                                    Siparişiniz iade edilmiştir.
+                                </h1>
+                            </div>
+                        </div>
+                      </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
