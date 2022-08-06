@@ -1,0 +1,177 @@
+<div class="my-5">
+  <div class="d-flex justify-content-center mb-5">
+    <div style="border:1px solid" class="border-primary rounded w-25">
+      <button class="btn btn btn-outline-primary rounded border-0 p-3 w-50" (click)="tabChange('login')">
+        Giriş Yap
+      </button>
+      <button class="btn btn-outline-primary rounded rounded-right border-0 p-3 w-50" (click)="tabChange('register')">
+        Kayıt ol
+      </button>
+    </div>
+  </div>
+
+  <div class="container" *ngIf="tabId === 'login'">
+    <div class="row">
+      <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+        <div class="card border-0 shadow rounded-3">
+          <div class="card-body p-4 p-sm-5">
+            <h1 class="card-title text-center mb-5 fs-5">GİRİŞ YAP</h1>
+            <form [formGroup]="loginForm" (submit)="login()">
+              <div class="form-floating mb-3">
+                <input
+                  type="text"
+                  class="form-control"
+                  id="floatingemail"
+                  placeholder="E-Mail"
+                  formControlName="email"
+                />
+                <label for="floatingemail">E-Mail</label>
+              </div>
+              <div class="form-floating mb-3">
+                <input
+                  type="password"
+                  class="form-control"
+                  id="floatingPassword"
+                  placeholder="Şifre"
+                  formControlName="password"
+                />
+                <label for="floatingPassword">Şifre</label>
+              </div>
+
+              <div class="form-check mb-3">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  value=""
+                  id="rememberPasswordCheck"
+                />
+                <label class="form-check-label" for="rememberPasswordCheck">
+                  Şifremi hatırla
+                </label>
+              </div>
+              <div class="d-grid">
+                <button class="btn btn-primary btn-lg btn-login" type="submit">
+                  Giriş yap
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Register PART -->
+  <div class="container" *ngIf="tabId === 'register'">
+    <div class="row">
+      <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+        <div class="card border-0 shadow rounded-3">
+          <div class="card-body p-4 p-sm-5">
+            <h1 class="card-title text-center mb-5 fs-5">KAYIT OL</h1>
+            <form [formGroup]="registerForm" (submit)="register()">
+              <div class="form-floating mb-3">
+                <input
+                  type="text"
+                  class="form-control"
+                  id="floatingEmail"
+                  placeholder="E-Mail"
+                  formControlName="email"
+                />
+                <label for="floatingEmail">E-Mail</label>
+              </div>
+              <div class="form-floating mb-3">
+                <input
+                  type="password"
+                  class="form-control"
+                  id="floatingPassword"
+                  placeholder="Şifre"
+                  formControlName="password"
+                />
+                <label for="floatingPassword">Şifre</label>
+              </div>
+              <div class="form-floating mb-3">
+                <input
+                  type="password"
+                  class="form-control"
+                  id="floatingPasswordConfirm"
+                  placeholder="Şifre"
+                  formControlName="confirmPassword"
+                />
+                <label for="floatingPasswordConfirm">Şifre Tekrar</label>
+              </div>
+
+
+              <div class="form-floating mb-3">
+                <input
+                  type="text"
+                  class="form-control"
+                  id="floatingName"
+                  placeholder="İsim"
+                  formControlName="firstName"
+                />
+                <label for="floatingName">İsim</label>
+              </div>
+              <div class="form-floating mb-3">
+                <input
+                  type="text"
+                  class="form-control"
+                  id="floatingSurname"
+                  placeholder="Soyisim"
+                  formControlName="lastName"
+                />
+                <label for="floatingSurname">Soyisim</label>
+              </div>
+
+              <div class="form-floating mb-3">
+                <input
+                  type="text"
+                  class="form-control"
+                  id="floatingPhone"
+                  placeholder="Telefon"
+                  formControlName="phoneNumber"
+                />
+                <label for="floatingPhone">Telefon</label>
+              </div>
+
+              <div>
+                <select class="form-select mb-3" formControlName="city">
+                  <option value=" " selected disabled hidden>Şehir</option>
+                  <option *ngFor="let city of cities" value="{{city}}">{{city}}</option>
+                </select>
+              </div>
+
+
+              <div class="form-floating mb-3">
+                <input
+                  type="text"
+                  class="form-control"
+                  id="floatingAddress"
+                  placeholder="Adres"
+                  formControlName="address"
+                />
+                <label for="floatingAddress">Adres</label>
+              </div>
+
+              <div class="form-floating mb-3">
+                <input
+                  type="text"
+                  class="form-control"
+                  id="floatingShop"
+                  placeholder="Dükkan Adı"
+                  formControlName="storeName"
+                />
+                <label for="floatingShop">Dükkan Adı</label>
+              </div>
+              
+              <div class="d-grid">
+                <button class="btn btn-primary btn-lg btn-login" type="submit">
+                  Kayıt ol
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

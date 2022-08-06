@@ -3,7 +3,7 @@ import { ProductsService } from 'src/app/services/products.service';
 import { IProduct } from '../models/IProduct';
 import { IImage } from '../models/IImage';
 import { ICategory } from '../models/ICategory';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { identifierName } from '@angular/compiler';
 
 @Component({
@@ -39,14 +39,14 @@ export class ProductDetailsComponent implements OnInit {
 
   constructor(
     private productsService: ProductsService,
-    private activateRoute: ActivatedRoute
+    private activateRoute: ActivatedRoute,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
     this._id = Number(this.activateRoute.snapshot.paramMap.get('id'));
     this.getProductByID();
   }
-
   getProductByID() {
     this.productsService.getProduct(this._id).subscribe((product) => {
       //placeholder
@@ -54,7 +54,7 @@ export class ProductDetailsComponent implements OnInit {
       console.log(this.product);
       console.log('images length: ' + this.product.images.length);
       console.log('url count: ' + this._urlCount);
-    });
+    },(error) => {this.router.navigate([''])});
   }
 
   incrementDesiredCount() {
@@ -66,7 +66,7 @@ export class ProductDetailsComponent implements OnInit {
   }
 
   decrementDesiredCount() {
-    if (this._desiredCount <= 0) {
+    if (this._desiredCount <= 1) {
       return;
     } else {
       this._desiredCount -= 1;

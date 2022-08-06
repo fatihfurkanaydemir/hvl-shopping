@@ -21,6 +21,8 @@ namespace Infrastructure.Persistence.Repositories
           .Take(pageSize)
           .Include(p => p.Images)
           .Include(p => p.Category)
+          .Include(p => p.Seller)
+          .ThenInclude(s => s.Address)
           .AsNoTracking()
           .ToListAsync();
     }
@@ -30,6 +32,8 @@ namespace Infrastructure.Persistence.Repositories
       return await _products
         .Include(p => p.Images)
         .Include(p => p.Category)
+        .Include(p => p.Seller)
+        .ThenInclude(s => s.Address)
         .AsTracking()
         .SingleOrDefaultAsync(p => p.Id == id);
     }
@@ -39,7 +43,23 @@ namespace Infrastructure.Persistence.Repositories
       return await _products
         .Include(p => p.Images)
         .Include(p => p.Category)
+        .Include(p => p.Seller)
+        .ThenInclude(s => s.Address)
         .Where(p => p.Category.Id == id)
+        .Skip((pageNumber - 1) * pageSize)
+        .Take(pageSize)
+        .AsNoTracking()
+        .ToListAsync();
+    }
+
+    public async Task<IReadOnlyList<Product>> GetBySellerIdentityIdWithRelationsAsync(string id, int pageNumber, int pageSize)
+    {
+      return await _products
+        .Include(p => p.Images)
+        .Include(p => p.Category)
+        .Include(p => p.Seller)
+        .ThenInclude(s => s.Address)
+        .Where(p => p.Seller.IdentityId == id)
         .Skip((pageNumber - 1) * pageSize)
         .Take(pageSize)
         .AsNoTracking()
@@ -50,8 +70,15 @@ namespace Infrastructure.Persistence.Repositories
     {
       return await _products
         .Include(p => p.Category)
-        .Include(p => p.Images)
         .Where(p => p.Category.Id == id)
+        .CountAsync();
+    }
+
+    public async Task<int> GetDataCountBySellerIdentityIdAsync(string id)
+    {
+      return await _products
+        .Include(p => p.Seller)
+        .Where(p => p.Seller.IdentityId == id)
         .CountAsync();
     }
   }

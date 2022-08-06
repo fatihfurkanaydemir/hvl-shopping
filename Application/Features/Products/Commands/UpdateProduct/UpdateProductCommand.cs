@@ -2,6 +2,7 @@
 using Application.Interfaces.Repositories;
 using Application.Wrappers;
 using AutoMapper;
+using DataAnnotationsExtensions;
 using Domain.Entities;
 using Domain.Enums;
 using MediatR;
@@ -21,9 +22,11 @@ namespace Application.Features.Products.Commands.UpdateProduct
     public string Name { get; set; }
     public string Code { get; set; }
     public string Description { get; set; }
-    public List<ImageDTO>? Images { get; set; }
     public int InStock { get; set; }
+    [Min(1)]
+    public decimal Price { get; set; }
     public int CategoryId { get; set; }
+    public List<ImageDTO>? Images { get; set; }
   }
   public class UpdateProductCommandHandler : IRequestHandler<UpdateProductCommand, Response<int>>
   {
