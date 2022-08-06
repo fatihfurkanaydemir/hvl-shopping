@@ -36,44 +36,46 @@
         </div>
       </div>
     </div>
-    <div class="col-md-6">
-        <h4 class="text-right" style="margin-bottom: 20px;">Profil Bilgileri</h4>
-                <label for="disabledTextInput" aria-placeholder="asd">İsim</label>
-                <div class="row" style="margin-left:3px;">
-                    <input style="margin-right: 5px;" type="text" id="disabledTextInput" class="form-control w-75" placeholder="x">
-                    <button style="max-width: 80px;" class="btn btn-primary profile-button w-25" type="button">
-                        Değiştir
-                    </button>
-                </div>
-                <label for="disabledTextInput" aria-placeholder="asd">Soy İsim</label>
-                <div class="row" style="margin-left:3px;">
-                    <input style="margin-right: 5px;" type="text" id="disabledTextInput" class="form-control w-75" placeholder="x">
-                    <button style="max-width: 80px;" class="btn btn-primary profile-button w-25" type="button">
-                        Değiştir
-                    </button>
-                </div>
-                <label for="disabledTextInput" aria-placeholder="asd">Şifre</label>
-                <div class="row" style="margin-left:3px;">
-                    <input style="margin-right: 5px;" type="text" id="disabledTextInput" class="form-control w-75" placeholder="x">
-                    <button style="max-width: 80px;" class="btn btn-primary profile-button w-25" type="button">
-                        Değiştir
-                    </button>
-                </div>
-                <label for="disabledTextInput" aria-placeholder="asd">Cep Telefonu</label>
-                <div class="row" style="margin-left:3px;">
-                    <input style="margin-right: 5px;" type="text" id="disabledTextInput" class="form-control w-75" placeholder="x">
-                    <button style="max-width: 80px;" class="btn btn-primary profile-button w-25" type="button">
-                        Değiştir
-                    </button>
-                </div>
-
-                <div class="row mt-4" style="margin-left:3px; ">
-                    <button class="btn btn-primary profile-button w-50 mx-auto" type="button">
-                        Diğer Ayarlar
-                    </button>
-                </div>
+    <div class="col-md-6"> <!-- Profil Display Ekranı-->
+      <h4 class="text-right" style="margin-bottom: 20px;">Profil Bilgileri</h4>
+      <label for="disabledTextInput" aria-placeholder="asd">İsim</label>
+      <form [formGroup]="userDisplayForm" (ngSubmit)="onUserDisplayFormSubmit()">
+      <div class="row" style="margin-left:3px;">
+          <input formControlName="isim" style="margin-right: 5px;" type="text" id="disabledTextInput" class="form-control w-75" placeholder="x">
+          <button style="max-width: 80px;" class="btn btn-primary profile-button w-25" type="submit">
+            Değiştir
+          </button>
+        </div>
+        <label for="disabledTextInput" aria-placeholder="asd">Soy İsim</label>
+        <div class="row" style="margin-left:3px;">
+          <input formControlName="soyIsim" style="margin-right: 5px;" type="text" id="disabledTextInput" class="form-control w-75" placeholder="x">
+          <button style="max-width: 80px;" class="btn btn-primary profile-button w-25" type="submit">
+            Değiştir
+          </button>
+        </div>
+        <label for="disabledTextInput" aria-placeholder="asd">Şifre</label>
+        <div class="row" style="margin-left:3px;">
+          <input formControlName="sifre" style="margin-right: 5px;" type="text" id="disabledTextInput" class="form-control w-75" placeholder="x">
+          <button style="max-width: 80px;" class="btn btn-primary profile-button w-25" type="submit">
+            Değiştir
+          </button>
+        </div>
+        <label for="disabledTextInput" aria-placeholder="asd">Cep Telefonu</label>
+        <div class="row" style="margin-left:3px;">
+          <input formControlName="telNo" style="margin-right: 5px;" type="text" id="disabledTextInput" class="form-control w-75" placeholder="x">
+          <button style="max-width: 80px;" class="btn btn-primary profile-button w-25" type="submit">
+            Değiştir
+          </button>
+        </div>
+        
+        <div class="row mt-4" style="margin-left:3px; ">
+          <button class="btn btn-primary profile-button w-50 mx-auto" type="submit">
+            Diğer Ayarlar
+          </button>
+        </div>
+      </form>
+      </div>
     </div>
-  </div>
   <div class="row border-top mt-4"> <!--Profil aya-->
     <div class="col-md-6 border-right">
       <div class="p-3 py-5">
