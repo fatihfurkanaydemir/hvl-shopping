@@ -25,6 +25,8 @@ const appRoutes: Routes = [
   { path: 'register', component: RegisterPageComponent},
   { path: 'user-profile', component: UserProfileComponent},
   { path: 'product/:id', component: ProductDetailsComponent },
+  { path: 'basket', loadChildren: () => import('./basket/basket.module').then(mod =>
+    mod.BasketModule), data: {breadcrumb:'Basket'}},
   { path: '', component: HomePageComponent, pathMatch: 'full' },
   {
     path: 'seller-panel',
