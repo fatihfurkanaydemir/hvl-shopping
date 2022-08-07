@@ -12,6 +12,7 @@ using Application.Wrappers;
 using Newtonsoft.Json;
 using WebApi.Settings;
 using Application.Services;
+using StackExchange.Redis;
 
 var config = new ConfigurationBuilder()
   .AddJsonFile("appsettings.json")
@@ -41,6 +42,11 @@ builder.Services.AddSwaggerGen(c => {
 builder.Services.AddApplicationLayer(config);
 builder.Services.AddPersistenceInfrastructure(config);
 builder.Services.AddSwaggerExtension();
+builder.Services.AddSingleton<IConnectionMultiplexer>(c => {
+  var configuration = ConfigurationOptions.Parse(config.GetConnectionString("Redis"),
+  true);
+  return ConnectionMultiplexer.Connect(configuration);
+});
 
 builder.Services.AddCors(options =>
 {
