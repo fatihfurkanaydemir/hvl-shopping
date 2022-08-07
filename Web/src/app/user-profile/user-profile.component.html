@@ -41,28 +41,28 @@
       <label for="disabledTextInput" aria-placeholder="asd">İsim</label>
       <form [formGroup]="userDisplayForm" (ngSubmit)="onUserDisplayFormSubmit()">
       <div class="row" style="margin-left:3px;">
-          <input formControlName="isim" style="margin-right: 5px;" type="text" id="disabledTextInput" class="form-control w-75" placeholder="x">
+          <input formControlName="isim" style="margin-right: 5px;" type="text" id="disabledTextInput" class="form-control w-75" [(ngModel)]="myCustomerUser.FirstName">
           <button style="max-width: 80px;" class="btn btn-primary profile-button w-25" type="submit">
             Değiştir
           </button>
         </div>
         <label for="disabledTextInput" aria-placeholder="asd">Soy İsim</label>
         <div class="row" style="margin-left:3px;">
-          <input formControlName="soyIsim" style="margin-right: 5px;" type="text" id="disabledTextInput" class="form-control w-75" placeholder="x">
+          <input formControlName="soyIsim" style="margin-right: 5px;" type="text" id="disabledTextInput" class="form-control w-75" [(ngModel)]="myCustomerUser.LastName">
           <button style="max-width: 80px;" class="btn btn-primary profile-button w-25" type="submit">
             Değiştir
           </button>
         </div>
         <label for="disabledTextInput" aria-placeholder="asd">Şifre</label>
         <div class="row" style="margin-left:3px;">
-          <input formControlName="sifre" style="margin-right: 5px;" type="text" id="disabledTextInput" class="form-control w-75" placeholder="x">
+          <input formControlName="sifre" style="margin-right: 5px;" type="text" id="disabledTextInput" class="form-control w-75" [(ngModel)]="myCustomerUser.Password">
           <button style="max-width: 80px;" class="btn btn-primary profile-button w-25" type="submit">
             Değiştir
           </button>
         </div>
         <label for="disabledTextInput" aria-placeholder="asd">Cep Telefonu</label>
         <div class="row" style="margin-left:3px;">
-          <input formControlName="telNo" style="margin-right: 5px;" type="text" id="disabledTextInput" class="form-control w-75" placeholder="x">
+          <input formControlName="telNo" style="margin-right: 5px;" type="text" id="disabledTextInput" class="form-control w-75" [(ngModel)]="myCustomerUser.PhoneNumber">
           <button style="max-width: 80px;" class="btn btn-primary profile-button w-25" type="submit">
             Değiştir
           </button>
