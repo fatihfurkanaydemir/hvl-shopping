@@ -7,13 +7,14 @@ import { FormBuilder, FormControl, FormGroup, FormGroupName, Validators } from '
   styleUrls: ['./user-profile.component.css']
 })
 export class UserProfileComponent implements OnInit {
-  userDisplayForm: FormGroup;
+  userSettingsForm: FormGroup;
 
   myCustomerUser: any = ({
     IdentityId: "temp-Identity-Id",
     FirstName: "temp-first-name",
     LastName: "temp-last-name",
-    PhoneNumber: "temp-phone-number",
+    EMail: "temp-Email@gmail.com",
+    PhoneNumber: "051231241241215",
     Addresses: "temp-adressess",
     Password: "temp-password"
   });
@@ -21,25 +22,29 @@ export class UserProfileComponent implements OnInit {
   myChangedCustomer: Object;
 
   constructor(fb: FormBuilder) { 
-    this.userDisplayForm = new FormGroup({
+    this.userSettingsForm = new FormGroup({
       isim: new FormControl('', Validators.required),
       soyIsim: new FormControl('', Validators.required),
-      sifre: new FormControl('', Validators.required),
       telNo: new FormControl('', Validators.required),
-      adresler: new FormControl(['temp-adres-1', 'temp-adres-2'], Validators.required)
+      adres1: new FormControl('', Validators.required),
+      adres2: new FormControl('', Validators.required),
+      email: new FormControl('', Validators.required),
+      country: new FormControl('', Validators.required),
+      city: new FormControl('', Validators.required)
     });
 
     this.myCustomerUser = new Object({
       IdentityId: "temp-Identity-Id",
       FirstName: "temp-first-name",
       LastName: "temp-last-name",
-      PhoneNumber: "temp-phone-number",
+      EMail: "temp-Email@gmail.com",
+      PhoneNumber: "051231241241215",
       Addresses: "temp-adresses",
       Password: "temp-password"
     });
 
     this.myChangedCustomer = new Object({
-
+      
     });
   }
 
@@ -47,21 +52,28 @@ export class UserProfileComponent implements OnInit {
     
   }
 
-  getChangedCustomer(){
-    this.myCustomerUser = {
-      IdentityId: "temp-Identity-Id",
-      FirstName: this.userDisplayForm.controls['isim'].value,
-      LastName: this.userDisplayForm.controls['soyIsim'].value,
-      PhoneNumber: this.userDisplayForm.controls['telNo'].value,
-      Addresses: this.userDisplayForm.controls['adresler'].value,
-      Password: this.userDisplayForm.controls['sifre'].value
-    };
+  setChangedCustomer(){
+      this.myChangedCustomer = {
+        IdentityId: this.myCustomerUser.IdentityId,
+        FirstName: this.userSettingsForm.controls['isim'].value,
+        LastName: this.userSettingsForm.controls['soyIsim'].value,
+        PhoneNumber: this.userSettingsForm.controls['telNo'].value,
+        Adres1: this.userSettingsForm.controls['adres1'].value,
+        Adres2: this.userSettingsForm.controls['adres2'].value,
+        Email: this.userSettingsForm.controls['email'].value,
+        Country: this.userSettingsForm.controls['country'].value,
+        City: this.userSettingsForm.controls['city'].value
+      };
   }
   
   onUserDisplayFormSubmit(){
-    this.getChangedCustomer();
-    console.log(this.userDisplayForm.value);
-    console.log(this.myCustomerUser)
+    this.setChangedCustomer();
+    console.log(this.myChangedCustomer);
   }
 
+  onUserSettingsFormSubmit(){
+    this.setChangedCustomer();
+    console.log(this.userSettingsForm.value);
+    console.log(this.myChangedCustomer);
+  }
 }

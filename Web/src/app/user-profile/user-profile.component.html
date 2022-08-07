@@ -9,8 +9,8 @@
           class="rounded-circle mt-5"
           width="150px"
           src="https://cdn-icons-png.flaticon.com/512/21/21104.png"
-        /><span class="font-weight-bold">User</span
-        ><span class="text-black-50">user@gmail.com</span><span> </span>
+        /><span class="font-weight-bold">{{myCustomerUser.FirstName}}</span
+        ><span class="text-black-50">{{myCustomerUser.EMail}}</span><span> </span>
       </div>
     </div>
     <div class="col-md-6" > <!--Adres Bilgileri-->
@@ -38,54 +38,47 @@
     </div>
     <div class="col-md-6"> <!-- Profil Display Ekranı-->
       <h4 class="text-right" style="margin-bottom: 20px;">Profil Bilgileri</h4>
-      <label for="disabledTextInput" aria-placeholder="asd">İsim</label>
-      <form [formGroup]="userDisplayForm" (ngSubmit)="onUserDisplayFormSubmit()">
-      <div class="row" style="margin-left:3px;">
-          <input formControlName="isim" style="margin-right: 5px;" type="text" id="disabledTextInput" class="form-control w-75" [(ngModel)]="myCustomerUser.FirstName">
-          <button style="max-width: 80px;" class="btn btn-primary profile-button w-25" type="submit">
-            Değiştir
-          </button>
-        </div>
-        <label for="disabledTextInput" aria-placeholder="asd">Soy İsim</label>
-        <div class="row" style="margin-left:3px;">
-          <input formControlName="soyIsim" style="margin-right: 5px;" type="text" id="disabledTextInput" class="form-control w-75" [(ngModel)]="myCustomerUser.LastName">
-          <button style="max-width: 80px;" class="btn btn-primary profile-button w-25" type="submit">
-            Değiştir
-          </button>
-        </div>
-        <label for="disabledTextInput" aria-placeholder="asd">Şifre</label>
-        <div class="row" style="margin-left:3px;">
-          <input formControlName="sifre" style="margin-right: 5px;" type="text" id="disabledTextInput" class="form-control w-75" [(ngModel)]="myCustomerUser.Password">
-          <button style="max-width: 80px;" class="btn btn-primary profile-button w-25" type="submit">
-            Değiştir
-          </button>
-        </div>
-        <label for="disabledTextInput" aria-placeholder="asd">Cep Telefonu</label>
-        <div class="row" style="margin-left:3px;">
-          <input formControlName="telNo" style="margin-right: 5px;" type="text" id="disabledTextInput" class="form-control w-75" [(ngModel)]="myCustomerUser.PhoneNumber">
-          <button style="max-width: 80px;" class="btn btn-primary profile-button w-25" type="submit">
-            Değiştir
-          </button>
-        </div>
-        
-        <div class="row mt-4" style="margin-left:3px; ">
-          <button class="btn btn-primary profile-button w-50 mx-auto" type="submit">
-            Diğer Ayarlar
-          </button>
-        </div>
-      </form>
+      <div class="list-group">
+        <a href="user-profile#profil-ayarlari" class="list-group-item list-group-item-action" aria-current="true">
+          <div class="d-flex w-100 justify-content-between">
+            <h5 class="mb-1">İsim</h5>
+          </div>
+          <p class="mb-1">{{myCustomerUser.FirstName}}</p>
+        </a>
+        <a href="user-profile#profil-ayarlari" class="list-group-item list-group-item-action">
+          <div class="d-flex w-100 justify-content-between">
+            <h5 class="mb-1">Soy İsim</h5>
+          </div>
+          <p class="mb-1">{{myCustomerUser.LastName}}</p>
+        </a>
+        <a href="user-profile#profil-ayarlari" class="list-group-item list-group-item-action">
+          <div class="d-flex w-100 justify-content-between">
+            <h5 class="mb-1">E-Mail</h5>
+          </div>
+          <p class="mb-1">{{myCustomerUser.EMail}}</p>
+        </a>
+        <a href="user-profile#profil-ayarlari" class="list-group-item list-group-item-action">
+          <div class="d-flex w-100 justify-content-between">
+            <h5 class="mb-1">Cep Telefonu</h5>
+          </div>
+          <p class="mb-1">{{myCustomerUser.PhoneNumber}}</p>
+        </a>
+      </div>
       </div>
     </div>
   <div class="row border-top mt-4"> <!--Profil aya-->
     <div class="col-md-6 border-right">
+    <form id="profil-ayarlari" [formGroup]="userSettingsForm" (ngSubmit)="onUserSettingsFormSubmit()">
       <div class="p-3 py-5">
         <div class="d-flex justify-content-between align-items-center mb-3">
           <h4 class="text-right">Profil Ayarları</h4>
         </div>
+        
         <div class="row mt-2">
           <div class="col-md-6">
             <label class="labels">İsim</label
             ><input
+              formControlName="isim"
               type="text"
               class="form-control"
               placeholder="first name"
@@ -95,6 +88,7 @@
           <div class="col-md-6">
             <label class="labels">Soyisim</label
             ><input
+              formControlName="soyIsim"
               type="text"
               class="form-control"
               value=""
@@ -106,6 +100,7 @@
           <div class="col-md-12">
             <label class="labels">Telefon Numarası</label
             ><input
+              formControlName="telNo"
               type="text"
               class="form-control"
               placeholder="enter phone number"
@@ -115,6 +110,7 @@
           <div class="col-md-12">
             <label class="labels">1. Adres</label
             ><input
+              formControlName="adres1"
               type="text"
               class="form-control"
               placeholder="enter address line 1"
@@ -124,6 +120,7 @@
           <div class="col-md-12">
             <label class="labels">2. Adres</label
             ><input
+              formControlName="adres2"
               type="tex"
               class="form-control"
               placeholder="enter address line 2"
@@ -131,17 +128,9 @@
             />
           </div>
           <div class="col-md-12">
-            <label class="labels">Posta Kodu</label
+            <label class="labels">Email</label
             ><input
-              type="text"
-              class="form-control"
-              placeholder="enter address line 2"
-              value=""
-            />
-          </div>
-          <div class="col-md-12">
-            <label class="labels">Email ID</label
-            ><input
+              formControlName="email"
               type="text"
               class="form-control"
               placeholder="enter email id"
@@ -153,6 +142,7 @@
           <div class="col-md-6">
             <label class="labels">Ülke</label
             ><input
+              formControlName="country"
               type="text"
               class="form-control"
               placeholder="country"
@@ -162,6 +152,7 @@
           <div class="col-md-6">
             <label class="labels">Şehir</label
             ><input
+              formControlName="city"
               type="text"
               class="form-control"
               value=""
@@ -170,17 +161,28 @@
           </div>
         </div>
         <div class="mt-5 text-center">
-          <button class="btn btn-primary profile-button" type="button">
+          <button class="btn btn-primary profile-button" type="submit">
             Kaydet
           </button>
         </div>
       </div>
+    </form>
     </div>
-    <div class="col-md-6 border-right my-auto">
-      <div class="mt-5 text-center">
-        <button class="btn btn-primary profile-button" type="button">
-          Şifre Değiştir
-        </button>
+    <div class="d-flex col-md-6 border-right justify-content-end" style="flex-direction: column;">
+      <div class="mt-5 m-5">
+          <label class="labels" style="flex-direction: row; ">Şifre</label>
+          <input
+                type="text"
+                class="form-control"
+                value=""
+                placeholder="state"
+              />
+              <div class="d-flex justify-content-center">
+                <button class="btn btn-primary profile-button mt-5" type="button">
+                  Şifre Değiştir
+                </button>
+              </div>
+              
       </div>
     </div>
   </div>
