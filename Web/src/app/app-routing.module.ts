@@ -16,17 +16,21 @@ import { LoginPageComponent } from './login-page/login-page.component';
 import { RegisterPageComponent } from './register-page/register-page.component';
 import { SellerLoginComponent } from './seller-panel/seller-login/seller-login.component';
 import { MyOrdersComponent } from './my-orders/my-orders.component';
+import { AuthGuard } from './services/auth.guard';
+import { SellerAuthGuard } from './services/sellerAuth.guard';
+import { AdminAuthGuard } from './services/adminAuth.guard';
 
 const appRoutes: Routes = [
-  { path: 'my-orders', component:MyOrdersComponent},
-  { path: 'seller-login', component:SellerLoginComponent},
-  { path: 'login', component: LoginPageComponent},
-  { path: 'register', component: RegisterPageComponent},
+  { path: 'my-orders', component: MyOrdersComponent },
+  { path: 'seller-login', component: SellerLoginComponent },
+  { path: 'login', component: LoginPageComponent },
+  { path: 'register', component: RegisterPageComponent },
   { path: 'product/:id', component: ProductDetailsComponent },
   { path: '', component: HomePageComponent, pathMatch: 'full' },
   {
     path: 'seller-panel',
     component: SellerPanelComponent,
+    canActivate: [AuthGuard, SellerAuthGuard],
     children: [
       { path: 'dashboard', component: SellerDashboardTabComponent },
       { path: 'manage-products', component: SellerManageproductsTabComponent },
@@ -36,6 +40,7 @@ const appRoutes: Routes = [
   {
     path: 'admin-panel',
     component: AdminPanelComponent,
+    canActivate: [AuthGuard, AdminAuthGuard],
     children: [
       { path: 'dashboard', component: AdminDashboardTabComponent },
       { path: 'manage-clients', component: AdminManageClientsTabComponent },

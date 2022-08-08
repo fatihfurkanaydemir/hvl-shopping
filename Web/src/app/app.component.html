@@ -9,28 +9,59 @@
     />
     <span class="ms-md-2">Havelsan Shopping</span>
   </a>
-  <div>
-    
+  <div></div>
+  <div class="d-inline" *ngIf="!user?.token">
+    <a
+      class="text-decoration-underline nav-link pb-2"
+      [routerLink]="['/seller-login']"
+      >Satıcı Ol</a
+    >
+    <button
+      type="button"
+      (click)="goToPage('register')"
+      class="btn btn-light me-3"
+    >
+      Üye ol
+    </button>
+    <button
+      type="button"
+      (click)="goToPage('login')"
+      class="btn btn-light me-3"
+    >
+      Giriş Yap
+    </button>
   </div>
- <div class="d-inline" *ngIf="!authenticated">
-  
-  <a class="text-decoration-underline nav-link pb-2" [routerLink]="['/seller-login']">Satıcı Ol</a>
-  <button type="button" (click)="goToPage('register')" class="btn btn-light me-3">Üye ol</button>
-  <button type="button" (click)="goToPage('login')" class="btn btn-light me-3">Giriş Yap</button>
- </div>
 
- <div class="d-inline" *ngIf="authenticated">
-  
-  <a class="text-decoration-underline nav-link pb-2" [routerLink]="['/seller-login']">Satıcı Ol</a>
-      <div ngbDropdown class="d-inline p-3">
-        <button type="button" class="btn btn-light" id="dropdownBasic1" ngbDropdownToggle>Hesabım</button>
-        <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-          <button ngbDropdownItem>Profil</button>
-          <button ngbDropdownItem>Siparişlerim</button>
-          <button ngbDropdownItem>Çıkış yap</button>
-        </div>
+  <div class="d-inline" *ngIf="user?.token">
+    <a
+      class="text-decoration-underline nav-link pb-2"
+      [routerLink]="['/seller-login']"
+      >Satıcı Ol</a
+    >
+    <div ngbDropdown class="d-inline p-3">
+      <button
+        type="button"
+        class="btn btn-light"
+        id="dropdownBasic1"
+        ngbDropdownToggle
+      >
+        Hesabım
+      </button>
+      <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+        <button ngbDropdownItem>Profil</button>
+        <button ngbDropdownItem *ngIf="user?.hasRole('Customer')">
+          Siparişlerim
+        </button>
+        <button ngbDropdownItem (click)="logout()">Çıkış yap</button>
       </div>
-  <button type="button" (click)="goToPage('login')" class="btn btn-light me-3">Sepetim</button>
- </div>
+    </div>
+    <button
+      type="button"
+      class="btn btn-light me-3"
+      *ngIf="user?.hasRole('Customer')"
+    >
+      Sepetim
+    </button>
+  </div>
 </nav>
-<router-outlet ></router-outlet>
+<router-outlet></router-outlet>

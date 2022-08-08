@@ -1,71 +1,109 @@
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
+import {
+  AbstractControl,
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  ValidatorFn,
+  Validators,
+} from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
-import { Emitters } from '../emitters/emitters';
+import { ICustomerRegister } from '../models/ICustomerRegister';
+import { ToastService } from '../services/toast.service';
 
 @Component({
   selector: 'app-register-page',
   templateUrl: './register-page.component.html',
-  styleUrls: ['./register-page.component.css']
+  styleUrls: ['./register-page.component.css'],
 })
 export class RegisterPageComponent implements OnInit {
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private toastService: ToastService
+  ) {}
 
-  registerForm: FormGroup = new FormGroup({
-    email: new FormControl(""),
-    password: new FormControl(""),
-    confirmPassword: new FormControl(""),
-    firstName: new FormControl(""),
-    lastName: new FormControl(""),
-    phoneNumber: new FormControl(""),
-  });
-  
-  constructor(private formBuilder : FormBuilder, private authService: AuthService, private router: Router){ }
-  submitted = false;
-  validPattern = "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*/.?&])[A-Za-z\d$@$!%*?&].{6,}$";
+  registerForm!: FormGroup;
+
+  passwordValidPattern =
+    '^(?=.{6,})(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[/@/#/$/%/^/./&/+/=/*/-]).*$';
+
   ngOnInit(): void {
-    this.registerForm = this.formBuilder.group(
-      {
-        lastName: [null, [Validators.required,Validators.min(1)]],
-        firstName: [null, [Validators.required, Validators.min(1)]],
-        phoneNumber: [null, [Validators.required, Validators.pattern("^[0-9].{1,}$"),Validators.min(1)]],
-        email: ['', [Validators.required, Validators.email,Validators.min(1)]],
-        password: [
-          '',
-          [
-            Validators.required,
-            Validators.pattern(this.validPattern),
-            Validators.min(1)
-          ]
-        ],
-        confirmPassword: ['', [Validators.required, Validators.min(1)]],
-      },
-    );
+    this.registerForm = new FormGroup({
+      lastName: new FormControl(null, [Validators.required]),
+      firstName: new FormControl(null, [Validators.required]),
+      phoneNumber: new FormControl(null, [
+        Validators.required,
+        Validators.pattern('^[+]?\\d{10,12}$'),
+      ]),
+      email: new FormControl(null, [Validators.required, Validators.email]),
+      password: new FormControl(null, [
+        Validators.required,
+        Validators.pattern(this.passwordValidPattern),
+      ]),
+      confirmPassword: new FormControl(null, [
+        Validators.required,
+        Validators.pattern(this.passwordValidPattern),
+      ]),
+    });
   }
+
   get f(): { [key: string]: AbstractControl } {
     return this.registerForm.controls;
   }
 
-  register(){
-    this.submitted = true;
-    if (this.registerForm.invalid) {
-      return;
-    }else{
-      this.authService
-      .createUser(this.registerForm.getRawValue())
-      .subscribe((response) => {
-        next: {
-          Emitters.authEmitter.emit(true)
-        }
-        error: (err : any) => {
-          Emitters.authEmitter.emit(false)
-        }
-        if(response.succeeded){
-          this.router.navigate(['']);
-        }
-        this.registerForm = response.data;
-        console.log(response)
-      });
-    }
+  register() {
+    if (this.registerForm.invalid) return;
+
+    const registerData: ICustomerRegister = {
+      email: this.registerForm.value.email,
+      password: this.registerForm.value.password,
+      confirmPassword: this.registerForm.value.confirmPassword,
+      firstName: this.registerForm.value.firstName,
+      lastName: this.registerForm.value.lastName,
+      phoneNumber: this.registerForm.value.phoneNumber,
+    };
+
+    this.authService.registerCustoemr(registerData).subscribe({
+      next: (response) => {
+        this.toastService.showToast({
+          icon: 'success',
+          title: 'Kayıt oluşturuldu.',
+        });
+
+        this.registerForm.reset();
+        this.router.navigate(['/login']);
+      },
+      error: (errorResp) => {
+        this.toastService.showToast({
+          icon: 'error',
+          title: 'Kayıt oluşturulamadı.',
+        });
+
+        errorResp.error.errors.forEach((err: string) => {
+          this.toastService.showToast({
+            icon: 'error',
+            title: err,
+          });
+        });
+      },
+    });
+  }
+
+  isRegisterFormControlInvalid(name: string) {
+    return (
+      this.registerForm.get(name)?.invalid &&
+      (this.registerForm.get(name)?.dirty ||
+        this.registerForm.get(name)?.touched)
+    );
+  }
+
+  isRegisterFormControlValid(name: string) {
+    return (
+      this.registerForm.get(name)?.valid &&
+      (this.registerForm.get(name)?.dirty ||
+        this.registerForm.get(name)?.touched)
+    );
   }
 }

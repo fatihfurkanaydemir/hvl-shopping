@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 
@@ -30,6 +30,7 @@ import { CategoriesPageComponent } from './categories-page/categories-page.compo
 import { LoginPageComponent } from './login-page/login-page.component';
 import { RegisterPageComponent } from './register-page/register-page.component';
 import { SellerLoginComponent } from './seller-panel/seller-login/seller-login.component';
+import { AuthInterceptor } from './services/auth-interceptor.service';
 import { MyOrdersComponent } from './my-orders/my-orders.component';
 
 @NgModule({
@@ -67,7 +68,13 @@ import { MyOrdersComponent } from './my-orders/my-orders.component';
     ReactiveFormsModule,
     [SweetAlert2Module.forRoot()],
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true,
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

@@ -6,6 +6,7 @@ export interface IProductUpdate {
   code: string;
   description: string;
   images: IImage[];
+  price: number;
   inStock: number;
   categoryId: number;
 }

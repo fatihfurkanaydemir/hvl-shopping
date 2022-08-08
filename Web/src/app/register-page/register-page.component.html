@@ -17,10 +17,15 @@
               formControlName="email"
               id="email"
               class="form-control form-control-lg"
-              [ngClass]="{ 'is-invalid': submitted && f['email'].errors }"
+              [ngClass]="{
+                'is-invalid': isRegisterFormControlInvalid('email'),
+                'is-valid': isRegisterFormControlValid('email')
+              }"
             />
-            <div *ngIf="submitted && f['email'].errors" class="invalid-feedback">
-              <div *ngIf="f['email'].errors['required']">Bu alan boş bırakılamaz</div>
+            <div *ngIf="f['email'].errors" class="invalid-feedback">
+              <div *ngIf="f['email'].errors['required']">
+                Bu alan boş bırakılamaz
+              </div>
               <div *ngIf="f['email'].errors['email']">Geçersiz e-mail</div>
             </div>
           </div>
@@ -32,17 +37,17 @@
               formControlName="password"
               id="pass"
               class="form-control form-control-lg"
-              [ngClass]="{ 'is-invalid': submitted && f['password'].errors }"
+              [ngClass]="{
+                'is-invalid': isRegisterFormControlInvalid('password'),
+                'is-valid': isRegisterFormControlValid('password')
+              }"
             />
-            <div
-            *ngIf="submitted && f['password'].errors"
-            class="invalid-feedback"
-          >
-            <div *ngIf="f['password'].errors">
-              Şifreniz en az 6 karakterden oluşmalıdır ve en az bir tane büyük harf, küçük harf ve sayı içermelidir.
+            <div *ngIf="f['password'].errors" class="invalid-feedback">
+              <div *ngIf="f['password'].errors">
+                Şifreniz en az 6 karakterden oluşmalıdır ve en az bir tane büyük
+                harf, küçük harf ve sayı içermelidir.
+              </div>
             </div>
-            
-          </div>
           </div>
 
           <div class="form-outline mb-4">
@@ -53,20 +58,18 @@
               id="pass2"
               class="form-control form-control-lg"
               [ngClass]="{
-                'is-invalid': submitted && f['confirmPassword'].errors
+                'is-invalid': isRegisterFormControlInvalid('confirmPassword'),
+                'is-valid': isRegisterFormControlValid('confirmPassword')
               }"
             />
-            <div
-            *ngIf="submitted && f['confirmPassword'].errors"
-            class="invalid-feedback"
-          >
-            <div *ngIf="f['confirmPassword'].errors['required']">
-              Bu alan boş bırakılamaz
+            <div *ngIf="f['confirmPassword'].errors" class="invalid-feedback">
+              <div *ngIf="f['confirmPassword'].errors['required']">
+                Bu alan boş bırakılamaz
+              </div>
+              <div *ngIf="f['confirmPassword'].errors['matching']">
+                Confirm Password does not match
+              </div>
             </div>
-            <div *ngIf="f['confirmPassword'].errors['matching']">
-              Confirm Password does not match
-            </div>
-          </div>
           </div>
 
           <div class="form-outline mb-4">
@@ -76,16 +79,16 @@
               formControlName="firstName"
               id="firstname"
               class="form-control form-control-lg"
-              [ngClass]="{ 'is-invalid': submitted && f['firstName'].errors }"
+              [ngClass]="{
+                'is-invalid': isRegisterFormControlInvalid('firstName'),
+                'is-valid': isRegisterFormControlValid('firstName')
+              }"
             />
-            <div
-            *ngIf="submitted && f['firstName'].errors"
-            class="invalid-feedback"
-          >
-            <div *ngIf="f['firstName'].errors['required']">
-              Bu alan boş bırakılamaz
+            <div *ngIf="f['firstName'].errors" class="invalid-feedback">
+              <div *ngIf="f['firstName'].errors['required']">
+                Bu alan boş bırakılamaz
+              </div>
             </div>
-          </div>
           </div>
 
           <div class="form-outline mb-4">
@@ -95,16 +98,17 @@
               formControlName="lastName"
               id="lastname"
               class="form-control form-control-lg"
-              [ngClass]="{ 'is-invalid': submitted && f['lastName'].errors }"
+              [ngClass]="{
+                'is-invalid': isRegisterFormControlInvalid('lastName'),
+                'is-valid': isRegisterFormControlValid('lastName')
+              }"
             />
-            <div
-            *ngIf="submitted && f['lastName'].errors"
-            class="invalid-feedback"
-          >
-            <div *ngIf="f['lastName'].errors['required']">Bu alan boş bırakılamaz</div>
+            <div *ngIf="f['lastName'].errors" class="invalid-feedback">
+              <div *ngIf="f['lastName'].errors['required']">
+                Bu alan boş bırakılamaz
+              </div>
+            </div>
           </div>
-          </div>
-
 
           <div class="form-outline mb-4">
             <label class="form-label" for="phone">Telefon</label>
@@ -113,20 +117,20 @@
               formControlName="phoneNumber"
               id="phone"
               class="form-control form-control-lg"
-              [ngClass]="{ 'is-invalid': submitted && f['phoneNumber'].errors }"
+              [ngClass]="{
+                'is-invalid': isRegisterFormControlInvalid('phoneNumber'),
+                'is-valid': isRegisterFormControlValid('phoneNumber')
+              }"
             />
-            <div
-            *ngIf="submitted && f['phoneNumber'].errors"
-            class="invalid-feedback"
-          >
-            <div *ngIf="f['phoneNumber'].errors">
-              Geçersiz telefon numarası
+            <div *ngIf="f['phoneNumber'].errors" class="invalid-feedback">
+              <div *ngIf="f['phoneNumber'].errors">
+                Geçersiz telefon numarası
+              </div>
             </div>
-          </div>
           </div>
 
           <div class="d-flex justify-content-around align-items-center">
-            <a href="./login">Zaten üyeliğim var.</a>
+            <a [routerLink]="['/login']">Zaten üyeliğim var.</a>
           </div>
 
           <div class="w-100 mt-5">
