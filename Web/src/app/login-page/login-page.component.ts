@@ -32,6 +32,8 @@ export class LoginPageComponent implements OnInit {
   }
 
   login() {
+    if (this.loginForm.invalid) return;
+
     const loginData: ILogin = {
       email: this.loginForm.value.email,
       password: this.loginForm.value.password,

@@ -5,6 +5,7 @@ import { BehaviorSubject, map, Observable, tap } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { IApiResponseSingle } from '../models/IApiResponseSingle';
 import { IAuthData } from '../models/IAuthData';
+import { ICustomerRegister } from '../models/ICustomerRegister';
 import { ILogin } from '../models/ILogin';
 import { ISellerRegister } from '../models/ISellerRegister';
 import { User } from '../models/User';
@@ -22,7 +23,14 @@ export class AuthService {
   authUrl: string = environment.authUrl;
   apiUrl: string = environment.apiUrl;
 
-  registerCustomer() {}
+  registerCustoemr(
+    registerData: ICustomerRegister
+  ): Observable<IApiResponseSingle> {
+    return this.httpClient.post<IApiResponseSingle>(
+      `${this.apiUrl}/Customer`,
+      registerData
+    );
+  }
 
   registerSeller(
     registerData: ISellerRegister

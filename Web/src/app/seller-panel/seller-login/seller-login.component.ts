@@ -60,6 +60,8 @@ export class SellerLoginComponent implements OnInit {
   }
 
   register() {
+    if (this.registerForm.invalid) return;
+
     const registerData: ISellerRegister = {
       email: this.registerForm.value.email,
       password: this.registerForm.value.password,
@@ -103,6 +105,8 @@ export class SellerLoginComponent implements OnInit {
   }
 
   login() {
+    if (this.loginForm.invalid) return;
+
     const loginData: ILogin = {
       email: this.loginForm.value.email,
       password: this.loginForm.value.password,
