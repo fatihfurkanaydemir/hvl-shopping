@@ -19,12 +19,18 @@ import { MyOrdersComponent } from './my-orders/my-orders.component';
 import { AuthGuard } from './services/auth.guard';
 import { SellerAuthGuard } from './services/sellerAuth.guard';
 import { AdminAuthGuard } from './services/adminAuth.guard';
+import { UserProfileComponent } from './user-profile/user-profile.component';
 
 const appRoutes: Routes = [
   { path: 'my-orders', component: MyOrdersComponent },
   { path: 'seller-login', component: SellerLoginComponent },
   { path: 'login', component: LoginPageComponent },
   { path: 'register', component: RegisterPageComponent },
+  { path: 'my-orders', component:MyOrdersComponent},
+  { path: 'seller-login', component:SellerLoginComponent},
+  { path: 'login', component: LoginPageComponent},
+  { path: 'register', component: RegisterPageComponent},
+  { path: 'user-profile', component: UserProfileComponent},
   { path: 'product/:id', component: ProductDetailsComponent },
   { path: '', component: HomePageComponent, pathMatch: 'full' },
   {

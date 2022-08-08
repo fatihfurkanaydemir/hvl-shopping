@@ -32,6 +32,7 @@ import { RegisterPageComponent } from './register-page/register-page.component';
 import { SellerLoginComponent } from './seller-panel/seller-login/seller-login.component';
 import { AuthInterceptor } from './services/auth-interceptor.service';
 import { MyOrdersComponent } from './my-orders/my-orders.component';
+import { UserProfileComponent } from './user-profile/user-profile.component';
 
 @NgModule({
   declarations: [
@@ -58,6 +59,7 @@ import { MyOrdersComponent } from './my-orders/my-orders.component';
     RegisterPageComponent,
     SellerLoginComponent,
     MyOrdersComponent,
+    UserProfileComponent,
   ],
   imports: [
     BrowserModule,

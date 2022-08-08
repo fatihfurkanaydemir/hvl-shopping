@@ -115,6 +115,4 @@ export class ProductDetailsComponent implements OnInit {
   tabChange(id: string) {
     this.tabId = id;
   }
-
-  activeButtonChange() {}
 }
