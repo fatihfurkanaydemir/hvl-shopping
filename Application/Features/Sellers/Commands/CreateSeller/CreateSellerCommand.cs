@@ -6,6 +6,7 @@ using System.ComponentModel.DataAnnotations;
 using MediatR;
 using Application.Services;
 using Application.DTOs;
+using Application.Exceptions;
 
 namespace Application.Features.Sellers.Commands.CreateSeller
 {
@@ -50,7 +51,12 @@ namespace Application.Features.Sellers.Commands.CreateSeller
       var seller = _mapper.Map<Seller>(request);
 
       var registerResponse = await _authService.RegisterSeller(request.Email, request.Password, request.ConfirmPassword);
-      if (!registerResponse.Succeeded) return registerResponse;
+      if (!registerResponse.Succeeded)
+      {
+        var exception = new ApiException(registerResponse.Message) { Errors = registerResponse.Errors };
+        exception.Data["DataMessage"] = registerResponse.Data;
+        throw exception;
+      }
 
       seller.IdentityId = registerResponse.Data;
 

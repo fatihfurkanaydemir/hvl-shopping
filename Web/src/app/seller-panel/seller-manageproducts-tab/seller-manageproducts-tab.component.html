@@ -4,7 +4,8 @@
     <thead>
       <tr>
         <th scope="col">İsim</th>
-        <th scope="col">Ürün Kodu</th>
+        <th scope="col">Fiyat</th>
+        <th scope="col">Kod</th>
         <th scope="col">Kategori</th>
         <th scope="col">Stokta</th>
         <th scope="col">Satıldı</th>
@@ -15,6 +16,9 @@
     <tbody class="table-group-divider">
       <tr class="align-middle" *ngFor="let product of products">
         <th scope="row">{{ product.name }}</th>
+        <th>
+          <strong>{{ product.price }} ₺</strong>
+        </th>
         <td>{{ product.code }}</td>
         <td>{{ product.category.name }}</td>
         <td>{{ product.inStock }}</td>

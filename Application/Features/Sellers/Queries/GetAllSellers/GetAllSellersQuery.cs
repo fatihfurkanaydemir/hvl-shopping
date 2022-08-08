@@ -25,7 +25,7 @@ namespace Application.Features.Sellers.Queries.GetAllSellers
     {
       var validFilter = _mapper.Map<GetAllSellersParameter>(request);
       var dataCount = await _sellerRepository.GetDataCount();
-      var sellers = await _sellerRepository.GetPageResponseWithRelationsAsync(request.PageNumber, request.PageSize);
+      var sellers = await _sellerRepository.GetPagedResponseWithRelationsAsync(request.PageNumber, request.PageSize);
 
       var sellerViewModels = new List<GetAllSellersViewModel>();
 

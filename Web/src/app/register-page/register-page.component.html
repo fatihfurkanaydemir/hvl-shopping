@@ -1,54 +1,148 @@
 <section class="vh-100">
-    <div class="container py-5 h-100">
-      <div class="row d-flex align-items-center justify-content-center h-100">
-        <div class="col-md-8 col-lg-7 col-xl-6">
-          <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.svg"
-            class="img-fluid" alt="Phone image">
-        </div>
-        <div class="col-md-7 col-lg-5 col-xl-5 offset-xl-1">
+  <div class="container py-5 h-100">
+    <div class="row d-flex align-items-center justify-content-center h-100">
+      <div class="col-md-8 col-lg-7 col-xl-6">
+        <img
+          src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.svg"
+          class="img-fluid"
+          alt="Phone image"
+        />
+      </div>
+      <div class="col-md-7 col-lg-5 col-xl-5 offset-xl-1">
+        <form [formGroup]="registerForm" (submit)="register()">
+          <div class="form-outline mb-4">
+            <label class="form-label" for="email">E-Mail</label>
+            <input
+              type="email"
+              formControlName="email"
+              id="email"
+              class="form-control form-control-lg"
+              [ngClass]="{
+                'is-invalid': isRegisterFormControlInvalid('email'),
+                'is-valid': isRegisterFormControlValid('email')
+              }"
+            />
+            <div *ngIf="f['email'].errors" class="invalid-feedback">
+              <div *ngIf="f['email'].errors['required']">
+                Bu alan boş bırakılamaz
+              </div>
+              <div *ngIf="f['email'].errors['email']">Geçersiz e-mail</div>
+            </div>
+          </div>
 
-          <form [formGroup]="registerForm" (submit)="register()">
-            <div class="form-outline mb-4">
-              <label class="form-label" for="user">E-Mail</label>
-              <input type="email" formControlName="email" id="user" class="form-control form-control-lg" />
+          <div class="form-outline mb-4">
+            <label class="form-label" for="pass">Şifre</label>
+            <input
+              type="password"
+              formControlName="password"
+              id="pass"
+              class="form-control form-control-lg"
+              [ngClass]="{
+                'is-invalid': isRegisterFormControlInvalid('password'),
+                'is-valid': isRegisterFormControlValid('password')
+              }"
+            />
+            <div *ngIf="f['password'].errors" class="invalid-feedback">
+              <div *ngIf="f['password'].errors">
+                Şifreniz en az 6 karakterden oluşmalıdır ve en az bir tane büyük
+                harf, küçük harf ve sayı içermelidir.
+              </div>
             </div>
-  
-            <div class="form-outline mb-4">
-              <label class="form-label" for="pass">Şifre</label>
-              <input type="password" formControlName="password" id="pass" class="form-control form-control-lg" />
-            </div>
+          </div>
 
-            <div class="form-outline mb-4">
-              <label class="form-label" for="pass2">Tekrar Şifre</label>
-              <input type="password" formControlName="confirmPassword" id="pass2" class="form-control form-control-lg" />
+          <div class="form-outline mb-4">
+            <label class="form-label" for="pass2">Tekrar Şifre</label>
+            <input
+              type="password"
+              formControlName="confirmPassword"
+              id="pass2"
+              class="form-control form-control-lg"
+              [ngClass]="{
+                'is-invalid': isRegisterFormControlInvalid('confirmPassword'),
+                'is-valid': isRegisterFormControlValid('confirmPassword')
+              }"
+            />
+            <div *ngIf="f['confirmPassword'].errors" class="invalid-feedback">
+              <div *ngIf="f['confirmPassword'].errors['required']">
+                Bu alan boş bırakılamaz
+              </div>
+              <div *ngIf="f['confirmPassword'].errors['matching']">
+                Confirm Password does not match
+              </div>
             </div>
+          </div>
 
-            <div class="form-outline mb-4">
-              <label class="form-label" for="firstname">İsim</label>
-              <input type="firstname" formControlName="firstName" id="firstname" class="form-control form-control-lg" />
+          <div class="form-outline mb-4">
+            <label class="form-label" for="firstname">İsim</label>
+            <input
+              type="firstname"
+              formControlName="firstName"
+              id="firstname"
+              class="form-control form-control-lg"
+              [ngClass]="{
+                'is-invalid': isRegisterFormControlInvalid('firstName'),
+                'is-valid': isRegisterFormControlValid('firstName')
+              }"
+            />
+            <div *ngIf="f['firstName'].errors" class="invalid-feedback">
+              <div *ngIf="f['firstName'].errors['required']">
+                Bu alan boş bırakılamaz
+              </div>
             </div>
+          </div>
 
-            <div class="form-outline mb-4">
-              <label class="form-label" for="lastname">Soyisim</label>
-              <input type="lastname" formControlName="lastName" id="lastname" class="form-control form-control-lg" />
+          <div class="form-outline mb-4">
+            <label class="form-label" for="lastname">Soyisim</label>
+            <input
+              type="lastname"
+              formControlName="lastName"
+              id="lastname"
+              class="form-control form-control-lg"
+              [ngClass]="{
+                'is-invalid': isRegisterFormControlInvalid('lastName'),
+                'is-valid': isRegisterFormControlValid('lastName')
+              }"
+            />
+            <div *ngIf="f['lastName'].errors" class="invalid-feedback">
+              <div *ngIf="f['lastName'].errors['required']">
+                Bu alan boş bırakılamaz
+              </div>
             </div>
+          </div>
 
-            <div class="form-outline mb-4">
-              <label class="form-label" for="phone">Telefon</label>
-              <input type="phone" formControlName="phoneNumber" id="phone" class="form-control form-control-lg" />
+          <div class="form-outline mb-4">
+            <label class="form-label" for="phone">Telefon</label>
+            <input
+              type="phone"
+              formControlName="phoneNumber"
+              id="phone"
+              class="form-control form-control-lg"
+              [ngClass]="{
+                'is-invalid': isRegisterFormControlInvalid('phoneNumber'),
+                'is-valid': isRegisterFormControlValid('phoneNumber')
+              }"
+            />
+            <div *ngIf="f['phoneNumber'].errors" class="invalid-feedback">
+              <div *ngIf="f['phoneNumber'].errors">
+                Geçersiz telefon numarası
+              </div>
             </div>
-  
-            <div class="d-flex justify-content-around align-items-center">
-              
-              <a href="./login">Zaten üyeliğim var.</a>
-            </div>
-  
-            <div class="w-100 mt-5">
-                <button type="submit" class="btn btn-primary btn-lg btn-block w-100">Üye ol</button>
-            </div>
+          </div>
 
-          </form>
-        </div>
+          <div class="d-flex justify-content-around align-items-center">
+            <a [routerLink]="['/login']">Zaten üyeliğim var.</a>
+          </div>
+
+          <div class="w-100 mt-5">
+            <button
+              type="submit"
+              class="btn btn-primary btn-lg btn-block w-100"
+            >
+              Üye ol
+            </button>
+          </div>
+        </form>
       </div>
     </div>
-  </section>
+  </div>
+</section>
