@@ -31,6 +31,7 @@ import { LoginPageComponent } from './login-page/login-page.component';
 import { RegisterPageComponent } from './register-page/register-page.component';
 import { SellerLoginComponent } from './seller-panel/seller-login/seller-login.component';
 import { AuthInterceptor } from './services/auth-interceptor.service';
+import { MyOrdersComponent } from './my-orders/my-orders.component';
 
 @NgModule({
   declarations: [
@@ -56,6 +57,7 @@ import { AuthInterceptor } from './services/auth-interceptor.service';
     LoginPageComponent,
     RegisterPageComponent,
     SellerLoginComponent,
+    MyOrdersComponent,
   ],
   imports: [
     BrowserModule,
