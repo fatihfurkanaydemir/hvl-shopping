@@ -1,6 +1,6 @@
 <div id="add-product" class="mt-2">
   <form>
-    <div class="form-group row">
+    <div class="form-floating mb-3 row">
       <div class="col-9">
         <input type="text" class="form-control" placeholder="Ürün Ara" />
       </div>
@@ -24,8 +24,7 @@
         ></button>
       </div>
       <div class="modal-body">
-        <div class="form-group">
-          <label for="product-name">Ürün ismi</label>
+        <div class="form-floating mb-3">
           <input
             type="text"
             id="product-name"
@@ -33,8 +32,10 @@
             [(ngModel)]="product.name"
             name="productname"
             #productName="ngModel"
+            placeholder="Ürün ismi"
             required
           />
+          <label for="product-name">Ürün ismi</label>
         </div>
 
         <p
@@ -46,17 +47,18 @@
           Bu alan boş bırakılamaz.
         </p>
 
-        <div class="form-group">
-          <label for="product-code">Ürün kodu</label>
+        <div class="form-floating mb-3">
           <input
             type="text"
             id="product-code"
             class="form-control"
             [(ngModel)]="product.code"
+            placeholder="Ürün kodu"
             name="product-code"
             required
             #productCode="ngModel"
           />
+          <label for="product-code">Ürün kodu</label>
         </div>
 
         <p
@@ -68,8 +70,7 @@
           Bu alan boş bırakılamaz.
         </p>
 
-        <div class="form-group">
-          <label for="product-category">Kategori</label>
+        <div class="form-floating mb-3">
           <select
             id="product-category"
             name="product-category"
@@ -81,10 +82,10 @@
               {{ category.name }}
             </option>
           </select>
+          <label for="product-category">Kategori</label>
         </div>
 
-        <div class="form-group">
-          <label for="product-stock">Stok</label>
+        <div class="form-floating mb-3">
           <input
             type="number"
             id="product-stock"
@@ -92,10 +93,12 @@
             placeholder="0"
             [(ngModel)]="product.inStock"
             name="product-stock"
+            placeholder="Stok"
             required
             min="0"
             #inStock="ngModel"
           />
+          <label for="product-stock">Stok</label>
         </div>
 
         <p
@@ -105,17 +108,41 @@
           Bu alan boş bırakılamaz.
         </p>
 
-        <div class="form-group">
-          <label for="product-detail">Ürün detayları</label>
+        <div class="form-floating mb-3">
+          <input
+            type="number"
+            id="product-price"
+            class="form-control"
+            placeholder="1"
+            [(ngModel)]="product.price"
+            name="product-price"
+            placeholder="Fiyat"
+            required
+            min="1"
+            #price="ngModel"
+          />
+          <label for="product-price">Fiyat</label>
+        </div>
+
+        <p
+          *ngIf="price.invalid && (price.dirty || price.touched)"
+          class="text-danger error-message"
+        >
+          Bu alan boş bırakılamaz.
+        </p>
+
+        <div class="form-floating mb-3">
           <textarea
             id="product-detail"
             class="form-control"
             placeholder="Ürün detayları"
             [(ngModel)]="product.description"
             name="product-description"
+            placeholder="Ürün detayları"
             required
             #description="ngModel"
           ></textarea>
+          <label for="product-detail">Ürün detayları</label>
         </div>
 
         <p

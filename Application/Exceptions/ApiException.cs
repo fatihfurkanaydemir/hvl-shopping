@@ -4,6 +4,7 @@ namespace Application.Exceptions
 {
     public class ApiException : Exception
     {
+        public List<string> Errors { get; set; }
         public ApiException() : base() { }
 
         public ApiException(string message) : base(message) { }

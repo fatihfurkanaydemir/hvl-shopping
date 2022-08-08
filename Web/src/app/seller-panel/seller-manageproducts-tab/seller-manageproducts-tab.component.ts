@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { exhaustMap, take, tap } from 'rxjs';
 import { IProduct } from 'src/app/models/IProduct';
+import { AuthService } from 'src/app/services/auth.service';
 import { ProductsService } from 'src/app/services/products.service';
 
 @Component({
@@ -13,17 +15,29 @@ export class SellerManageproductsTabComponent implements OnInit {
   pageSize: number = 12;
   dataCount: number = 0;
 
-  constructor(private productsService: ProductsService) {}
+  constructor(
+    private productsService: ProductsService,
+    private authService: AuthService
+  ) {}
 
   ngOnInit(): void {
     this.getProducts();
   }
 
   getProducts() {
-    this.productsService
-      .getAllProducts(this.pageNumber, this.pageSize)
+    this.authService.userSubject
+      .pipe(
+        take(1),
+        exhaustMap((user) => {
+          return this.productsService.getAllProductsByIdentityId(
+            user.identityId,
+            this.pageNumber,
+            this.pageSize
+          );
+        })
+      )
       .subscribe((response) => {
-        this.products = response.data;
+        this.products = response.data.products;
         this.dataCount = +response.dataCount;
       });
   }

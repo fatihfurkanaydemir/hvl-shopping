@@ -24,10 +24,11 @@ namespace Infrastructure.Persistence.Seeds
 
       try
       {
-        var sellers = await sellerRepository.GetAllAsync();
+        var sellers = (await sellerRepository.GetPagedResponseWithRelationsAsync(1, 50)).ToList();
+        await sellerRepository.ClearChangeTracker();
         foreach (var deserializedItem in deserializedMockData)
         {
-          var category = await categoryRepository.GetByIdAsync(deserializedItem.Category.Id);   
+          var category = await categoryRepository.GetByIdAsync(deserializedItem.Category.Id);
           await categoryRepository.MarkUnchangedAsync(category);
           deserializedItem.Category = category;
 
@@ -35,7 +36,7 @@ namespace Infrastructure.Persistence.Seeds
           await sellerRepository.MarkUnchangedAsync(seller);
           deserializedItem.Seller = seller;
 
-          await productRepository.AddAsync(deserializedItem);
+          var product = await productRepository.AddAsync(deserializedItem);
         }
       }
       catch (Exception ex)

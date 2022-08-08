@@ -66,5 +66,20 @@ namespace Infrastructure.Persistence.Repositories
     {
       _dbContext.Entry(entity).State = EntityState.Unchanged;
     }
+
+    public async Task MarkDetachedAsync(T entity)
+    {
+      _dbContext.Entry(entity).State = EntityState.Detached;
+    }
+
+    public async Task MarkModifiedAsync(T entity)
+    {
+      _dbContext.Entry(entity).State = EntityState.Modified;
+    }
+
+    public async Task ClearChangeTracker()
+    {
+      _dbContext.ChangeTracker.Clear();
+    }
   }
 }

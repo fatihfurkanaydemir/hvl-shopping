@@ -55,6 +55,7 @@ namespace Application.Features.Products.Commands.UpdateProduct
       product.Description = requestProduct.Description;
       product.Images = requestProduct.Images;
       product.InStock = requestProduct.InStock;
+      product.Price = requestProduct.Price;
 
       await _categoryRepository.MarkUnchangedAsync(category);
       product.Category = category;
