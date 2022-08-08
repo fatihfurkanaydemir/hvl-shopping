@@ -51,10 +51,11 @@ namespace Application.Features.Customers.Commands.CreateCustomer
       if (!registerResponse.Succeeded) return registerResponse;
 
       customer.IdentityId = registerResponse.Data;
+      customer.Addresses = new List<Address>();
 
       await _customerRepository.AddAsync(customer);
 
-      return new Response<string>(customer.Id.ToString(), "Customer registered");
+      return new Response<string>(customer.IdentityId, "Customer registered");
     }
   }
 }

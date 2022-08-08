@@ -1,5 +1,6 @@
 ﻿using Application.Features.Customers.Commands.CreateCustomer;
 using Application.Features.Customers.Queries.GetAllCustomers;
+using Application.Features.Customers.Queries.GetCustomerByIdentityId;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 
@@ -19,6 +20,13 @@ namespace WebApi.Controllers.v1
     public async Task<IActionResult> Get([FromQuery] GetAllCustomersParameter filter)
     {
       return Ok(await Mediator.Send(new GetAllCustomersQuery() { PageSize = filter.PageSize, PageNumber = filter.PageNumber }));
+    }
+
+    // GET: api/<controller>/id
+    [HttpGet("{identityId}")]
+    public async Task<IActionResult> GetCustomerByIdentityId(string identityId)
+    {
+      return Ok(await Mediator.Send(new GetCustomerByIdentityIdQuery() { identityId = identityId }));
     }
 
     //// GET: api/<controller>/id
