@@ -1,9 +1,9 @@
 ﻿using Domain.Entities;
 using Domain.Enums;
 
-namespace Application.Features.Customers.Queries.GetAllCustomers
+namespace Application.Features.Customers.Queries.GetCustomerByIdentityId
 {
-  public class GetAllCustomersViewModel
+  public class GetCustomerByIdentityIdViewModel
   {
     public int Id { get; set; }
     public string IdentityId { get; set; }

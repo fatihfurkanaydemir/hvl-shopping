@@ -1,5 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import {
+  AbstractControl,
+  FormControl,
+  FormGroup,
+  ValidationErrors,
+  ValidatorFn,
+  Validators,
+} from '@angular/forms';
 import { Router } from '@angular/router';
 import { ILogin } from 'src/app/models/ILogin';
 import { ISellerRegister } from 'src/app/models/ISellerRegister';
@@ -21,6 +28,9 @@ export class SellerLoginComponent implements OnInit {
     private router: Router
   ) {}
 
+  passwordValidPattern =
+    '^(?=.{6,})(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[/@/#/$/%/^/./&/+/=/*/-]).*$';
+
   tabId: string = 'login';
   tabChange(id: string) {
     this.tabId = id;
@@ -40,13 +50,19 @@ export class SellerLoginComponent implements OnInit {
   ngOnInit(): void {
     this.registerForm = new FormGroup({
       email: new FormControl('', [Validators.required, Validators.email]),
-      password: new FormControl('', [Validators.required]),
-      confirmPassword: new FormControl('', [Validators.required]),
+      password: new FormControl('', [
+        Validators.required,
+        Validators.pattern(this.passwordValidPattern),
+      ]),
+      confirmPassword: new FormControl('', [
+        Validators.required,
+        Validators.pattern(this.passwordValidPattern),
+      ]),
       firstName: new FormControl('', [Validators.required]),
       lastName: new FormControl('', [Validators.required]),
       phoneNumber: new FormControl('', [
         Validators.required,
-        Validators.minLength(10),
+        Validators.pattern('^[+]?\\d{10,12}$'),
       ]),
       address: new FormControl('', [Validators.required]),
       storeName: new FormControl('', [Validators.required]),
