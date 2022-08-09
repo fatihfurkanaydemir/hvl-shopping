@@ -1,4 +1,5 @@
 ﻿using Application.Wrappers;
+using Domain.Common;
 using Newtonsoft.Json;
 using System.Text;
 
@@ -47,6 +48,15 @@ public class AuthService
     using var httpResponseMessage = await _httpClient.PostAsync("/api/Account/register", registerSellerJson);
 
     var response = JsonConvert.DeserializeObject<Response<string>>(await httpResponseMessage.Content.ReadAsStringAsync());
+
+    return response;
+  }
+
+  public async Task<Response<ProfileInformation>> GetProfileInformation(string identityId)
+  {
+    using var httpResponseMessage = await _httpClient.GetAsync($"/api/Account/{identityId}");
+
+    var response = JsonConvert.DeserializeObject<Response<ProfileInformation>>(await httpResponseMessage.Content.ReadAsStringAsync());
 
     return response;
   }

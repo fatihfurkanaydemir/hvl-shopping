@@ -30,6 +30,7 @@ export class ProductDetailsComponent implements OnInit {
     id: 0,
     firstName: '',
     lastName: '',
+    email: '',
     phoneNumber: '',
     shopName: '',
     address: {

@@ -1,4 +1,5 @@
 ﻿using Application.Features.Customers.Commands.CreateCustomer;
+using Application.Features.Customers.Commands.UpdateCustomer;
 using Application.Features.Customers.Queries.GetAllCustomers;
 using Application.Features.Customers.Queries.GetCustomerByIdentityId;
 using Microsoft.AspNetCore.Mvc;
@@ -27,6 +28,13 @@ namespace WebApi.Controllers.v1
     public async Task<IActionResult> GetCustomerByIdentityId(string identityId)
     {
       return Ok(await Mediator.Send(new GetCustomerByIdentityIdQuery() { identityId = identityId }));
+    }
+
+    // PATCH: api/<controller>/id
+    [HttpPatch]
+    public async Task<IActionResult> UpdateCustomer(UpdateCustomerCommand command)
+    {
+      return Ok(await Mediator.Send(command));
     }
 
     //// GET: api/<controller>/id

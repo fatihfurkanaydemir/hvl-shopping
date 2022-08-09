@@ -10,6 +10,7 @@ namespace Application.Features.Customers.Queries.GetCustomerByIdentityId
     public string FirstName { get; set; }
     public string LastName { get; set; }
     public string PhoneNumber { get; set; }
+    public string Email { get; set; }
     public List<Address> Addresses { get; set; }
   }
 }
