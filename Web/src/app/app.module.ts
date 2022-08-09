@@ -33,6 +33,9 @@ import { SellerLoginComponent } from './seller-panel/seller-login/seller-login.c
 import { AuthInterceptor } from './services/auth-interceptor.service';
 import { MyOrdersComponent } from './my-orders/my-orders.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
+import { SearchFilterComponent } from './search-filter/search-filter.component';
+import { FilterPipe } from './filter.pipe';
+import { HeaderComponent } from './header/header.component';
 import { AddAddressComponent } from './user-profile/add-address/add-address.component';
 import { AddressActionsComponent } from './user-profile/address-actions/address-actions.component';
 
@@ -62,6 +65,9 @@ import { AddressActionsComponent } from './user-profile/address-actions/address-
     SellerLoginComponent,
     MyOrdersComponent,
     UserProfileComponent,
+    SearchFilterComponent,
+    FilterPipe,
+    HeaderComponent,
     AddAddressComponent,
     AddressActionsComponent,
   ],
