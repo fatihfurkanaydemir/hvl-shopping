@@ -1,9 +1,12 @@
 ﻿using Application.Features.Customers.Commands.CreateCustomer;
 using Application.Features.Customers.Commands.UpdateCustomer;
+using Application.Features.Customers.Commands.DeleteAddress;
+using Application.Features.Customers.Commands.UpdateAddress;
 using Application.Features.Customers.Queries.GetAllCustomers;
 using Application.Features.Customers.Queries.GetCustomerByIdentityId;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
+using Application.Features.Customers.Commands.AddAddress;
 
 namespace WebApi.Controllers.v1
 {
@@ -30,9 +33,30 @@ namespace WebApi.Controllers.v1
       return Ok(await Mediator.Send(new GetCustomerByIdentityIdQuery() { identityId = identityId }));
     }
 
-    // PATCH: api/<controller>/id
+    // PATCH: api/<controller>
     [HttpPatch]
     public async Task<IActionResult> UpdateCustomer(UpdateCustomerCommand command)
+    {
+      return Ok(await Mediator.Send(command));
+    }
+
+    // PATCH: api/<controller>
+    [HttpPatch("UpdateAddress")]
+    public async Task<IActionResult> UpdateAddress(UpdateAddressCommand command)
+    {
+      return Ok(await Mediator.Send(command));
+    }
+
+    // POST api/<controller>/AddAddress
+    [HttpPost("AddAddress")]
+    public async Task<IActionResult> AddAddress(AddAddressCommand command)
+    {
+      return Ok(await Mediator.Send(command));
+    }
+
+    // POST api/<controller>/DeleteAddress
+    [HttpDelete("DeleteAddress")]
+    public async Task<IActionResult> DeleteAddress(DeleteAddressCommand command)
     {
       return Ok(await Mediator.Send(command));
     }

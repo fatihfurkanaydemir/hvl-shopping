@@ -19,31 +19,35 @@
     <div class="col-md-6 d-flex flex-column align-items-center">
       <!--Adres Bilgileri-->
       <h4 class="text-right" style="margin-bottom: 20px">Adres Bilgileri</h4>
-      <div>
-        <div class="card">
+      <div class="w-100 d-flex flex-column gap-2">
+        <div class="card" *ngFor="let address of customer.addresses">
           <div class="card-body">
-            <h5 class="card-title">1. Adres</h5>
-            <h6 class="card-subtitle mb-2 text-muted">Ev</h6>
+            <h5 class="card-title">
+              <div class="d-flex justify-content-between">
+                <p>{{ address.title }}</p>
+                <app-address-actions
+                  [address]="address"
+                  [customer]="customer"
+                  (OnAddressChanged)="onAddressChanged()"
+                ></app-address-actions>
+              </div>
+            </h5>
+            <h6 class="card-subtitle mb-2 text-muted">{{ address.city }}</h6>
             <p class="card-text">
-              Some quick example text to build on the card title and make up the
-              bulk of the card's content.
-            </p>
-          </div>
-        </div>
-        <div class="card mt-3">
-          <div class="card-body">
-            <h5 class="card-title">2. Adres</h5>
-            <h6 class="card-subtitle mb-2 text-muted">İş</h6>
-            <p class="card-text">
-              Some quick example text to build on the card title and make up the
-              bulk of the card's content.
+              {{ address.addressDescription }}
             </p>
           </div>
         </div>
       </div>
-      <button type="button" class="btn btn-outline-primary w-50 mt-3">
-        + Adres Ekle
-      </button>
+      <div class="w-100 text-center">
+        <app-add-address
+          [customer]="customer"
+          (OnAddressAdded)="onAddressChanged()"
+        ></app-add-address>
+        <!-- <p *ngIf="customer.addresses.length >= 5" class="text-info mt-3">
+          En fazla 5 adres eklenebilir. Yeni bir adres için var olan bir adresi
+        </p> -->
+      </div>
     </div>
     <div class="col-md-6">
       <!-- Profil Display Ekranı-->
@@ -291,9 +295,7 @@
             </div>
           </div>
         </div>
-      </form>
-      <div class="">
-        <div class="d-flex justify-content-center">
+        <div class="d-flex justify-content-center mt-2">
           <button
             class="btn btn-primary w-50"
             type="submit"
@@ -302,7 +304,7 @@
             Şifre Değiştir
           </button>
         </div>
-      </div>
+      </form>
     </div>
   </div>
 </div>

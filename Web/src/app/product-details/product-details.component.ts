@@ -34,6 +34,8 @@ export class ProductDetailsComponent implements OnInit {
     phoneNumber: '',
     shopName: '',
     address: {
+      id: 0,
+      title: '',
       addressDescription: '',
       city: '',
     },

@@ -78,6 +78,8 @@ export class SellerLoginComponent implements OnInit {
       phoneNumber: this.registerForm.value.phoneNumber,
       shopName: this.registerForm.value.storeName,
       address: {
+        id: 0,
+        title: '',
         city: this.registerForm.value.city,
         addressDescription: this.registerForm.value.address,
       },

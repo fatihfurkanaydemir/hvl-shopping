@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { exhaustMap, map, take, tap } from 'rxjs';
+import { IChangePassword } from '../models/IChangePassword';
 import { ICustomer } from '../models/ICustomer';
 import { ICustomerEditProfile } from '../models/ICustomerEditProfile';
 import { AuthService } from '../services/auth.service';
@@ -56,6 +57,14 @@ export class UserProfileComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.getUser();
+  }
+
+  onAddressChanged() {
+    this.getUser();
+  }
+
+  getUser() {
     this.authService.userSubject
       .pipe(
         take(1),
@@ -87,6 +96,8 @@ export class UserProfileComponent implements OnInit {
           icon: 'success',
           title: 'Profil Güncellendi',
         });
+
+        this.getUser();
       },
       error: (error) => {
         this.toastService.showToast({
@@ -97,7 +108,42 @@ export class UserProfileComponent implements OnInit {
     });
   }
 
-  onChangePasswordSubmit() {}
+  onChangePasswordSubmit() {
+    if (this.changePasswordForm.invalid) return;
+
+    const changePasswordData: IChangePassword = {
+      email: this.customer.email,
+      oldPassword: this.changePasswordForm.value.oldPassword,
+      newPassword: this.changePasswordForm.value.newPassword,
+      confirmNewPassword: this.changePasswordForm.value.confirmNewPassword,
+    };
+
+    this.userService.changePassword(changePasswordData).subscribe({
+      next: (response) => {
+        this.toastService.showToast({
+          icon: 'success',
+          title: 'Şifre Güncellendi, Lütfen Tekrar Giriş Yapınız.',
+        });
+
+        this.changePasswordForm.reset();
+        this.authService.logout();
+      },
+      error: (error) => {
+        this.toastService.showToast({
+          icon: 'error',
+          title: error.error.message,
+        });
+        if (error.error.errors) {
+          error.error.errors.forEach((err: any) => {
+            this.toastService.showToast({
+              icon: 'error',
+              title: err,
+            });
+          });
+        }
+      },
+    });
+  }
 
   isEditProfileFormControlInvalid(name: string) {
     return (
