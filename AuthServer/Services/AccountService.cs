@@ -29,6 +29,23 @@ public class AccountService : IAccountService
     _signInManager = signInManager;
   }
 
+  public async Task<Response<ProfileInformation>> GetProfileInformation(ProfileInformationRequest request)
+  {
+    var user = await _userManager.FindByIdAsync(request.IdentityId);
+    if (user == null) throw new ApiException($"User not found.");
+
+    var rolesList = await _userManager.GetRolesAsync(user).ConfigureAwait(false);
+
+    var profile = new ProfileInformation
+    {
+      Email = user.Email,
+      Id = user.Id,
+      Roles = rolesList.ToList()
+    };
+
+    return new Response<ProfileInformation>(profile);
+  }
+
   public async Task<Response<string>> RegisterAsync(RegisterRequest request)
   {
     var user = new ApplicationUser

@@ -31,6 +31,7 @@ namespace Infrastructure.Persistence
       services.AddScoped<IProductRepositoryAsync, ProductRepositoryAsync>();
       services.AddScoped<ICustomerRepositoryAsync, CustomerRepositoryAsync>();
       services.AddScoped<ISellerRepositoryAsync, SellerRepositoryAsync>();
+      services.AddScoped<IAddressRepositoryAsync, AddressRepositoryAsync>();
     }
   }
 }

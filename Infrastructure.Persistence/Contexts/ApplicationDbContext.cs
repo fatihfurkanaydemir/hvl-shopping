@@ -21,6 +21,7 @@ namespace Infrastructure.Persistence.Contexts
     public DbSet<Category> Categories { get; set; }
     public DbSet<Customer> Customers { get; set; }
     public DbSet<Seller> Sellers { get; set; }
+    public DbSet<Address> Addresses { get; set; }
     public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
     {
       foreach (var entry in ChangeTracker.Entries<AuditableBaseEntity>())

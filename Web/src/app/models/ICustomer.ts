@@ -1,11 +1,11 @@
 import { IAddress } from './IAddress';
 
-export interface ISeller {
+export interface ICustomer {
   id: number;
+  identityId: string;
+  email: string;
   firstName: string;
   lastName: string;
   phoneNumber: string;
-  email: string;
-  shopName: string;
-  address: IAddress;
+  addresses: IAddress[];
 }

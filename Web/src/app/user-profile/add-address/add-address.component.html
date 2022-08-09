@@ -1,0 +1,90 @@
+<div class="w-100">
+  <button
+    type="button"
+    class="btn btn-outline-primary w-50 mt-3"
+    (click)="openModal(modal)"
+  >
+    + Adres Ekle
+  </button>
+
+  <ng-template #modal let-modal>
+    <form [formGroup]="addAddressForm" (ngSubmit)="onSubmit(modal)">
+      <div class="modal-header">
+        <h1 class="modal-title" id="modal-basic-title">Adres ekle</h1>
+        <button
+          type="button"
+          class="btn-close"
+          aria-label="Close"
+          (click)="modal.dismiss('Cross click')"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <div class="form-floating mb-3 has-validation">
+          <input
+            type="text"
+            class="form-control"
+            id="title"
+            placeholder="Adres Tanımı"
+            formControlName="title"
+            [ngClass]="{
+              'is-invalid': isFormControlInvalid('title'),
+              'is-valid': isFormControlValid('title')
+            }"
+          />
+          <label for="floatingPhone">Adres Tanımı</label>
+        </div>
+        <p
+          *ngIf="isFormControlInvalid('title')"
+          class="text-danger error-message"
+        >
+          Lütfen geçerli bir değer girin.
+        </p>
+
+        <div class="form-floating mb-3 has-validation">
+          <input
+            type="text"
+            class="form-control"
+            id="description"
+            placeholder="Adres"
+            formControlName="description"
+            [ngClass]="{
+              'is-invalid': isFormControlInvalid('description'),
+              'is-valid': isFormControlValid('description')
+            }"
+          />
+          <label for="floatingPhone">Adres</label>
+        </div>
+        <p
+          *ngIf="isFormControlInvalid('description')"
+          class="text-danger error-message"
+        >
+          Lütfen geçerli bir değer girin.
+        </p>
+
+        <div>
+          <select class="form-select py-3 mb-3" formControlName="city">
+            <option value=" " selected disabled hidden>Şehir</option>
+            <option *ngFor="let city of cities" value="{{ city }}">
+              {{ city }}
+            </option>
+          </select>
+        </div>
+        <p
+          *ngIf="isFormControlInvalid('city')"
+          class="text-danger error-message"
+        >
+          Lütfen geçerli bir değer girin.
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="submit"
+          class="btn btn-primary w-100"
+          [disabled]="addAddressForm.invalid"
+        >
+          Ekle
+        </button>
+      </div>
+    </form>
+  </ng-template>
+</div>

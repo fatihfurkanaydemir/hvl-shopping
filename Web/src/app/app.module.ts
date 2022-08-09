@@ -36,6 +36,8 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
 import { SearchFilterComponent } from './search-filter/search-filter.component';
 import { FilterPipe } from './filter.pipe';
 import { HeaderComponent } from './header/header.component';
+import { AddAddressComponent } from './user-profile/add-address/add-address.component';
+import { AddressActionsComponent } from './user-profile/address-actions/address-actions.component';
 
 @NgModule({
   declarations: [
@@ -66,6 +68,8 @@ import { HeaderComponent } from './header/header.component';
     SearchFilterComponent,
     FilterPipe,
     HeaderComponent,
+    AddAddressComponent,
+    AddressActionsComponent,
   ],
   imports: [
     BrowserModule,

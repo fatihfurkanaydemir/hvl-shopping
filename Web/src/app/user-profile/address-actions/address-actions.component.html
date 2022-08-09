@@ -1,0 +1,135 @@
+<div>
+  <div class="btn-group btn-group-sm">
+    <button
+      type="button"
+      class="btn btn-outline-primary"
+      (click)="openModal(editAddressModal)"
+    >
+      <i class="fa fa-pencil-square-o" style="font-size: 20px"></i>
+    </button>
+    <button
+      type="button"
+      class="btn btn-outline-danger"
+      (click)="openModal(confirmDeleteModal)"
+    >
+      <i class="fa fa-trash" style="font-size: 20px"></i>
+    </button>
+  </div>
+
+  <ng-template #editAddressModal let-modal>
+    <form [formGroup]="editAddressForm" (ngSubmit)="onSubmit(modal)">
+      <div class="modal-header">
+        <h1 class="modal-title" id="modal-basic-title">Adresi Düzenle</h1>
+        <button
+          type="button"
+          class="btn-close"
+          aria-label="Close"
+          (click)="modal.dismiss('Cross click')"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <div class="form-floating mb-3 has-validation">
+          <input
+            type="text"
+            class="form-control"
+            id="title"
+            placeholder="Adres Tanımı"
+            formControlName="title"
+            [ngClass]="{
+              'is-invalid': isFormControlInvalid('title'),
+              'is-valid': isFormControlValid('title')
+            }"
+          />
+          <label for="floatingPhone">Adres Tanımı</label>
+        </div>
+        <p
+          *ngIf="isFormControlInvalid('title')"
+          class="text-danger error-message"
+        >
+          Lütfen geçerli bir değer girin.
+        </p>
+
+        <div class="form-floating mb-3 has-validation">
+          <input
+            type="text"
+            class="form-control"
+            id="description"
+            placeholder="Adres"
+            formControlName="description"
+            [ngClass]="{
+              'is-invalid': isFormControlInvalid('description'),
+              'is-valid': isFormControlValid('description')
+            }"
+          />
+          <label for="floatingPhone">Adres</label>
+        </div>
+        <p
+          *ngIf="isFormControlInvalid('description')"
+          class="text-danger error-message"
+        >
+          Lütfen geçerli bir değer girin.
+        </p>
+
+        <div>
+          <select class="form-select py-3 mb-3" formControlName="city">
+            <option value=" " selected disabled hidden>Şehir</option>
+            <option *ngFor="let city of cities" value="{{ city }}">
+              {{ city }}
+            </option>
+          </select>
+        </div>
+        <p
+          *ngIf="isFormControlInvalid('city')"
+          class="text-danger error-message"
+        >
+          Lütfen geçerli bir değer girin.
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="submit"
+          class="btn btn-primary w-100"
+          [disabled]="editAddressForm.invalid"
+        >
+          Kaydet
+        </button>
+      </div>
+    </form>
+  </ng-template>
+
+  <ng-template #confirmDeleteModal let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-title">Adresi Sil</h4>
+      <button
+        type="button"
+        class="btn-close"
+        aria-describedby="modal-title"
+        (click)="modal.dismiss('Cross click')"
+      ></button>
+    </div>
+    <div class="modal-body">
+      <p>
+        <strong>
+          <span class="text-primary">{{ address.title }}</span>
+          Adresini silmek istediğinize emin misiniz?
+        </strong>
+      </p>
+    </div>
+    <div class="modal-footer">
+      <button
+        type="button"
+        class="btn btn-outline-secondary"
+        (click)="modal.dismiss('cancel click')"
+      >
+        İptal
+      </button>
+      <button
+        type="button"
+        class="btn btn-danger"
+        (click)="onDeleteAddress(modal)"
+      >
+        Sil
+      </button>
+    </div>
+  </ng-template>
+</div>

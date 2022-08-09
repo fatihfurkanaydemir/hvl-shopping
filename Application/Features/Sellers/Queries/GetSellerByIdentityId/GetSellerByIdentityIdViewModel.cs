@@ -12,6 +12,7 @@ namespace Application.Features.Sellers.Queries.GetSellerByIdentityId
     public string LastName { get; set; }
     public string PhoneNumber { get; set; }
     public string ShopName { get; set; }
+    public string Email { get; set; }
     public AddressViewModel Address { get; set; }
   }
 }
