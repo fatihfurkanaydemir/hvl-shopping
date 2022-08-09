@@ -20,8 +20,6 @@ export class CategoriesPageComponent implements OnInit {
   productsPageNumber: number = 1;
   productsPageSize: number = 20;
 
-  currentRate = 5;
-
   constructor(
     private activatedRoute: ActivatedRoute,
     private categoriesService: CategoriesService,
@@ -45,21 +43,22 @@ export class CategoriesPageComponent implements OnInit {
           this.categories = response.data;
 
           const categoryId = this.getCategoryIdByName(categoryName!);
-          if(categoryId === undefined){
-            this.router.navigate([""])
-          }else{
-          this.categoriesService
-            .getCategoryProducts(
-              categoryId!,
-              this.productsPageNumber,
-              this.productsPageSize
-            )
-            .subscribe({
-              next: (response) => {
-                this.products = response.data.products;
-                this.productsDataCount = +response.dataCount;
-              },
-            })};
+          if (categoryId === undefined) {
+            this.router.navigate(['']);
+          } else {
+            this.categoriesService
+              .getCategoryProducts(
+                categoryId!,
+                this.productsPageNumber,
+                this.productsPageSize
+              )
+              .subscribe({
+                next: (response) => {
+                  this.products = response.data.products;
+                  this.productsDataCount = +response.dataCount;
+                },
+              });
+          }
         });
     });
   }

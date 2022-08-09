@@ -20,8 +20,10 @@ import { AuthGuard } from './services/auth.guard';
 import { SellerAuthGuard } from './services/sellerAuth.guard';
 import { AdminAuthGuard } from './services/adminAuth.guard';
 import { UserProfileComponent } from './user-profile/user-profile.component';
+import { SearchFilterComponent } from './search-filter/search-filter.component';
 
 const appRoutes: Routes = [
+  { path: 'search', component: SearchFilterComponent },
   { path: 'my-orders', component: MyOrdersComponent },
   { path: 'seller-login', component: SellerLoginComponent },
   { path: 'login', component: LoginPageComponent },
