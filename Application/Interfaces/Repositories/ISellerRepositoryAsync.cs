@@ -6,5 +6,6 @@ namespace Application.Interfaces.Repositories
   {
     public Task<Seller?> GetByIdentityIdAsync(string id);
     public Task<IEnumerable<Seller>?> GetPagedResponseWithRelationsAsync(int pageNumber, int pageSize);
+    //public Task<Seller?> GetByIdentityIdWithRelationsAsync(string id);
   }
 }

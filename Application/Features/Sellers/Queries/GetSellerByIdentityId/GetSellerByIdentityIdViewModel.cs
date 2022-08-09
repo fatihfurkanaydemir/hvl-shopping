@@ -1,6 +1,10 @@
-﻿namespace Application.Features.SharedViewModels
+﻿using Application.Features.SharedViewModels;
+using Domain.Entities;
+using Domain.Enums;
+
+namespace Application.Features.Sellers.Queries.GetSellerByIdentityId
 {
-  public class SellerViewModel
+  public class GetSellerByIdentityIdViewModel
   {
     public int Id { get; set; }
     public string IdentityId { get; set; }
@@ -9,7 +13,5 @@
     public string PhoneNumber { get; set; }
     public string ShopName { get; set; }
     public AddressViewModel Address { get; set; }
-    //public List<Product> Products { get; set; }
-    //public List<Order> Orders { get; set; }
   }
 }

@@ -31,5 +31,10 @@ namespace Infrastructure.Persistence.Repositories
         .AsNoTracking()
         .ToListAsync();
     }
+
+    //public async Task<Seller?> GetByIdentityIdWithRelationsAsync(string id)
+    //{
+
+    //}
   }
 }

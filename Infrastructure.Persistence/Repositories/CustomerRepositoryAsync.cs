@@ -28,7 +28,7 @@ namespace Infrastructure.Persistence.Repositories
     {
       return await _customers
         .Include(p => p.Addresses)
-        .AsTracking()
+        .AsNoTracking()
         .SingleOrDefaultAsync(p => p.IdentityId == id);
     }
   }
