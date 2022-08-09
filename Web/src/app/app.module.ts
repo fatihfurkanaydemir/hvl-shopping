@@ -33,6 +33,8 @@ import { SellerLoginComponent } from './seller-panel/seller-login/seller-login.c
 import { AuthInterceptor } from './services/auth-interceptor.service';
 import { MyOrdersComponent } from './my-orders/my-orders.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
+import { AddAddressComponent } from './user-profile/add-address/add-address.component';
+import { AddressActionsComponent } from './user-profile/address-actions/address-actions.component';
 
 @NgModule({
   declarations: [
@@ -60,6 +62,8 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
     SellerLoginComponent,
     MyOrdersComponent,
     UserProfileComponent,
+    AddAddressComponent,
+    AddressActionsComponent,
   ],
   imports: [
     BrowserModule,

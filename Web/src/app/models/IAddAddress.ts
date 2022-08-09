@@ -1,5 +1,5 @@
-export interface IAddress {
-  id: number;
+export interface IAddAddress {
+  identityId: string;
   title: string;
   addressDescription: string;
   city: string;

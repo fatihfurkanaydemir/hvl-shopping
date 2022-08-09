@@ -22,15 +22,15 @@ import { AdminAuthGuard } from './services/adminAuth.guard';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 
 const appRoutes: Routes = [
-  { path: 'my-orders', component: MyOrdersComponent },
   { path: 'seller-login', component: SellerLoginComponent },
   { path: 'login', component: LoginPageComponent },
   { path: 'register', component: RegisterPageComponent },
-  { path: 'my-orders', component:MyOrdersComponent},
-  { path: 'seller-login', component:SellerLoginComponent},
-  { path: 'login', component: LoginPageComponent},
-  { path: 'register', component: RegisterPageComponent},
-  { path: 'user-profile', component: UserProfileComponent},
+  { path: 'my-orders', component: MyOrdersComponent, canActivate: [AuthGuard] },
+  {
+    path: 'user-profile',
+    component: UserProfileComponent,
+    canActivate: [AuthGuard],
+  },
   { path: 'product/:id', component: ProductDetailsComponent },
   { path: '', component: HomePageComponent, pathMatch: 'full' },
   {

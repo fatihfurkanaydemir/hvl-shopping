@@ -48,8 +48,12 @@
         Hesabım
       </button>
       <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-        <button ngbDropdownItem>Profil</button>
-        <button ngbDropdownItem *ngIf="user?.hasRole('Customer')">
+        <button ngbDropdownItem [routerLink]="['/user-profile']">Profil</button>
+        <button
+          ngbDropdownItem
+          *ngIf="user?.hasRole('Customer')"
+          [routerLink]="['/my-orders']"
+        >
           Siparişlerim
         </button>
         <button ngbDropdownItem (click)="logout()">Çıkış yap</button>

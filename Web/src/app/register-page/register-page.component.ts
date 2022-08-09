@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { ICustomerRegister } from '../models/ICustomerRegister';
 import { ToastService } from '../services/toast.service';
+import { ValidationPatterns } from '../shared/ValidationPatterns';
 
 @Component({
   selector: 'app-register-page',
@@ -26,25 +27,22 @@ export class RegisterPageComponent implements OnInit {
 
   registerForm!: FormGroup;
 
-  passwordValidPattern =
-    '^(?=.{6,})(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[/@/#/$/%/^/./&/+/=/*/-]).*$';
-
   ngOnInit(): void {
     this.registerForm = new FormGroup({
       lastName: new FormControl(null, [Validators.required]),
       firstName: new FormControl(null, [Validators.required]),
       phoneNumber: new FormControl(null, [
         Validators.required,
-        Validators.pattern('^[+]?\\d{10,12}$'),
+        Validators.pattern(ValidationPatterns.phoneNumber),
       ]),
       email: new FormControl(null, [Validators.required, Validators.email]),
       password: new FormControl(null, [
         Validators.required,
-        Validators.pattern(this.passwordValidPattern),
+        Validators.pattern(ValidationPatterns.password),
       ]),
       confirmPassword: new FormControl(null, [
         Validators.required,
-        Validators.pattern(this.passwordValidPattern),
+        Validators.pattern(ValidationPatterns.password),
       ]),
     });
   }
