@@ -30,7 +30,7 @@
           <button ngbDropdownItem>Çıkış yap</button>
         </div>
       </div>
-  <button type="button" (click)="goToPage('login')" class="btn btn-light me-3">Sepetim</button>
+  <button [routerLink]="['/basket']" type="button" class="btn btn-light me-3">Sepetim</button>
  </div>
 </nav>
 <router-outlet ></router-outlet>

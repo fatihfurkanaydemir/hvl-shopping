@@ -66,7 +66,7 @@
       </div>
       </div>
     </div>
-  <div class="row border-top mt-4"> <!--Profil aya-->
+  <div class="row border-top mt-4"> <!--Profil ayarları-->
     <div class="col-md-6 border-right">
     <form id="profil-ayarlari" [formGroup]="userSettingsForm" (ngSubmit)="onUserSettingsFormSubmit()">
       <div class="p-3 py-5">
@@ -81,7 +81,7 @@
               formControlName="isim"
               type="text"
               class="form-control"
-              placeholder="first name"
+              placeholder="İsim"
               value=""
             />
           </div>
@@ -92,7 +92,7 @@
               type="text"
               class="form-control"
               value=""
-              placeholder="surname"
+              placeholder="Soyisim"
             />
           </div>
         </div>
@@ -103,7 +103,7 @@
               formControlName="telNo"
               type="text"
               class="form-control"
-              placeholder="enter phone number"
+              placeholder="+90(5**)-***-****"
               value=""
             />
           </div>
@@ -113,7 +113,7 @@
               formControlName="adres1"
               type="text"
               class="form-control"
-              placeholder="enter address line 1"
+              placeholder="1. Adres"
               value=""
             />
           </div>
@@ -123,7 +123,7 @@
               formControlName="adres2"
               type="tex"
               class="form-control"
-              placeholder="enter address line 2"
+              placeholder="2. Adres"
               value=""
             />
           </div>
@@ -133,7 +133,7 @@
               formControlName="email"
               type="text"
               class="form-control"
-              placeholder="enter email id"
+              placeholder="temp@email.com"
               value=""
             />
           </div>
@@ -145,7 +145,7 @@
               formControlName="country"
               type="text"
               class="form-control"
-              placeholder="country"
+              placeholder="Ülke"
               value=""
             />
           </div>
@@ -156,7 +156,7 @@
               type="text"
               class="form-control"
               value=""
-              placeholder="state"
+              placeholder="Şehir"
             />
           </div>
         </div>
@@ -175,7 +175,7 @@
                 type="text"
                 class="form-control"
                 value=""
-                placeholder="state"
+                placeholder="Şifre"
               />
               <div class="d-flex justify-content-center">
                 <button class="btn btn-primary profile-button mt-5" type="button">
