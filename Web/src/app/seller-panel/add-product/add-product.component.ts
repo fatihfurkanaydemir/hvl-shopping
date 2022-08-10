@@ -6,6 +6,8 @@ import {
   ModalDismissReasons,
   NgbActiveModal,
 } from '@ng-bootstrap/ng-bootstrap';
+import { exhaustMap, take } from 'rxjs';
+import { AuthService } from 'src/app/services/auth.service';
 
 import { ProductsService } from 'src/app/services/products.service';
 import { ToastService } from 'src/app/services/toast.service';
@@ -30,9 +32,11 @@ export class AddProductComponent implements OnInit {
   categories: ICategory[] = [];
 
   product: IProductCreate = {
+    sellerIdentityId: '',
     name: '',
     code: '',
     description: '',
+    price: 1,
     inStock: 0,
     images: [],
     categoryId: 0,
@@ -42,7 +46,8 @@ export class AddProductComponent implements OnInit {
     private productsService: ProductsService,
     private categoriesService: CategoriesService,
     private modalService: NgbModal,
-    private toastService: ToastService
+    private toastService: ToastService,
+    private authService: AuthService
   ) {}
 
   onSubmit(addProductForm: NgForm, modal: NgbActiveModal) {
@@ -53,28 +58,36 @@ export class AddProductComponent implements OnInit {
 
     this.product.categoryId = +addProductForm.value['product-category'];
 
-    this.productsService.createProduct(this.product).subscribe({
-      next: (response) => {
-        this.toastService.showToast({
-          icon: 'success',
-          title: 'Ürün başarılı bir şekilde eklendi.',
-        });
+    this.authService.userSubject
+      .pipe(
+        take(1),
+        exhaustMap((user) => {
+          this.product.sellerIdentityId = user.identityId;
+          return this.productsService.createProduct(this.product);
+        })
+      )
+      .subscribe({
+        next: (response) => {
+          this.toastService.showToast({
+            icon: 'success',
+            title: 'Ürün başarılı bir şekilde eklendi.',
+          });
 
-        modal.dismiss();
-        addProductForm.reset();
-        this.productAddedEvent.emit(true);
-      },
-      error: (error) => {
-        this.toastService.showToast({
-          icon: 'error',
-          title: 'Ürün eklenirken hata oluştu.',
-        });
+          modal.dismiss();
+          addProductForm.reset();
+          this.productAddedEvent.emit(true);
+        },
+        error: (error) => {
+          this.toastService.showToast({
+            icon: 'error',
+            title: 'Ürün eklenirken hata oluştu.',
+          });
 
-        modal.dismiss();
-        addProductForm.reset();
-        this.productAddedEvent.emit(true);
-      },
-    });
+          modal.dismiss();
+          addProductForm.reset();
+          this.productAddedEvent.emit(true);
+        },
+      });
   }
 
   ngOnInit() {

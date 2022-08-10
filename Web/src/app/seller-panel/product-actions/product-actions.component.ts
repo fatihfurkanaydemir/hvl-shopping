@@ -37,6 +37,7 @@ export class ProductActionsComponent implements OnInit {
     name: '',
     code: '',
     description: '',
+    price: 1,
     inStock: 0,
     images: [],
     categoryId: 0,
@@ -127,6 +128,7 @@ export class ProductActionsComponent implements OnInit {
       this.product.images = response.data.images;
       this.product.name = response.data.name;
       this.product.inStock = response.data.inStock;
+      this.product.price = response.data.price;
     });
   }
 

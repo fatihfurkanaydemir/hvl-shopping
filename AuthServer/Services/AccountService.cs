@@ -38,7 +38,12 @@ public class AccountService : IAccountService
     };
 
     var userWithSameEmail = await _userManager.FindByEmailAsync(request.Email);
-    if (userWithSameEmail != null) throw new ApiException($"Email {request.Email} is already registered.");
+    if (userWithSameEmail != null)
+    {
+      var exception = new ApiException($"Email {request.Email} is already registered.");
+      exception.Data["DataMessage"] = userWithSameEmail.Id;
+      throw exception;
+    }
     
     var result = await _userManager.CreateAsync(user, request.Password);
     if (result.Succeeded)
@@ -81,6 +86,7 @@ public class AccountService : IAccountService
     response.Id = user.Id;
     response.JWToken = new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken);
     response.Email = user.Email;
+    response.Expires = jwtSecurityToken.Payload.Exp;
 
     var rolesList = await _userManager.GetRolesAsync(user).ConfigureAwait(false);
     response.Roles = rolesList.ToList();

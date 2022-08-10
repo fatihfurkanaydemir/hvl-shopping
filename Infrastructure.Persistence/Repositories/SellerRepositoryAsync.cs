@@ -22,7 +22,7 @@ namespace Infrastructure.Persistence.Repositories
         .SingleOrDefaultAsync(s => s.IdentityId == id);
     }
 
-    public async Task<IEnumerable<Seller>?> GetPageResponseWithRelationsAsync(int pageNumber, int pageSize)
+    public async Task<IEnumerable<Seller>?> GetPagedResponseWithRelationsAsync(int pageNumber, int pageSize)
     {
       return await _sellers
         .Include(s => s.Address)

@@ -5,6 +5,7 @@ import { IImage } from '../models/IImage';
 import { ICategory } from '../models/ICategory';
 import { ActivatedRoute, Router } from '@angular/router';
 import { identifierName } from '@angular/compiler';
+import { ISeller } from '../models/ISeller';
 
 @Component({
   selector: 'app-product-details',
@@ -25,15 +26,29 @@ export class ProductDetailsComponent implements OnInit {
     productCount: 0,
   };
 
+  seller: ISeller = {
+    id: 0,
+    firstName: '',
+    lastName: '',
+    phoneNumber: '',
+    shopName: '',
+    address: {
+      addressDescription: '',
+      city: '',
+    },
+  };
+
   product: IProduct = {
     id: 0,
     name: '',
     code: '',
     description: '',
     images: [],
+    price: 0,
     inStock: 0,
     sold: 0,
     status: '',
+    seller: this.seller,
     category: this.productCategory,
   };
 
@@ -48,13 +63,18 @@ export class ProductDetailsComponent implements OnInit {
     this.getProductByID();
   }
   getProductByID() {
-    this.productsService.getProduct(this._id).subscribe((product) => {
-      //placeholder
-      this.product = product.data;
-      console.log(this.product);
-      console.log('images length: ' + this.product.images.length);
-      console.log('url count: ' + this._urlCount);
-    },(error) => {this.router.navigate([''])});
+    this.productsService.getProduct(this._id).subscribe(
+      (product) => {
+        //placeholder
+        this.product = product.data;
+        console.log(this.product);
+        console.log('images length: ' + this.product.images.length);
+        console.log('url count: ' + this._urlCount);
+      },
+      (error) => {
+        this.router.navigate(['']);
+      }
+    );
   }
 
   incrementDesiredCount() {

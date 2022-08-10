@@ -35,6 +35,16 @@ export class ProductsService {
     );
   }
 
+  getAllProductsByIdentityId(
+    identityId: string,
+    pageNumber: number,
+    pageSize: number
+  ): Observable<IApiResponse> {
+    return this.httpClient.get<IApiResponse>(
+      `${environment.apiUrl}/Seller/${identityId}/Products?PageNumber=${pageNumber}&PageSize=${pageSize}`
+    );
+  }
+
   updateProduct(product: IProductUpdate): Observable<IApiResponse> {
     return this.httpClient.patch<IApiResponse>(
       this.apiUrl + '/Product/',

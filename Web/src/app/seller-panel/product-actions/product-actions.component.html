@@ -93,6 +93,29 @@
         </select>
       </div>
 
+      <div class="form-floating mb-3">
+        <input
+          type="number"
+          id="product-price"
+          class="form-control"
+          placeholder="1"
+          [(ngModel)]="product.price"
+          name="product-price"
+          placeholder="Fiyat"
+          required
+          min="1"
+          #price="ngModel"
+        />
+        <label for="product-price">Fiyat</label>
+      </div>
+
+      <p
+        *ngIf="price.invalid && (price.dirty || price.touched)"
+        class="text-danger error-message"
+      >
+        Bu alan boş bırakılamaz.
+      </p>
+
       <div class="form-group">
         <label for="product-stock">Stok</label>
         <input
