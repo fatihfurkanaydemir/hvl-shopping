@@ -5,7 +5,7 @@ import {
   NgbActiveModal,
   NgbModal,
 } from '@ng-bootstrap/ng-bootstrap';
-import { IAddAddress } from 'src/app/models/IAddAddress';
+import { IAddCustomerAddress } from 'src/app/models/IAddCustomerAddress';
 import { ICustomer } from 'src/app/models/ICustomer';
 import { ToastService } from 'src/app/services/toast.service';
 import { UserService } from 'src/app/services/user.service';
@@ -41,14 +41,14 @@ export class AddAddressComponent implements OnInit {
   onSubmit(modal: NgbActiveModal) {
     if (this.addAddressForm.invalid) return;
 
-    const addAddressData: IAddAddress = {
+    const addAddressData: IAddCustomerAddress = {
       identityId: this.customer.identityId,
       title: this.addAddressForm.value.title,
       addressDescription: this.addAddressForm.value.description,
       city: this.addAddressForm.value.city,
     };
 
-    this.userService.addAddress(addAddressData).subscribe({
+    this.userService.addCustomerAddress(addAddressData).subscribe({
       next: (response) => {
         this.toastService.showToast({
           icon: 'success',

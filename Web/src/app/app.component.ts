@@ -35,4 +35,10 @@ export class AppComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.userSub?.unsubscribe();
   }
+
+  getProfileLink() {
+    if (this.user?.isOnlyCustomer) return '/user-profile';
+    if (this.user?.isOnlySeller) return '/seller-profile';
+    return '';
+  }
 }

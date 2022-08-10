@@ -21,6 +21,8 @@ import { SellerAuthGuard } from './services/sellerAuth.guard';
 import { AdminAuthGuard } from './services/adminAuth.guard';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { SearchFilterComponent } from './search-filter/search-filter.component';
+import { SellerProfileComponent } from './seller-panel/seller-profile/seller-profile.component';
+import { CustomerAuthGuard } from './services/customerAuth.guard copy';
 
 const appRoutes: Routes = [
   { path: 'search', component: SearchFilterComponent },
@@ -33,10 +35,15 @@ const appRoutes: Routes = [
   {
     path: 'user-profile',
     component: UserProfileComponent,
-    canActivate: [AuthGuard],
+    canActivate: [AuthGuard, CustomerAuthGuard],
   },
   { path: 'product/:id', component: ProductDetailsComponent },
   { path: '', component: HomePageComponent, pathMatch: 'full' },
+  {
+    path: 'seller-profile',
+    component: SellerProfileComponent,
+    canActivate: [AuthGuard, SellerAuthGuard],
+  },
   {
     path: 'seller-panel',
     component: SellerPanelComponent,

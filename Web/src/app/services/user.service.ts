@@ -2,12 +2,13 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { IAddAddress } from '../models/IAddAddress';
 import { IApiResponseSingle } from '../models/IApiResponseSingle';
 import { IChangePassword } from '../models/IChangePassword';
 import { ICustomerEditProfile } from '../models/ICustomerEditProfile';
-import { IDeleteAddress } from '../models/IDeleteAddress';
-import { IEditAddress } from '../models/IEditAddress';
+import { IAddCustomerAddress } from '../models/IAddCustomerAddress';
+import { IDeleteCustomerAddress } from '../models/IDeleteCustomerAddress';
+import { IEditCustomerAddress } from '../models/IEditCustomerAddress';
+import { ISellerEditProfile } from '../models/ISellerEditProfile';
 
 @Injectable({ providedIn: 'root' })
 export class UserService {
@@ -37,6 +38,15 @@ export class UserService {
     );
   }
 
+  editSellerProfile(
+    seller: ISellerEditProfile
+  ): Observable<IApiResponseSingle> {
+    return this.httpClient.patch<IApiResponseSingle>(
+      `${this.apiUrl}/Seller`,
+      seller
+    );
+  }
+
   changePassword(
     changePasswordData: IChangePassword
   ): Observable<IApiResponseSingle> {
@@ -46,22 +56,26 @@ export class UserService {
     );
   }
 
-  addAddress(addAddressdata: IAddAddress): Observable<IApiResponseSingle> {
+  addCustomerAddress(
+    addAddressdata: IAddCustomerAddress
+  ): Observable<IApiResponseSingle> {
     return this.httpClient.post<IApiResponseSingle>(
       `${this.apiUrl}/Customer/AddAddress`,
       addAddressdata
     );
   }
 
-  editAddress(editAddressdata: IEditAddress): Observable<IApiResponseSingle> {
+  editCustomerAddress(
+    editAddressdata: IEditCustomerAddress
+  ): Observable<IApiResponseSingle> {
     return this.httpClient.patch<IApiResponseSingle>(
       `${this.apiUrl}/Customer/UpdateAddress`,
       editAddressdata
     );
   }
 
-  deleteAddress(
-    deleteAddressdata: IDeleteAddress
+  deleteCustomerAddress(
+    deleteAddressdata: IDeleteCustomerAddress
   ): Observable<IApiResponseSingle> {
     return this.httpClient.request<IApiResponseSingle>(
       'delete',

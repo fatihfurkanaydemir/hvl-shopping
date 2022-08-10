@@ -1,6 +1,5 @@
-export interface IEditAddress {
+export interface IAddCustomerAddress {
   identityId: string;
-  addressId: number;
   title: string;
   addressDescription: string;
   city: string;

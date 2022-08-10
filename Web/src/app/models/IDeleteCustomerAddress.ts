@@ -1,4 +1,4 @@
-export interface IDeleteAddress {
+export interface IDeleteCustomerAddress {
   addressId: number;
   identityId: string;
 }

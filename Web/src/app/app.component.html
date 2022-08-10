@@ -12,7 +12,7 @@
   <div></div>
   <div class="d-inline" *ngIf="!user?.token">
     <a
-      class="text-decoration-underline nav-link pb-2"
+      class="text-decoration-underline nav-link text-light pb-2"
       [routerLink]="['/seller-login']"
       >Satıcı Ol</a
     >
@@ -34,10 +34,18 @@
 
   <div class="d-inline" *ngIf="user?.token">
     <a
-      class="text-decoration-underline nav-link pb-2"
+      class="text-decoration-underline nav-link text-light pb-2"
       [routerLink]="['/seller-login']"
+      *ngIf="!user?.isOnlySeller"
       >Satıcı Ol</a
     >
+    <a
+      class="btn btn-light"
+      *ngIf="user?.isOnlySeller"
+      [routerLink]="['/seller-panel']"
+    >
+      Yönetim Paneli
+    </a>
     <div ngbDropdown class="d-inline p-3">
       <button
         type="button"
@@ -48,10 +56,12 @@
         Hesabım
       </button>
       <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-        <button ngbDropdownItem [routerLink]="['/user-profile']">Profil</button>
+        <button ngbDropdownItem [routerLink]="[getProfileLink()]">
+          Profil
+        </button>
         <button
           ngbDropdownItem
-          *ngIf="user?.hasRole('Customer')"
+          *ngIf="user?.isOnlyCustomer"
           [routerLink]="['/my-orders']"
         >
           Siparişlerim
@@ -62,7 +72,7 @@
     <button
       type="button"
       class="btn btn-light me-3"
-      *ngIf="user?.hasRole('Customer')"
+      *ngIf="user?.isOnlyCustomer"
     >
       Sepetim
     </button>

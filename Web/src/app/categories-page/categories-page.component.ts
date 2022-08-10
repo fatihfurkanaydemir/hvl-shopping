@@ -54,8 +54,10 @@ export class CategoriesPageComponent implements OnInit {
               )
               .subscribe({
                 next: (response) => {
-                  this.products = response.data.products;
-                  this.productsDataCount = +response.dataCount;
+                  this.products = response.data.products.filter(
+                    (p: any) => p.status !== 'Passive'
+                  );
+                  this.productsDataCount = this.products.length;
                 },
               });
           }

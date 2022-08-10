@@ -1,4 +1,5 @@
 ﻿using Application.Features.Sellers.Commands.CreateSeller;
+using Application.Features.Sellers.Commands.UpdateSeller;
 using Application.Features.Sellers.Queries.GetAllSellers;
 using Application.Features.Sellers.Queries.GetSellerProductsByIdentityId;
 using Application.Features.Sellers.Queries.GetSellerByIdentityId;
@@ -12,6 +13,13 @@ namespace WebApi.Controllers.v1
     // POST api/<controller>
     [HttpPost]
     public async Task<IActionResult> Create(CreateSellerCommand command)
+    {
+      return Ok(await Mediator.Send(command));
+    }
+
+    // PATCH: api/<controller>
+    [HttpPatch]
+    public async Task<IActionResult> UpdateSeller(UpdateSellerCommand command)
     {
       return Ok(await Mediator.Send(command));
     }

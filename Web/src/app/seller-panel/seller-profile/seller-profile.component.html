@@ -1,0 +1,371 @@
+<div
+  class="container rounded bg-white mt-5 mb-5"
+  style="background-color: antiquewhite"
+>
+  <div class="row">
+    <!--Profil görüntüleme ekranı-->
+    <div class="col-md-12 border-bottom m-4">
+      <!--Profil fotografi ve e-mail-->
+      <div class="d-flex flex-column align-items-center text-center p-3 py-5">
+        <img
+          class="rounded-circle mt-5"
+          width="150px"
+          src="https://cdn-icons-png.flaticon.com/512/21/21104.png"
+        /><span class="font-weight-bold">{{ seller.firstName }}</span
+        ><span class="text-black-50">{{ seller.email }}</span
+        ><span> </span>
+      </div>
+    </div>
+    <h4 class="text-right" style="margin-bottom: 20px">Profil Bilgileri</h4>
+    <div class="col-md-6">
+      <!-- Profil Display Ekranı-->
+      <div class="list-group">
+        <a
+          href="seller-profile#edit-profile"
+          class="list-group-item list-group-item-action"
+          aria-current="true"
+        >
+          <div class="d-flex w-100 justify-content-between">
+            <h5 class="mb-1">İsim</h5>
+          </div>
+          <p class="mb-1">{{ seller.firstName }}</p>
+        </a>
+        <a
+          href="seller-profile#edit-profile"
+          class="list-group-item list-group-item-action"
+        >
+          <div class="d-flex w-100 justify-content-between">
+            <h5 class="mb-1">Soy İsim</h5>
+          </div>
+          <p class="mb-1">{{ seller.lastName }}</p>
+        </a>
+
+        <a
+          href="seller-profile#edit-profile"
+          class="list-group-item list-group-item-action"
+        >
+          <div class="d-flex w-100 justify-content-between">
+            <h5 class="mb-1">Cep Telefonu</h5>
+          </div>
+          <p class="mb-1">{{ seller.phoneNumber }}</p>
+        </a>
+        <a
+          href="seller-profile#edit-profile"
+          class="list-group-item list-group-item-action"
+        >
+          <div class="d-flex w-100 justify-content-between">
+            <h5 class="mb-1">Email</h5>
+          </div>
+          <p class="mb-1">{{ seller.email }}</p>
+        </a>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <!-- Profil Display Ekranı-->
+      <div class="list-group">
+        <a
+          href="seller-profile#edit-profile"
+          class="list-group-item list-group-item-action"
+          aria-current="true"
+        >
+          <div class="d-flex w-100 justify-content-between">
+            <h5 class="mb-1">Dükkan İsmi</h5>
+          </div>
+          <p class="mb-1">{{ seller.shopName }}</p>
+        </a>
+        <a
+          href="seller-profile#edit-profile"
+          class="list-group-item list-group-item-action"
+          aria-current="true"
+        >
+          <div class="d-flex w-100 justify-content-between">
+            <h5 class="mb-1">Adres</h5>
+          </div>
+          <p class="mb-1">{{ seller.address.addressDescription }}</p>
+        </a>
+        <a
+          href="seller-profile#edit-profile"
+          class="list-group-item list-group-item-action"
+          aria-current="true"
+        >
+          <div class="d-flex w-100 justify-content-between">
+            <h5 class="mb-1">Şehir</h5>
+          </div>
+          <p class="mb-1">{{ seller.address.city }}</p>
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="row border-top mt-4">
+    <!--Profil aya-->
+    <div class="col-md-6 border-right d-flex flex-column">
+      <form
+        id="edit-profile"
+        [formGroup]="editProfileForm"
+        (ngSubmit)="onEditProfileSubmit()"
+      >
+        <div class="p-3 py-5">
+          <div class="d-flex justify-content-between align-items-center">
+            <h4 class="text-right">Profil Ayarları</h4>
+          </div>
+
+          <div class="row mt-2">
+            <div class="col-md-6">
+              <div class="form-floating mb-3 has-validation">
+                <input
+                  type="text"
+                  class="form-control"
+                  id="firstName"
+                  placeholder="İsim"
+                  formControlName="firstName"
+                  [ngClass]="{
+                    'is-invalid': isEditProfileFormControlInvalid('firstName'),
+                    'is-valid': isEditProfileFormControlValid('firstName')
+                  }"
+                />
+                <label for="firstName">İsim</label>
+              </div>
+              <p
+                *ngIf="isEditProfileFormControlInvalid('firstName')"
+                class="text-danger error-message"
+              >
+                Lütfen geçerli bir değer girin.
+              </p>
+            </div>
+            <div class="col-md-6">
+              <div class="form-floating mb-3 has-validation">
+                <input
+                  type="text"
+                  class="form-control"
+                  id="lastName"
+                  placeholder="Soyisim"
+                  formControlName="lastName"
+                  [ngClass]="{
+                    'is-invalid': isEditProfileFormControlInvalid('lastName'),
+                    'is-valid': isEditProfileFormControlValid('lastName')
+                  }"
+                />
+                <label for="lastName">Soyisim</label>
+              </div>
+              <p
+                *ngIf="isEditProfileFormControlInvalid('lastName')"
+                class="text-danger error-message"
+              >
+                Lütfen geçerli bir değer girin.
+              </p>
+            </div>
+          </div>
+          <div class="row mt-3">
+            <div class="col-md-12">
+              <div class="form-floating mb-3 has-validation">
+                <input
+                  type="text"
+                  class="form-control"
+                  id="phoneNumber"
+                  placeholder="Telefon Numarası"
+                  formControlName="phoneNumber"
+                  [ngClass]="{
+                    'is-invalid':
+                      isEditProfileFormControlInvalid('phoneNumber'),
+                    'is-valid': isEditProfileFormControlValid('phoneNumber')
+                  }"
+                />
+                <label for="phoneNumber">Telefon Numarası</label>
+              </div>
+              <p
+                *ngIf="isEditProfileFormControlInvalid('phoneNumber')"
+                class="text-danger error-message"
+              >
+                Lütfen geçerli bir değer girin.
+              </p>
+            </div>
+          </div>
+          <div class="row mt-3">
+            <div class="col-md-12">
+              <div class="form-floating mb-3 has-validation">
+                <input
+                  type="text"
+                  class="form-control"
+                  id="shopName"
+                  placeholder="Dükkan İsmi"
+                  formControlName="shopName"
+                  [ngClass]="{
+                    'is-invalid': isEditProfileFormControlInvalid('shopName'),
+                    'is-valid': isEditProfileFormControlValid('shopName')
+                  }"
+                />
+                <label for="shopName">Dükkan İsmi</label>
+              </div>
+              <p
+                *ngIf="isEditProfileFormControlInvalid('shopName')"
+                class="text-danger error-message"
+              >
+                Lütfen geçerli bir değer girin.
+              </p>
+            </div>
+          </div>
+          <div formGroupName="address">
+            <div class="row mt-3">
+              <div class="col-md-12">
+                <div class="form-floating mb-3 has-validation">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="addressDescription"
+                    placeholder="Adres"
+                    formControlName="addressDescription"
+                    [ngClass]="{
+                      'is-invalid': isEditProfileFormControlInvalid(
+                        'address.addressDescription'
+                      ),
+                      'is-valid': isEditProfileFormControlValid(
+                        'address.addressDescription'
+                      )
+                    }"
+                  />
+                  <label for="addressDescription">Adres</label>
+                </div>
+                <p
+                  *ngIf="
+                    isEditProfileFormControlInvalid(
+                      'address.addressDescription'
+                    )
+                  "
+                  class="text-danger error-message"
+                >
+                  Lütfen geçerli bir değer girin.
+                </p>
+              </div>
+            </div>
+            <div class="row mt-3">
+              <div>
+                <select class="form-select py-3 mb-3" formControlName="city">
+                  <option value=" " selected disabled hidden>Şehir</option>
+                  <option *ngFor="let city of cities" value="{{ city }}">
+                    {{ city }}
+                  </option>
+                </select>
+              </div>
+              <p
+                *ngIf="isEditProfileFormControlInvalid('address.city')"
+                class="text-danger error-message"
+              >
+                Lütfen geçerli bir değer girin.
+              </p>
+            </div>
+          </div>
+          <div class="mt-5 text-center">
+            <button
+              class="btn btn-primary profile-button w-50"
+              type="submit"
+              [disabled]="
+                this.editProfileForm.invalid || !this.editProfileForm.touched
+              "
+            >
+              Kaydet
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="d-flex col-md-6 border-right flex-column">
+      <form
+        id="change-password"
+        [formGroup]="changePasswordForm"
+        (ngSubmit)="onChangePasswordSubmit()"
+      >
+        <div class="p-3 py-5">
+          <div class="d-flex align-items-center">
+            <h4 class="text-right">Şifre Değiştir</h4>
+          </div>
+
+          <div class="row mt-2">
+            <div class="col-md-12">
+              <div class="form-floating mb-3 has-validation">
+                <input
+                  type="password"
+                  class="form-control"
+                  id="oldPassword"
+                  placeholder="Eski Şifre"
+                  formControlName="oldPassword"
+                  [ngClass]="{
+                    'is-invalid':
+                      isChangePasswordFormControlInvalid('oldPassword'),
+                    'is-valid': isChangePasswordFormControlValid('oldPassword')
+                  }"
+                />
+                <label for="oldPassword">Eski Şifre</label>
+              </div>
+              <p
+                *ngIf="isChangePasswordFormControlInvalid('oldPassword')"
+                class="text-danger error-message"
+              >
+                Lütfen geçerli bir değer girin.
+              </p>
+            </div>
+          </div>
+
+          <div class="row mt-3">
+            <div class="col-md-6">
+              <div class="form-floating has-validation">
+                <input
+                  type="password"
+                  class="form-control"
+                  id="newPassword"
+                  placeholder="Yeni Şifre"
+                  formControlName="newPassword"
+                  [ngClass]="{
+                    'is-invalid':
+                      isChangePasswordFormControlInvalid('newPassword'),
+                    'is-valid': isChangePasswordFormControlValid('newPassword')
+                  }"
+                />
+                <label for="newPassword">Yeni Şifre</label>
+              </div>
+              <p
+                *ngIf="isChangePasswordFormControlInvalid('newPassword')"
+                class="text-danger error-message"
+              >
+                Lütfen geçerli bir değer girin.
+              </p>
+            </div>
+
+            <div class="col-md-6">
+              <div class="form-floating has-validation">
+                <input
+                  type="password"
+                  class="form-control"
+                  id="confirmNewPassword"
+                  placeholder="Tekrar Yeni Şifre"
+                  formControlName="confirmNewPassword"
+                  [ngClass]="{
+                    'is-invalid':
+                      isChangePasswordFormControlInvalid('confirmNewPassword'),
+                    'is-valid':
+                      isChangePasswordFormControlValid('confirmNewPassword')
+                  }"
+                />
+                <label for="confirmNewPassword">Tekrar Yeni Şifre</label>
+              </div>
+              <p
+                *ngIf="isChangePasswordFormControlInvalid('confirmNewPassword')"
+                class="text-danger error-message"
+              >
+                Lütfen geçerli bir değer girin.
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="d-flex justify-content-center mt-2">
+          <button
+            class="btn btn-primary w-50"
+            type="submit"
+            [disabled]="this.changePasswordForm.invalid"
+          >
+            Şifre Değiştir
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

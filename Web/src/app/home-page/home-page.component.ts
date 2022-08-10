@@ -45,7 +45,9 @@ export class HomePageComponent implements OnInit {
     this.productsService
       .getAllProducts(this.productsPageNumber, this.productsPageSize)
       .subscribe((response) => {
-        this.products = response.data;
+        this.products = response.data.filter(
+          (p: any) => p.status !== 'Passive'
+        );
       });
   }
 }
