@@ -60,13 +60,6 @@ builder.Services.Configure<FormOptions>(o =>
 
 builder.Services.Configure<JWTSettings>(config.GetSection("JWTSettings"));
 
-builder.Services.Configure<FormOptions>(o =>
-{
-  o.ValueLengthLimit = int.MaxValue;
-  o.MultipartBodyLengthLimit = int.MaxValue;
-  o.MemoryBufferThreshold = int.MaxValue;
-});
-
 builder.Services.AddAuthentication(options =>
 {
   options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -111,6 +104,21 @@ builder.Services.AddAuthentication(options =>
       return context.Response.WriteAsync(result);
     },
   };
+});
+
+//builder.Services.AddCap(opts =>
+//{
+//  opts.UseInMemoryStorage();
+//  opts.UseInMemoryMessageQueue();
+//  //opts.UseEntityFramework<ApplicationDbContext>();
+//  //opts.UsePostgreSql(config.GetConnectionString("DefaultConnection"));
+//  opts.UseRabbitMQ(opts =>
+//  {
+//    opts.ExchangeName = "amq.topic";
+//    opts.HostName = config.GetConnectionString("RabbitMQ");
+//    opts.UserName = "guest";
+//    opts.Password = "guest";
+//  });
 });
 
 var app = builder.Build();

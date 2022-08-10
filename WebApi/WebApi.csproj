@@ -7,12 +7,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <!--<PackageReference Include="DotNetCore.CAP" Version="6.1.0" />
+    <PackageReference Include="DotNetCore.CAP.InMemoryStorage" Version="6.1.0" />
+    <PackageReference Include="DotNetCore.CAP.PostgreSql" Version="6.1.0" />
+    <PackageReference Include="DotNetCore.CAP.RabbitMQ" Version="6.1.0" />-->
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.7" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.7">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="Savorboard.CAP.InMemoryMessageQueue" Version="6.0.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
   </ItemGroup>
 
