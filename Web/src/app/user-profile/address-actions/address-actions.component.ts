@@ -7,8 +7,8 @@ import {
 } from '@ng-bootstrap/ng-bootstrap';
 import { IAddress } from 'src/app/models/IAddress';
 import { ICustomer } from 'src/app/models/ICustomer';
-import { IDeleteAddress } from 'src/app/models/IDeleteAddress';
-import { IEditAddress } from 'src/app/models/IEditAddress';
+import { IDeleteCustomerAddress } from 'src/app/models/IDeleteCustomerAddress';
+import { IEditCustomerAddress } from 'src/app/models/IEditCustomerAddress';
 import { ToastService } from 'src/app/services/toast.service';
 import { UserService } from 'src/app/services/user.service';
 import { SharedValues } from 'src/app/shared/SharedValues';
@@ -52,7 +52,7 @@ export class AddressActionsComponent implements OnInit {
   onSubmit(editAddressModal: NgbActiveModal) {
     if (this.editAddressForm.invalid) return;
 
-    const editAddressData: IEditAddress = {
+    const editAddressData: IEditCustomerAddress = {
       identityId: this.customer.identityId,
       addressId: this.address.id,
       title: this.editAddressForm.value.title,
@@ -60,7 +60,7 @@ export class AddressActionsComponent implements OnInit {
       city: this.editAddressForm.value.city,
     };
 
-    this.userService.editAddress(editAddressData).subscribe({
+    this.userService.editCustomerAddress(editAddressData).subscribe({
       next: (response) => {
         this.toastService.showToast({
           icon: 'success',
@@ -93,12 +93,12 @@ export class AddressActionsComponent implements OnInit {
   }
 
   onDeleteAddress(deleteAddressModal: NgbActiveModal) {
-    const deleteAddressData: IDeleteAddress = {
+    const deleteAddressData: IDeleteCustomerAddress = {
       addressId: this.address.id,
       identityId: this.customer.identityId,
     };
 
-    this.userService.deleteAddress(deleteAddressData).subscribe({
+    this.userService.deleteCustomerAddress(deleteAddressData).subscribe({
       next: (response) => {
         this.toastService.showToast({
           icon: 'success',

@@ -27,6 +27,7 @@ export class ProductDetailsComponent implements OnInit {
   };
 
   seller: ISeller = {
+    identityId: '',
     id: 0,
     firstName: '',
     lastName: '',

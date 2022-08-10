@@ -38,6 +38,7 @@ import { FilterPipe } from './filter.pipe';
 import { HeaderComponent } from './header/header.component';
 import { AddAddressComponent } from './user-profile/add-address/add-address.component';
 import { AddressActionsComponent } from './user-profile/address-actions/address-actions.component';
+import { SellerProfileComponent } from './seller-panel/seller-profile/seller-profile.component';
 
 @NgModule({
   declarations: [
@@ -70,6 +71,7 @@ import { AddressActionsComponent } from './user-profile/address-actions/address-
     HeaderComponent,
     AddAddressComponent,
     AddressActionsComponent,
+    SellerProfileComponent,
   ],
   imports: [
     BrowserModule,

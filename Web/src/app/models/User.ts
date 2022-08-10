@@ -16,4 +16,12 @@ export class User {
   hasRole(role: string) {
     return this.roles.find((r) => r === role);
   }
+
+  get isOnlyCustomer() {
+    return this.roles.find((r) => r === 'Customer') && this.roles.length === 1;
+  }
+
+  get isOnlySeller() {
+    return this.roles.find((r) => r === 'Seller') && this.roles.length === 1;
+  }
 }

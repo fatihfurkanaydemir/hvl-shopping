@@ -2,6 +2,7 @@ import { IAddress } from './IAddress';
 
 export interface ISeller {
   id: number;
+  identityId: string;
   firstName: string;
   lastName: string;
   phoneNumber: string;
