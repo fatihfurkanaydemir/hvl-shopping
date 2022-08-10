@@ -1,4 +1,14 @@
-<app-add-product (OnProductAdded)="getProducts()"></app-add-product>
+<div>
+  <app-add-product (OnProductAdded)="getProducts()"></app-add-product>
+<form class="d-flex row ">
+  <div class="col-10">
+    <input type="text" class="form-control" [(ngModel)]="filter" [ngModelOptions]="{standalone: true}" placeholder="Ürün Ara" />
+  </div>
+  <div class="col-2 btn-group">
+    <button class="btn btn-primary" (click)="search()">Ara</button>
+  </div>
+</form>
+</div>
 <div class="table-container">
   <table class="table table-hover table-responsive">
     <thead>
@@ -14,7 +24,7 @@
       </tr>
     </thead>
     <tbody class="table-group-divider">
-      <tr class="align-middle" *ngFor="let product of products">
+      <tr class="align-middle" *ngFor="let product of products | filter: filterTerm : filterMetadata">
         <th scope="row">{{ product.name }}</th>
         <th>
           <strong>{{ product.price }} ₺</strong>

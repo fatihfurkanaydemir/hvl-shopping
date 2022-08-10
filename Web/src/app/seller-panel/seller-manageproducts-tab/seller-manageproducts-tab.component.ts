@@ -10,6 +10,9 @@ import { ProductsService } from 'src/app/services/products.service';
   styleUrls: ['./seller-manageproducts-tab.component.css'],
 })
 export class SellerManageproductsTabComponent implements OnInit {
+  filter! : string;
+  filterTerm! : string;
+  filterMetadata = { count: 0 };
   products: IProduct[] = [];
   pageNumber: number = 1;
   pageSize: number = 12;
@@ -40,6 +43,9 @@ export class SellerManageproductsTabComponent implements OnInit {
         this.products = response.data.products;
         this.dataCount = +response.dataCount;
       });
+  }
+  search(){
+    this.filterTerm = this.filter;
   }
 
   onPageChange(newPageNumber: number) {
