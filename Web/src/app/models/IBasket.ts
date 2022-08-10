@@ -15,9 +15,5 @@ export interface IBasketItem {
 
 export class Basket implements IBasket {
     id = uuidv4();
-    items: IBasketItem[];
-
-    constructor(){
-        this.items = [];
-    }
+    items: IBasketItem[] = [];
 }

@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription, take, tap } from 'rxjs';
+import { BasketService } from './basket/basket.service';
 import { User } from './models/User';
 import { AuthService } from './services/auth.service';
 
@@ -14,7 +15,8 @@ export class AppComponent implements OnInit, OnDestroy {
   userSub?: Subscription;
   user?: User;
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(private authService: AuthService, private router: Router,
+    private basketService: BasketService) {}
 
   ngOnInit(): void {
     this.authService.autoLogin();
@@ -22,6 +24,13 @@ export class AppComponent implements OnInit, OnDestroy {
     this.userSub = this.authService.userSubject.subscribe((user) => {
       this.user = user;
     });
+
+    const basketId = localStorage.getItem('basket_id');
+    if (basketId){
+      this.basketService.getBasket(basketId).subscribe(()=>{
+        console.log('initialised basket');
+      });
+    }
   }
 
   goToPage(pageName: string) {
