@@ -10,7 +10,7 @@ export class FilterPipe implements PipeTransform {
       return products;
     } else {
       let filteredItems = products.filter((product) => {
-        return product.name.toLowerCase().includes(filterTerm)
+        return product.name.toLowerCase().startsWith(filterTerm)
         //  || product.seller.shopName.toLowerCase().includes(filterTerm);
         // || product.category.name.toLowerCase().includes(filterTerm)
       });
