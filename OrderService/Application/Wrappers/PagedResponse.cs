@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Application.Wrappers;
+namespace OrderService.Application.Wrappers;
 
 public class PagedResponse<T> : Response<T>
 {

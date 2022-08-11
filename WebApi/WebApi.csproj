@@ -17,6 +17,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="RabbitMQ.Client" Version="6.4.0" />
     <PackageReference Include="Savorboard.CAP.InMemoryMessageQueue" Version="6.0.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
   </ItemGroup>
@@ -24,6 +25,7 @@
   <ItemGroup>
 	<ProjectReference Include="..\Application\Application.csproj" />
 	<ProjectReference Include="..\Infrastructure.Persistence\Infrastructure.Persistence.csproj" />
+	<ProjectReference Include="..\Infrastructure\GlobalInfrastructure.csproj" />
   </ItemGroup>
 
 </Project>

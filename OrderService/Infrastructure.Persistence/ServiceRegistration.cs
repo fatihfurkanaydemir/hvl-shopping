@@ -1,11 +1,11 @@
-﻿using Application.Interfaces.Repositories;
-using Infrastructure.Persistence.Contexts;
-using Infrastructure.Persistence.Repositories;
+﻿using OrderService.Application.Interfaces.Repositories;
+using OrderService.Infrastructure.Persistence.Contexts;
+using OrderService.Infrastructure.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Infrastructure.Persistence;
+namespace OrderService.Infrastructure.Persistence;
 
 public static class ServiceRegistration
 {

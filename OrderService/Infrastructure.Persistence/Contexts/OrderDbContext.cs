@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Domain.Entities;
-using Domain.Common;
+using OrderService.Domain.Entities;
+using OrderService.Domain.Common;
 
 using System;
 using System.Collections.Generic;
@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Infrastructure.Persistence.Contexts;
+namespace OrderService.Infrastructure.Persistence.Contexts;
 
 public class OrderDbContext: DbContext
 {

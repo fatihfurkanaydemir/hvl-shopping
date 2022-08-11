@@ -1,7 +1,8 @@
 using OrderService.Middlewares;
-using Infrastructure.Persistence;
-using Application;
-using Savorboard.CAP.InMemoryMessageQueue;
+using OrderService.Infrastructure.Persistence;
+using OrderService.Application;
+using GlobalInfrastructure;
+using OrderService.Extensions;
 
 var config = new ConfigurationBuilder()
   .AddJsonFile("appsettings.json")
@@ -33,6 +34,8 @@ builder.Services.AddCors(options =>
       builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
     });
 });
+
+builder.Services.AddGlobalInfrastructure(config);
 
 //builder.Services.AddCap(opts =>
 //{
@@ -66,4 +69,7 @@ app.UseSwagger();
 app.UseSwaggerUI();
 app.UseHttpsRedirection();
 app.MapControllers();
+
+app.SubscribeEvents();
+
 app.Run();

@@ -1,4 +1,4 @@
-﻿namespace Application.Interfaces.Repositories;
+﻿namespace OrderService.Application.Interfaces.Repositories;
 
 public interface IGenericRepositoryAsync<T> where T : class
 {

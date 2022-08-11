@@ -4,7 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 using System.Net.Http.Headers;
 
-namespace Application;
+namespace OrderService.Application;
 
 public static class ServiceExtensions
 {

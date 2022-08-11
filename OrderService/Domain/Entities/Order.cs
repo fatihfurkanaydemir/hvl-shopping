@@ -1,7 +1,7 @@
-﻿using Domain.Common;
-using Domain.Enums;
+﻿using OrderService.Domain.Common;
+using OrderService.Domain.Enums;
 
-namespace Domain.Entities;
+namespace OrderService.Domain.Entities;
 
 public class Order: AuditableBaseEntity
 {

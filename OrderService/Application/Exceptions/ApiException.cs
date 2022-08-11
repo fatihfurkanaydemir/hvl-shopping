@@ -1,6 +1,6 @@
 ﻿using System.Globalization;
 
-namespace Application.Exceptions;
+namespace OrderService.Application.Exceptions;
 
 public class ApiException : Exception
 {

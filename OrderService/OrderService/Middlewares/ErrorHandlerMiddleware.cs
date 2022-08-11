@@ -1,5 +1,5 @@
-﻿using Application.Exceptions;
-using Application.Wrappers;
+﻿using OrderService.Application.Exceptions;
+using OrderService.Application.Wrappers;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using System.Net;

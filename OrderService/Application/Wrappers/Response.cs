@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace Application.Wrappers;
+namespace OrderService.Application.Wrappers;
 
 public class Response<T>
 {

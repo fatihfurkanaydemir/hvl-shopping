@@ -1,6 +1,6 @@
-﻿using Domain.Entities;
+﻿using OrderService.Domain.Entities;
 
-namespace Application.Interfaces.Repositories;
+namespace OrderService.Application.Interfaces.Repositories;
 
 public interface IOrderRepositoryAsync: IGenericRepositoryAsync<Order>
 {

@@ -1,8 +1,8 @@
-﻿using Application.Interfaces.Repositories;
-using Infrastructure.Persistence.Contexts;
+﻿using OrderService.Application.Interfaces.Repositories;
+using OrderService.Infrastructure.Persistence.Contexts;
 using Microsoft.EntityFrameworkCore;
 
-namespace Infrastructure.Persistence.Repositories;
+namespace OrderService.Infrastructure.Persistence.Repositories;
 
 public class GenericRepositoryAsync<T> : IGenericRepositoryAsync<T> where T : class
 {

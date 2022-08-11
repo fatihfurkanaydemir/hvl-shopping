@@ -1,11 +1,11 @@
-﻿using Application.Interfaces.Repositories;
-using Domain.Entities;
-using Infrastructure.Persistence.Contexts;
+﻿using OrderService.Application.Interfaces.Repositories;
+using OrderService.Domain.Entities;
+using OrderService.Infrastructure.Persistence.Contexts;
 using Microsoft.EntityFrameworkCore;
 
-namespace Infrastructure.Persistence.Repositories;
+namespace OrderService.Infrastructure.Persistence.Repositories;
 
-internal class OrderRepositoryAsync: GenericRepositoryAsync<Order>, IOrderRepositoryAsync
+internal class OrderRepositoryAsync : GenericRepositoryAsync<Order>, IOrderRepositoryAsync
 {
   private readonly DbSet<Order> _orders;
 

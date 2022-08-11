@@ -12,6 +12,7 @@ using Application.Wrappers;
 using Newtonsoft.Json;
 using WebApi.Settings;
 using Application.Services;
+using GlobalInfrastructure;
 
 var config = new ConfigurationBuilder()
   .AddJsonFile("appsettings.json")
@@ -106,6 +107,8 @@ builder.Services.AddAuthentication(options =>
   };
 });
 
+builder.Services.AddGlobalInfrastructure(config);
+
 //builder.Services.AddCap(opts =>
 //{
 //  opts.UseInMemoryStorage();
@@ -119,7 +122,6 @@ builder.Services.AddAuthentication(options =>
 //    opts.UserName = "guest";
 //    opts.Password = "guest";
 //  });
-});
 
 var app = builder.Build();
 
