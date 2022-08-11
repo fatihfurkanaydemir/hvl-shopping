@@ -1,12 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using OrderService.Domain.Entities;
-using OrderService.Domain.Common;
 
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Common.Entities;
 
 namespace OrderService.Infrastructure.Persistence.Contexts;
 

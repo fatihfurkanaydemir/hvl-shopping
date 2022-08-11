@@ -1,9 +1,10 @@
 ﻿using Common.Entities;
 using Common.Enums;
+using Common.EventBus.Events;
 
-namespace OrderService.Domain.Entities;
+namespace Common.ApplicationEvents;
 
-public class Order: AuditableBaseEntity
+public class CreateOrderEvent : Event
 {
   public string CustomerIdentityId { get; set; }
   public string CustomerFirstName { get; set; }
@@ -15,5 +16,5 @@ public class Order: AuditableBaseEntity
   public string AddressTitle { get; set; }
   public string AddressDescription { get; set; }
   public string AddressCity { get; set; }
-  public decimal TotalPrice { get; set; } 
+  public decimal TotalPrice { get; set; }
 }

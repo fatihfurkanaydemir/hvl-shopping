@@ -5,13 +5,23 @@ using Microsoft.EntityFrameworkCore;
 
 namespace OrderService.Infrastructure.Persistence.Repositories;
 
-internal class OrderRepositoryAsync : GenericRepositoryAsync<Order>, IOrderRepositoryAsync
+public class OrderRepositoryAsync : GenericRepositoryAsync<Order>, IOrderRepositoryAsync
 {
   private readonly DbSet<Order> _orders;
 
   public OrderRepositoryAsync(OrderDbContext dbContext) : base(dbContext)
   {
     _orders = dbContext.Orders;
+  }
+
+  public async Task<IReadOnlyList<Order>> GetPagedReponseWithRelationsAsync(int pageNumber, int pageSize)
+  {
+    return await _orders
+          .Skip((pageNumber - 1) * pageSize)
+          .Take(pageSize)
+          .Include(o => o.Products)
+          .AsNoTracking()
+          .ToListAsync();
   }
 
   //public async Task<IReadOnlyList<Customer>> GetPagedReponseWithRelationsAsync(int pageNumber, int pageSize)

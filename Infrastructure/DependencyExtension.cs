@@ -4,6 +4,10 @@ using Common.EventBus.Interfaces;
 using Common.ApplicationEvents;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using OrderService.Application.Features.Orders.EventHandlers.CreateOrder;
+using OrderService.Application.Interfaces.Repositories;
+using OrderService.Infrastructure.Persistence.Repositories;
+using OrderService.Infrastructure.Persistence.Contexts;
 
 namespace GlobalInfrastructure;
 
@@ -18,6 +22,9 @@ public static class DependencyExtension
     });
 
     services.AddTransient<TestEventHandler>();
-    //services.AddTransient<IEventHandler<TestEvent>, TestEventHandler>();
+    services.AddTransient<CreateOrderEventHandler>();
+
+    services.AddTransient<IOrderRepositoryAsync, OrderRepositoryAsync>();
+    services.AddDbContext<OrderDbContext>();
   }
 }

@@ -34,7 +34,7 @@ namespace Infrastructure.Persistence.Repositories
         .Include(p => p.Category)
         .Include(p => p.Seller)
         .ThenInclude(s => s.Address)
-        .AsTracking()
+        .AsNoTracking()
         .SingleOrDefaultAsync(p => p.Id == id);
     }
 
