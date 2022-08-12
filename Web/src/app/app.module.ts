@@ -42,6 +42,7 @@ import { SellerProfileComponent } from './seller-panel/seller-profile/seller-pro
 
 import { registerLocaleData } from '@angular/common';
 import localeTr from '@angular/common/locales/tr';
+import { OrdersActionsComponent } from './seller-panel/orders-actions/orders-actions.component';
 
 registerLocaleData(localeTr);
 @NgModule({
@@ -76,6 +77,7 @@ registerLocaleData(localeTr);
     AddAddressComponent,
     AddressActionsComponent,
     SellerProfileComponent,
+    OrdersActionsComponent,
   ],
   imports: [
     BrowserModule,

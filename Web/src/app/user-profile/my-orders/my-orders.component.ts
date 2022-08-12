@@ -42,8 +42,13 @@ export class MyOrdersComponent implements OnInit {
       .subscribe({
         next: (response) => {
           this.orders = response.data;
-          this.dataCount = response.dataCount;
+          this.dataCount = +response.dataCount;
         },
       });
+  }
+
+  onPageChange(newPageNumber: number) {
+    this.pageNumber = newPageNumber;
+    this.getOrders();
   }
 }

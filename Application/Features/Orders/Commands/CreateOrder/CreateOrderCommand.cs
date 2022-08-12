@@ -72,6 +72,7 @@ namespace Application.Features.Orders.Commands.CreateOrder
 
         if(product.Seller.Id != seller.Id) throw new ApiException($"Seller does not have the product ({product.Name})");
         if(product.InStock < p.Count) throw new ApiException($"Not enough stock for the product ({product.Name})");
+        if(product.Status == Domain.Enums.ProductStatus.Passive) throw new ApiException($"Product is not active ({product.Name})");
 
         orderEvent.Products.Add(new OrderProduct
         {
@@ -94,6 +95,7 @@ namespace Application.Features.Orders.Commands.CreateOrder
       {
         var product = await _productRepository.GetByIdWithRelationsAsync(p.ProductId);
         product.InStock -= p.Count;
+        product.Sold += p.Count;
         await _productRepository.UpdateAsync(product);
       }
 

@@ -13,42 +13,48 @@
           <div class="card-body p-4 p-sm-5">
             <div class="row">
               <div class="col d-xxl-inline-block">
-                <h1 class="d-inline card-title fs-5">Sipariş Tarihi</h1>
+                <h1 class="d-inline card-title fs-4">Sipariş Tarihi</h1>
                 <p>
                   {{ order.created | date: "mediumDate" }}
                 </p>
               </div>
 
               <div class="col d-inline-block">
-                <h1 class="d-inline card-title fs-5">Alıcı</h1>
+                <h1 class="d-inline card-title fs-4">Alıcı</h1>
                 <p>
                   {{ order.customerFirstName }} {{ order.customerLastName }}
                 </p>
               </div>
               <div class="col d-inline-block">
-                <h1 class="d-inline card-title fs-5">Telefon</h1>
+                <h1 class="d-inline card-title fs-4">Telefon</h1>
                 <p>
                   {{ order.customerPhoneNumber }}
                 </p>
               </div>
               <div class="col d-inline-block">
-                <h1 class="d-inline card-title fs-5">Tutar</h1>
-                <p>{{ order.totalPrice }}</p>
+                <h1 class="d-inline card-title fs-4">Tutar</h1>
+                <p>{{ order.totalPrice | currency: "TRY":"symbol" }}</p>
               </div>
             </div>
             <div class="row">
               <div class="col d-inline-block">
-                <h1 class="d-inline card-title fs-5">Sipariş Özeti</h1>
-                <p *ngFor="let product of order.products" class="text-info">
+                <h1 class="d-inline card-title fs-4">Sipariş Özeti</h1>
+                <p
+                  *ngFor="let product of order.products"
+                  class="text-info mb-1"
+                >
                   {{ product.count }} x {{ product.productName }} (
                   {{ product.count }} x {{ product.pricePerProduct }} ) =
-                  {{ product.pricePerProduct * product.count }}
+                  {{
+                    product.pricePerProduct * product.count
+                      | currency: "TRY":"symbol"
+                  }}
                 </p>
               </div>
             </div>
-            <div class="row">
+            <div class="row mt-2">
               <div class="col-6 d-inline-block">
-                <h1 class="d-inline card-title fs-5">Adres</h1>
+                <h1 class="d-inline card-title fs-4">Adres</h1>
                 <div>
                   <span class="text-secondary">Adres Tanımı</span>
                   <p class="form-control">{{ order.addressTitle }}</p>
@@ -64,31 +70,31 @@
               </div>
               <div class="col-6">
                 <div class="row">
-                  <h1 class="d-inline card-title fs-5">Durum</h1>
-                  <h1
-                    class="card-title fs-5"
+                  <h1 class="d-inline card-title fs-4">Durum</h1>
+                  <h2
+                    class="card-subtitle fs-5"
                     *ngIf="order.status === OrderStatus.Created"
                   >
                     Siparişiniz oluşturuldu
-                  </h1>
-                  <h1
+                  </h2>
+                  <h2
                     class="card-title fs-5"
                     *ngIf="order.status === OrderStatus.Canceled"
                   >
                     Siparişiniz iptal edilmiştir.
-                  </h1>
-                  <h1
+                  </h2>
+                  <h2
                     class="card-title fs-5"
                     *ngIf="order.status === OrderStatus.Shipped"
                   >
                     Siparişiniz kargolandı.
-                  </h1>
-                  <h1
-                    class="card-title fs-5"
+                  </h2>
+                  <h2
+                    class="card-title fs52"
                     *ngIf="order.status === OrderStatus.Returned"
                   >
                     Siparişiniz iade edilmiştir.
-                  </h1>
+                  </h2>
                 </div>
                 <div class="row"></div>
               </div>
@@ -98,4 +104,12 @@
       </div>
     </div>
   </div>
+</div>
+<div class="d-flex mt-4 justify-content-center">
+  <ngb-pagination
+    [collectionSize]="dataCount"
+    [(page)]="pageNumber"
+    [pageSize]="pageSize"
+    (pageChange)="onPageChange($event)"
+  ></ngb-pagination>
 </div>

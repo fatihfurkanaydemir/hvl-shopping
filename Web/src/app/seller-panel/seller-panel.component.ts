@@ -9,6 +9,6 @@ export class SellerPanelComponent implements OnInit {
   constructor(private router: Router, private route: ActivatedRoute) {}
 
   ngOnInit(): void {
-    this.router.navigate(['manage-products'], { relativeTo: this.route });
+    this.router.navigate(['dashboard'], { relativeTo: this.route });
   }
 }

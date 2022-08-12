@@ -20,6 +20,7 @@ public class OrderRepositoryAsync : GenericRepositoryAsync<Order>, IOrderReposit
           .Skip((pageNumber - 1) * pageSize)
           .Take(pageSize)
           .Include(o => o.Products)
+          .OrderByDescending(o => o.Created)
           .AsNoTracking()
           .ToListAsync();
   }
@@ -31,6 +32,7 @@ public class OrderRepositoryAsync : GenericRepositoryAsync<Order>, IOrderReposit
           .Take(pageSize)
           .Include(o => o.Products)
           .Where(o => o.CustomerIdentityId == Id)
+          .OrderByDescending(o => o.Created)
           .AsNoTracking()
           .ToListAsync();
   }
@@ -42,6 +44,7 @@ public class OrderRepositoryAsync : GenericRepositoryAsync<Order>, IOrderReposit
           .Take(pageSize)
           .Include(o => o.Products)
           .Where(o => o.SellerIdentityId == Id)
+          .OrderByDescending(o => o.Created)
           .AsNoTracking()
           .ToListAsync();
   }
