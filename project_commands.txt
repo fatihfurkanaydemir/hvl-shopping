@@ -1,0 +1,46 @@
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//
+// Database update komutları, postgreyi ilk kurduğunuzda ve tablo yapıları değiştiğinde çalıştırılması gerek
+//
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+// Tüm komutlar ana proje dizininde çalıştırılmalı
+
+1)
+// Postgre ve rabbitmq
+docker-compose up -d
+
+2)
+dotnet ef database update --context ApplicationDbContext --project .\Infrastructure.Persistence\ --startup-project .\WebApi\
+
+3)
+dotnet ef database update --context OrderDbContext --project .\OrderService\Infrastructure.Persistence\ --startup-project .\OrderService\OrderService\
+
+4)
+dotnet ef database update --context IdentityContext --project .\AuthServer\ --startup-project .\AuthServer\
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//
+// Servisler için
+//
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+Herhangibir zamanda projeyi çalıştırmak için proje çalışma sırası
+
+1)
+// Postgre ve rabbitmq
+docker-compose up -d
+
+2)
+AuthServer
+
+3)
+Diğer servislerin sırası önemli değil
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!                                                             !!
+!! AuthServer ilk başlatılmalı API nin seed edilebilmesi için. !!
+!!                                                             !!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
