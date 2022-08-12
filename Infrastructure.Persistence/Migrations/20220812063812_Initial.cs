@@ -52,7 +52,6 @@ namespace Infrastructure.Persistence.Migrations
                     Title = table.Column<string>(type: "text", nullable: false),
                     AddressDescription = table.Column<string>(type: "text", nullable: false),
                     City = table.Column<string>(type: "text", nullable: false),
-                    type = table.Column<int>(type: "integer", nullable: false),
                     CustomerId = table.Column<int>(type: "integer", nullable: true),
                     Created = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     LastModified = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
@@ -149,41 +148,6 @@ namespace Infrastructure.Persistence.Migrations
                         principalColumn: "Id");
                 });
 
-            migrationBuilder.CreateTable(
-                name: "Order",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    ProductId = table.Column<int>(type: "integer", nullable: false),
-                    SellerId = table.Column<int>(type: "integer", nullable: false),
-                    CustomerId = table.Column<int>(type: "integer", nullable: false),
-                    Created = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    LastModified = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Order", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Order_Customers_CustomerId",
-                        column: x => x.CustomerId,
-                        principalTable: "Customers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Order_Products_ProductId",
-                        column: x => x.ProductId,
-                        principalTable: "Products",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Order_Sellers_SellerId",
-                        column: x => x.SellerId,
-                        principalTable: "Sellers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
             migrationBuilder.CreateIndex(
                 name: "IX_Addresses_CustomerId",
                 table: "Addresses",
@@ -193,21 +157,6 @@ namespace Infrastructure.Persistence.Migrations
                 name: "IX_Image_ProductId",
                 table: "Image",
                 column: "ProductId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Order_CustomerId",
-                table: "Order",
-                column: "CustomerId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Order_ProductId",
-                table: "Order",
-                column: "ProductId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Order_SellerId",
-                table: "Order",
-                column: "SellerId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Products_CategoryId",
@@ -229,9 +178,6 @@ namespace Infrastructure.Persistence.Migrations
         {
             migrationBuilder.DropTable(
                 name: "Image");
-
-            migrationBuilder.DropTable(
-                name: "Order");
 
             migrationBuilder.DropTable(
                 name: "Products");

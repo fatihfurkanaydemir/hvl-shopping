@@ -6,6 +6,8 @@ using Common.ApplicationEvents;
 
 
 using OrderService.Application.Features.Orders.Queries.GetAllOrders;
+using OrderService.Application.Features.Orders.Queries.GetAllOrdersByCustomerIdentityId;
+using OrderService.Application.Features.Orders.Queries.GetAllOrdersBySellerIdentityId;
 
 namespace OrderService.Application.Mappings
 {
@@ -17,6 +19,8 @@ namespace OrderService.Application.Mappings
       CreateMap<Order, OrderViewModel>().ReverseMap();
       CreateMap<OrderProduct, OrderProductViewModel>().ReverseMap();
       CreateMap<GetAllOrdersQuery, GetAllOrdersParameter>();
+      CreateMap<GetAllOrdersByCustomerIdentityIdQuery, GetAllOrdersByCustomerIdentityIdParameter>();
+      CreateMap<GetAllOrdersBySellerIdentityIdQuery, GetAllOrdersBySellerIdentityIdParameter>();
     }
   }
 }

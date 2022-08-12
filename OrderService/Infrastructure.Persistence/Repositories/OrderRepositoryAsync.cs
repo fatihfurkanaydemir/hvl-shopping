@@ -24,21 +24,41 @@ public class OrderRepositoryAsync : GenericRepositoryAsync<Order>, IOrderReposit
           .ToListAsync();
   }
 
-  //public async Task<IReadOnlyList<Customer>> GetPagedReponseWithRelationsAsync(int pageNumber, int pageSize)
-  //{
-  //  return await _customers
-  //      .Skip((pageNumber - 1) * pageSize)
-  //      .Take(pageSize)
-  //      .Include(p => p.Addresses)
-  //      .AsNoTracking()
-  //      .ToListAsync();
-  //}
+  public async Task<IReadOnlyList<Order>> GetAllOrdersByCustomerIdentityIdAsync(string Id, int pageNumber, int pageSize)
+  {
+    return await _orders
+          .Skip((pageNumber - 1) * pageSize)
+          .Take(pageSize)
+          .Include(o => o.Products)
+          .Where(o => o.CustomerIdentityId == Id)
+          .AsNoTracking()
+          .ToListAsync();
+  }
 
-  //public async Task<Customer?> GetByIdentityIdWithRelationsAsync(string id)
-  //{
-  //  return await _customers
-  //    .Include(p => p.Addresses)
-  //    .AsNoTracking()
-  //    .SingleOrDefaultAsync(p => p.IdentityId == id);
-  //}
+  public async Task<IReadOnlyList<Order>> GetAllOrdersBySellerIdentityIdAsync(string Id, int pageNumber, int pageSize)
+  {
+    return await _orders
+          .Skip((pageNumber - 1) * pageSize)
+          .Take(pageSize)
+          .Include(o => o.Products)
+          .Where(o => o.SellerIdentityId == Id)
+          .AsNoTracking()
+          .ToListAsync();
+  }
+
+  public async Task<int> GetDataCountByCustomerIdentityIdAsync(string Id)
+  {
+    return await _orders
+          .Where(o => o.CustomerIdentityId == Id)
+          .AsNoTracking()
+          .CountAsync();
+  }
+
+  public async Task<int> GetDataCountBySellerIdentityIdAsync(string Id)
+  {
+    return await _orders
+          .Where(o => o.SellerIdentityId == Id)
+          .AsNoTracking()
+          .CountAsync();
+  }
 }

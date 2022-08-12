@@ -109,20 +109,6 @@ builder.Services.AddAuthentication(options =>
 
 builder.Services.AddGlobalInfrastructure(config);
 
-//builder.Services.AddCap(opts =>
-//{
-//  opts.UseInMemoryStorage();
-//  opts.UseInMemoryMessageQueue();
-//  //opts.UseEntityFramework<ApplicationDbContext>();
-//  //opts.UsePostgreSql(config.GetConnectionString("DefaultConnection"));
-//  opts.UseRabbitMQ(opts =>
-//  {
-//    opts.ExchangeName = "amq.topic";
-//    opts.HostName = config.GetConnectionString("RabbitMQ");
-//    opts.UserName = "guest";
-//    opts.Password = "guest";
-//  });
-
 var app = builder.Build();
 
 using (var scope = app.Services.CreateScope())

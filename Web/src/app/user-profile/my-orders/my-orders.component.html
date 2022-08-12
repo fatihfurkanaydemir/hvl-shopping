@@ -1,0 +1,101 @@
+<div class="container">
+  <div class="row" style="margin-top: 20px">
+    <div class="container mt-2">
+      <div *ngIf="this.dataCount == 0" class="mt-5">
+        <p class="text-lg-center text-primary" style="font-size: 24px">
+          Henüz bir siparişiniz bulunmamaktadır.
+        </p>
+      </div>
+
+      <h3 class="d-flex justify-content-center mt-3">Siparişler</h3>
+      <div class="mx-auto" *ngFor="let order of orders">
+        <div class="card border-0 shadow rounded-3 mt-3">
+          <div class="card-body p-4 p-sm-5">
+            <div class="row">
+              <div class="col d-xxl-inline-block">
+                <h1 class="d-inline card-title fs-5">Sipariş Tarihi</h1>
+                <p>
+                  {{ order.created | date: "mediumDate" }}
+                </p>
+              </div>
+
+              <div class="col d-inline-block">
+                <h1 class="d-inline card-title fs-5">Alıcı</h1>
+                <p>
+                  {{ order.customerFirstName }} {{ order.customerLastName }}
+                </p>
+              </div>
+              <div class="col d-inline-block">
+                <h1 class="d-inline card-title fs-5">Telefon</h1>
+                <p>
+                  {{ order.customerPhoneNumber }}
+                </p>
+              </div>
+              <div class="col d-inline-block">
+                <h1 class="d-inline card-title fs-5">Tutar</h1>
+                <p>{{ order.totalPrice }}</p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col d-inline-block">
+                <h1 class="d-inline card-title fs-5">Sipariş Özeti</h1>
+                <p *ngFor="let product of order.products" class="text-info">
+                  {{ product.count }} x {{ product.productName }} (
+                  {{ product.count }} x {{ product.pricePerProduct }} ) =
+                  {{ product.pricePerProduct * product.count }}
+                </p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-6 d-inline-block">
+                <h1 class="d-inline card-title fs-5">Adres</h1>
+                <div>
+                  <span class="text-secondary">Adres Tanımı</span>
+                  <p class="form-control">{{ order.addressTitle }}</p>
+                </div>
+                <div>
+                  <span class="text-secondary">Adres Tarifi</span>
+                  <p class="form-control">{{ order.addressDescription }}</p>
+                </div>
+                <div>
+                  <span class="text-secondary">Şehir</span>
+                  <p class="form-control">{{ order.addressCity }}</p>
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="row">
+                  <h1 class="d-inline card-title fs-5">Durum</h1>
+                  <h1
+                    class="card-title fs-5"
+                    *ngIf="order.status === OrderStatus.Created"
+                  >
+                    Siparişiniz oluşturuldu
+                  </h1>
+                  <h1
+                    class="card-title fs-5"
+                    *ngIf="order.status === OrderStatus.Canceled"
+                  >
+                    Siparişiniz iptal edilmiştir.
+                  </h1>
+                  <h1
+                    class="card-title fs-5"
+                    *ngIf="order.status === OrderStatus.Shipped"
+                  >
+                    Siparişiniz kargolandı.
+                  </h1>
+                  <h1
+                    class="card-title fs-5"
+                    *ngIf="order.status === OrderStatus.Returned"
+                  >
+                    Siparişiniz iade edilmiştir.
+                  </h1>
+                </div>
+                <div class="row"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

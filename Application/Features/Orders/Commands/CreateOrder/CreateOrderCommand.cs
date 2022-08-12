@@ -51,6 +51,8 @@ namespace Application.Features.Orders.Commands.CreateOrder
 
     public async Task<Response<int>> Handle(CreateOrderCommand request, CancellationToken cancellationToken)
     {
+      if (request.Products.Count <= 0) throw new ApiException("No products provided");
+
       var orderEvent = _mapper.Map<CreateOrderEvent>(request);
 
       var seller = await _sellerRepository.GetByIdentityIdAsync(orderEvent.SellerIdentityId);
@@ -63,6 +65,8 @@ namespace Application.Features.Orders.Commands.CreateOrder
 
       foreach(var p in request.Products)
       {
+        if(p.Count <= 0) throw new ApiException("Invalid product count");
+
         var product = await _productRepository.GetByIdWithRelationsAsync(p.ProductId);
         if (product == null) throw new ApiException($"Product ({p.ProductId}) not found");
 

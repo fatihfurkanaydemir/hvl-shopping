@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { LOCALE_ID, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
@@ -31,7 +31,7 @@ import { LoginPageComponent } from './login-page/login-page.component';
 import { RegisterPageComponent } from './register-page/register-page.component';
 import { SellerLoginComponent } from './seller-panel/seller-login/seller-login.component';
 import { AuthInterceptor } from './services/auth-interceptor.service';
-import { MyOrdersComponent } from './my-orders/my-orders.component';
+import { MyOrdersComponent } from './user-profile/my-orders/my-orders.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { SearchFilterComponent } from './search-filter/search-filter.component';
 import { FilterPipe } from './filter.pipe';
@@ -40,6 +40,10 @@ import { AddAddressComponent } from './user-profile/add-address/add-address.comp
 import { AddressActionsComponent } from './user-profile/address-actions/address-actions.component';
 import { SellerProfileComponent } from './seller-panel/seller-profile/seller-profile.component';
 
+import { registerLocaleData } from '@angular/common';
+import localeTr from '@angular/common/locales/tr';
+
+registerLocaleData(localeTr);
 @NgModule({
   declarations: [
     AppComponent,
@@ -87,6 +91,10 @@ import { SellerProfileComponent } from './seller-panel/seller-profile/seller-pro
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
       multi: true,
+    },
+    {
+      provide: LOCALE_ID,
+      useValue: 'tr-TR',
     },
   ],
   bootstrap: [AppComponent],
