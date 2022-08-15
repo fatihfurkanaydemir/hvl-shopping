@@ -21,8 +21,6 @@ services:
       PGDATA: /data/postgres
     volumes:
        - postgres:/data/postgres
-  redis:
-    image: redis:latest
     ports:
       - "5432:5432"
     networks:
@@ -36,18 +34,9 @@ services:
       PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:-pgadmin4@pgadmin.org}
       PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD:-admin}
       PGADMIN_CONFIG_SERVER_MODE: 'False'
-      - 6379:6379
-    command: ["redis-server", "--appendonly", "yes"]
     volumes:
-      - redis-data:/data
        - pgadmin:/var/lib/pgadmin
 
-  redis-commander:
-    image: rediscommander/redis-commander:latest
-    environment:
-      - REDIS_HOSTS=local:redis:6379
-      - HTTP_USER=root
-      - HTTP_PASSWORD=secret
     ports:
       - "${PGADMIN_PORT:-5050}:80"
     networks:
@@ -60,11 +49,7 @@ networks:
     
   postgres:
     driver: bridge
-      - 8081:8081
-    depends_on:
-      - redis
     
 volumes:
-  redis-data:
     postgres:
     pgadmin:
