@@ -1,0 +1,97 @@
+<button class="btn btn-sm btn-outline-primary" (click)="openModal(modal)">
+  Detaylar
+</button>
+<ng-template #modal let-modal>
+  <div class="modal-header">
+    <h1 class="text-center" id="modal-basic-title">Sipariş Detayı</h1>
+    <button
+      type="button"
+      class="btn-close"
+      aria-label="Close"
+      (click)="modal.dismiss('Cross click')"
+    ></button>
+  </div>
+  <div class="modal-body">
+    <div class="row text-center">
+      <div class="col d-xxl-inline-block">
+        <h1 class="d-inline card-title fs-4">Sipariş Tarihi</h1>
+        <p>
+          {{ order.created | date: "mediumDate" }}
+        </p>
+      </div>
+
+      <div class="col d-inline-block">
+        <h1 class="d-inline card-title fs-4">Alıcı</h1>
+        <p>{{ order.customerFirstName }} {{ order.customerLastName }}</p>
+      </div>
+    </div>
+    <div class="row text-center">
+      <div class="col d-inline-block">
+        <h1 class="d-inline card-title fs-4">Telefon</h1>
+        <p>
+          {{ order.customerPhoneNumber }}
+        </p>
+      </div>
+      <div class="col d-inline-block">
+        <h1 class="d-inline card-title fs-4">Tutar</h1>
+        <p>{{ order.totalPrice | currency: "TRY":"symbol" }}</p>
+      </div>
+    </div>
+    <hr />
+    <div class="row text-center">
+      <div class="col d-inline-block">
+        <h1 class="card-title fs-4 mb-2">Sipariş Özeti</h1>
+        <p *ngFor="let product of order.products" class="text-info mb-1">
+          {{ product.count }} x {{ product.productName }} (
+          {{ product.count }} x {{ product.pricePerProduct }} ) =
+          {{
+            product.pricePerProduct * product.count | currency: "TRY":"symbol"
+          }}
+        </p>
+      </div>
+    </div>
+    <hr />
+    <div class="row">
+      <h1 class="d-inline card-title fs-4 mb-2 text-center">Adres</h1>
+      <div>
+        <span class="text-secondary">Adres Tanımı</span>
+        <p class="form-control">{{ order.addressTitle }}</p>
+      </div>
+      <div>
+        <span class="text-secondary">Adres Tarifi</span>
+        <p class="form-control">{{ order.addressDescription }}</p>
+      </div>
+      <div>
+        <span class="text-secondary">Şehir</span>
+        <p class="form-control">{{ order.addressCity }}</p>
+      </div>
+    </div>
+    <hr />
+    <div class="row text-center">
+      <h1 class="d-inline card-title fs-4">Durum</h1>
+      <h2
+        class="card-subtitle fs-5 mt-3"
+        *ngIf="order.status === OrderStatus.Created"
+      >
+        Sipariş oluşturuldu.
+      </h2>
+      <h2 class="card-title fs-5" *ngIf="order.status === OrderStatus.Canceled">
+        Sipariş iptal edildi.
+      </h2>
+      <h2 class="card-title fs-5" *ngIf="order.status === OrderStatus.Shipped">
+        Sipariş kargolandı.
+      </h2>
+      <h2 class="card-title fs52" *ngIf="order.status === OrderStatus.Returned">
+        Sipariş iade edildi.
+      </h2>
+    </div>
+  </div>
+  <div class="modal-footer d-block">
+    <h1 class="card-title fs-4 text-center">İşlemler</h1>
+    <div class="btn-group btn-group-lg w-100 mt-3">
+      <div class="btn btn-outline-primary">Action 1</div>
+      <div class="btn btn-outline-secondary">Action 2</div>
+      <div class="btn btn-outline-danger">Action 3</div>
+    </div>
+  </div>
+</ng-template>

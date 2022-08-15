@@ -12,6 +12,5 @@ namespace Domain.Entities
     public string ShopName { get; set; }
     public Address Address { get; set; }
     public List<Product> Products { get; set; }
-    public List<Order> Orders { get; set; }
   }
 }

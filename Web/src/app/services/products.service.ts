@@ -11,8 +11,6 @@ import { IProductUpdate } from '../models/IProductUpdate';
 export class ProductsService {
   constructor(private httpClient: HttpClient) {}
 
-  apiUrl: string = environment.apiUrl;
-
   getAllProducts(
     pageNumber: number,
     pageSize: number
@@ -24,14 +22,14 @@ export class ProductsService {
 
   createProduct(product: IProductCreate): Observable<IApiResponse> {
     return this.httpClient.post<IApiResponse>(
-      this.apiUrl + '/Product',
+      environment.apiUrl + '/Product',
       product
     );
   }
 
   getProduct(id: number): Observable<IApiResponseSingle> {
     return this.httpClient.get<IApiResponseSingle>(
-      this.apiUrl + '/Product/' + id
+      environment.apiUrl + '/Product/' + id
     );
   }
 
@@ -47,21 +45,21 @@ export class ProductsService {
 
   updateProduct(product: IProductUpdate): Observable<IApiResponse> {
     return this.httpClient.patch<IApiResponse>(
-      this.apiUrl + '/Product/',
+      environment.apiUrl + '/Product/',
       product
     );
   }
 
   deactivateProduct(id: number): Observable<IApiResponseSingle> {
     return this.httpClient.post<IApiResponseSingle>(
-      this.apiUrl + '/Product/deactivate',
+      environment.apiUrl + '/Product/deactivate',
       { id }
     );
   }
 
   activateProduct(id: number): Observable<IApiResponseSingle> {
     return this.httpClient.post<IApiResponseSingle>(
-      this.apiUrl + '/Product/activate',
+      environment.apiUrl + '/Product/activate',
       { id }
     );
   }

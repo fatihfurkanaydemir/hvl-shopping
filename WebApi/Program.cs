@@ -12,6 +12,7 @@ using Application.Wrappers;
 using Newtonsoft.Json;
 using WebApi.Settings;
 using Application.Services;
+using GlobalInfrastructure;
 
 var config = new ConfigurationBuilder()
   .AddJsonFile("appsettings.json")
@@ -60,13 +61,6 @@ builder.Services.Configure<FormOptions>(o =>
 
 builder.Services.Configure<JWTSettings>(config.GetSection("JWTSettings"));
 
-builder.Services.Configure<FormOptions>(o =>
-{
-  o.ValueLengthLimit = int.MaxValue;
-  o.MultipartBodyLengthLimit = int.MaxValue;
-  o.MemoryBufferThreshold = int.MaxValue;
-});
-
 builder.Services.AddAuthentication(options =>
 {
   options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -112,6 +106,8 @@ builder.Services.AddAuthentication(options =>
     },
   };
 });
+
+builder.Services.AddGlobalInfrastructure(config);
 
 var app = builder.Build();
 

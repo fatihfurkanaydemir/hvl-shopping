@@ -17,10 +17,12 @@
 	<PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
   </ItemGroup>
   <ItemGroup>
+	<ProjectReference Include="..\Common\Common.csproj" />
 	<ProjectReference Include="..\Domain\Domain.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Features\Customers\Commands\UpdateAddress\" />
+    <Folder Include="Features\Orders\Queries\" />
   </ItemGroup>
 
 </Project>

@@ -26,6 +26,9 @@ using AutoMapper;
 using Domain.Entities;
 using Application.DTOs;
 using Application.Features.SharedViewModels;
+using Application.Features.Orders.Commands.CreateOrder;
+using Common.ApplicationEvents;
+using Common.Entities;
 
 namespace Application.Mappings
 {
@@ -76,6 +79,9 @@ namespace Application.Mappings
       CreateMap<Category, CategoryViewModel>().ReverseMap();
       CreateMap<Image, ImageViewModel>().ReverseMap();
       CreateMap<Seller, SellerViewModel>().ReverseMap();
+
+      CreateMap<CreateOrderCommand, CreateOrderEvent>().ReverseMap();
+      CreateMap<OrderProductDTO, OrderProduct>().ReverseMap();
     }
   }
 }
