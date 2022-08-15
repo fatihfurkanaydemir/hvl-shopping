@@ -22,11 +22,10 @@ import { AdminAuthGuard } from './services/adminAuth.guard';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { SearchFilterComponent } from './search-filter/search-filter.component';
 import { SellerProfileComponent } from './seller-panel/seller-profile/seller-profile.component';
-import { CustomerAuthGuard } from './services/customerAuth.guard copy';
+import { CustomerAuthGuard } from './services/customerAuth.guard';
 
 const appRoutes: Routes = [
   { path: 'search', component: SearchFilterComponent },
-  { path: 'my-orders', component: MyOrdersComponent },
 
   { path: 'seller-login', component: SellerLoginComponent },
   { path: 'login', component: LoginPageComponent },
