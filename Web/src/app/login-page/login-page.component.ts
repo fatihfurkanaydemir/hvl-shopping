@@ -7,6 +7,7 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
+import { BasketService } from '../basket/basket.service';
 import { ILogin } from '../models/ILogin';
 import { ToastService } from '../services/toast.service';
 
@@ -19,6 +20,7 @@ export class LoginPageComponent implements OnInit {
   constructor(
     private toastService: ToastService,
     private authService: AuthService,
+    private basketService: BasketService,
     private router: Router
   ) {}
 
@@ -41,6 +43,8 @@ export class LoginPageComponent implements OnInit {
 
     this.authService.login(loginData).subscribe({
       next: (data) => {
+        this.basketService.getBasket(data.id).subscribe();
+
         this.router.navigate(['/']);
       },
       error: (error) => {

@@ -6,14 +6,14 @@ import { BasketService } from './basket.service';
 @Component({
   selector: 'app-basket',
   templateUrl: './basket.component.html',
-  styleUrls: ['./basket.component.css']
+  styleUrls: ['./basket.component.css'],
 })
 export class BasketComponent implements OnInit {
   basket$!: Observable<IBasket>;
   basketTotal$!: Observable<IBasketTotals>;
-  basketItemsLength!: Observable<IBasket>;;
+  basketItemsLength!: Observable<IBasket>;
 
-  constructor(private basketService: BasketService) { }
+  constructor(private basketService: BasketService) {}
 
   ngOnInit(): void {
     this.basket$ = this.basketService.basket$;
@@ -21,20 +21,23 @@ export class BasketComponent implements OnInit {
     //console.log(this.basket$);
   }
 
-  removeBasketItem(item: IBasketItem){
+  removeBasketItem(item: IBasketItem) {
     this.basketService.removeItem(item);
   }
 
-  incrementQuantity(item: IBasketItem){
+  incrementQuantity(item: IBasketItem) {
     this.basketService.incrementItemQuantity(item);
   }
 
-  decrementQuantity(item: IBasketItem){
+  decrementQuantity(item: IBasketItem) {
     this.basketService.decrementItemQuantity(item);
   }
 
-  getBasketItemsLength(){
+  getBasketItemsLength() {
     return this.basketService.getItemsLength();
   }
 
+  OnCheckout() {
+    console.log(this.basketService.getCurrentBasketValue());
+  }
 }

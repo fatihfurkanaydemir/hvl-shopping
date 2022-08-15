@@ -15,8 +15,11 @@ export class AppComponent implements OnInit, OnDestroy {
   userSub?: Subscription;
   user?: User;
 
-  constructor(private authService: AuthService, private router: Router,
-    private basketService: BasketService) {}
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private basketService: BasketService
+  ) {}
 
   ngOnInit(): void {
     this.authService.autoLogin();
@@ -26,8 +29,8 @@ export class AppComponent implements OnInit, OnDestroy {
     });
 
     const basketId = localStorage.getItem('basket_id');
-    if (basketId){
-      this.basketService.getBasket(basketId).subscribe(()=>{
+    if (basketId) {
+      this.basketService.getBasket(basketId).subscribe(() => {
         console.log('initialised basket');
       });
     }
@@ -39,6 +42,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
   logout() {
     this.authService.logout();
+    this.basketService.logout();
   }
 
   ngOnDestroy(): void {

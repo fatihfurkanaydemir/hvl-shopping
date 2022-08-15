@@ -14,6 +14,7 @@ using WebApi.Settings;
 using Application.Services;
 using StackExchange.Redis;
 using GlobalInfrastructure;
+using Stripe;
 
 var config = new ConfigurationBuilder()
   .AddJsonFile("appsettings.json")
@@ -114,6 +115,8 @@ builder.Services.AddAuthentication(options =>
 });
 
 builder.Services.AddGlobalInfrastructure(config);
+
+StripeConfiguration.ApiKey = config.GetSection("Stripe")["ApiKey"];
 
 var app = builder.Build();
 
