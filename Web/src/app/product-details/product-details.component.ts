@@ -6,6 +6,7 @@ import { ICategory } from '../models/ICategory';
 import { ActivatedRoute, Router } from '@angular/router';
 import { identifierName } from '@angular/compiler';
 import { ISeller } from '../models/ISeller';
+import { BasketService } from '../basket/basket.service';
 
 @Component({
   selector: 'app-product-details',
@@ -57,6 +58,7 @@ export class ProductDetailsComponent implements OnInit {
   };
 
   constructor(
+    private basketService: BasketService,
     private productsService: ProductsService,
     private activateRoute: ActivatedRoute,
     private router: Router
@@ -66,24 +68,21 @@ export class ProductDetailsComponent implements OnInit {
     this._id = Number(this.activateRoute.snapshot.paramMap.get('id'));
     this.getProductByID();
   }
+
+  addItemToBasket(){
+    this.basketService.addItemToBasket(this.product);
+  }
+
   getProductByID() {
     this.productsService.getProduct(this._id).subscribe(
       (product) => {
-        //placeholder
         this.product = product.data;
-        console.log(this.product);
-        console.log('images length: ' + this.product.images.length);
-        console.log('url count: ' + this._urlCount);
-      },
-      (error) => {
-        this.router.navigate(['']);
       }
     );
   }
 
   incrementDesiredCount() {
     if (this._desiredCount > this.product.inStock) {
-      console.log('Reached the product stock.');
     } else {
       this._desiredCount += 1;
     }
@@ -98,13 +97,11 @@ export class ProductDetailsComponent implements OnInit {
   }
 
   incrementUrlCount() {
-    console.log('url count: ' + this._urlCount);
     if (this._urlCount >= this.product.images.length - 1) {
       this._urlCount = 0;
     } else {
       this._urlCount += 1;
     }
-    console.log('url count: ' + this._urlCount);
   }
 
   decrementUrlCount() {
@@ -113,7 +110,6 @@ export class ProductDetailsComponent implements OnInit {
     } else {
       this._urlCount -= 1;
     }
-    console.log(this._urlCount);
   }
 
   tabChange(id: string) {

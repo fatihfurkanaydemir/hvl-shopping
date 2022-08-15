@@ -38,6 +38,8 @@ const appRoutes: Routes = [
     canActivate: [AuthGuard, CustomerAuthGuard],
   },
   { path: 'product/:id', component: ProductDetailsComponent },
+  { path: 'basket', loadChildren: () => import('./basket/basket.module').then(mod =>
+    mod.BasketModule), data: {breadcrumb:'Basket'}},
   { path: '', component: HomePageComponent, pathMatch: 'full' },
   {
     path: 'seller-profile',
