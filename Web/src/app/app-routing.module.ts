@@ -23,9 +23,11 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
 import { SearchFilterComponent } from './search-filter/search-filter.component';
 import { SellerProfileComponent } from './seller-panel/seller-profile/seller-profile.component';
 import { CustomerAuthGuard } from './services/customerAuth.guard';
+import { PaymentSuccessPageComponent } from './payment-success-page/payment-success-page.component';
 
 const appRoutes: Routes = [
   { path: 'search', component: SearchFilterComponent },
+  { path: 'payment-success', component: PaymentSuccessPageComponent },
 
   { path: 'seller-login', component: SellerLoginComponent },
   { path: 'login', component: LoginPageComponent },
@@ -37,8 +39,12 @@ const appRoutes: Routes = [
     canActivate: [AuthGuard, CustomerAuthGuard],
   },
   { path: 'product/:id', component: ProductDetailsComponent },
-  { path: 'basket', loadChildren: () => import('./basket/basket.module').then(mod =>
-    mod.BasketModule), data: {breadcrumb:'Basket'}},
+  {
+    path: 'basket',
+    loadChildren: () =>
+      import('./basket/basket.module').then((mod) => mod.BasketModule),
+    data: { breadcrumb: 'Basket' },
+  },
   { path: '', component: HomePageComponent, pathMatch: 'full' },
   {
     path: 'seller-profile',

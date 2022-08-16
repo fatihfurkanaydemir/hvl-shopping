@@ -20,5 +20,7 @@ public static class ServiceExtensions
           httpClient.DefaultRequestHeaders.Add("Accept", "*/*");
           httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
         });
+
+        services.AddTransient<PaymentService>();
     }
 }

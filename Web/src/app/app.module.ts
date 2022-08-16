@@ -44,6 +44,7 @@ import { SellerProfileComponent } from './seller-panel/seller-profile/seller-pro
 import { registerLocaleData } from '@angular/common';
 import localeTr from '@angular/common/locales/tr';
 import { OrdersActionsComponent } from './seller-panel/orders-actions/orders-actions.component';
+import { PaymentSuccessPageComponent } from './payment-success-page/payment-success-page.component';
 
 registerLocaleData(localeTr);
 @NgModule({
@@ -79,6 +80,7 @@ registerLocaleData(localeTr);
     AddressActionsComponent,
     SellerProfileComponent,
     OrdersActionsComponent,
+    PaymentSuccessPageComponent,
   ],
   imports: [
     BrowserModule,

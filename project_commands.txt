@@ -37,6 +37,11 @@ docker-compose up -d
 AuthServer
 
 3)
+Stripe kullanıcı adı : şifre => hvlshopping@gmail.com : HVLshopping123456789.
+.\stripe.exe login 
+.\stripe.exe listen --forward-to localhost:7247/StripeWebhook
+
+4)
 Diğer servislerin sırası önemli değil
 
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!

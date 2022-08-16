@@ -1,0 +1,11 @@
+.address-selector {
+  max-height: 350px;
+}
+
+.address-btn {
+  text-align: start;
+}
+
+.address-selected {
+  outline: 4px solid green;
+}

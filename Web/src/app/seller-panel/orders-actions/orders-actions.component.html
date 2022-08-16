@@ -34,7 +34,7 @@
       </div>
       <div class="col d-inline-block">
         <h1 class="d-inline card-title fs-4">Tutar</h1>
-        <p>{{ order.totalPrice | currency: "TRY":"symbol" }}</p>
+        <p>{{ order.totalProductPrice | currency: "TRY":"symbol" }}</p>
       </div>
     </div>
     <hr />
@@ -70,10 +70,16 @@
     <div class="row text-center">
       <h1 class="d-inline card-title fs-4">Durum</h1>
       <h2
-        class="card-subtitle fs-5 mt-3"
-        *ngIf="order.status === OrderStatus.Created"
+        class="card-subtitle fs-5"
+        *ngIf="order.status === OrderStatus.AwaitingPayment"
       >
-        Sipariş oluşturuldu.
+        Ödeme bekleniyor.
+      </h2>
+      <h2
+        class="card-subtitle fs-5"
+        *ngIf="order.status === OrderStatus.AwaitingShipment"
+      >
+        Kargoya verilecek.
       </h2>
       <h2 class="card-title fs-5" *ngIf="order.status === OrderStatus.Canceled">
         Sipariş iptal edildi.

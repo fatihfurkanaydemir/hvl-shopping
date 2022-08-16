@@ -1,22 +1,26 @@
 <div *ngIf="getBasketItemsLength() === 0">
-      <div class="container mt-5">
-        <div class="row d-flex justify-content-center">
-          <div class="col-md-2">
-              <div class="mx-auto">
-                <h4>Sepetiniz boş.</h4>
-                <a routerLink="/" class="btn btn-outline-primary ms-4 mt-2 btn-block me-0" >
-                    Ana Sayfa
-                </a>
-              </div>
-          </div>
+  <div class="container mt-5">
+    <div class="row d-flex justify-content-center">
+      <div class="col-md-2">
+        <div class="mx-auto">
+          <h4>Sepetiniz boş.</h4>
+          <a
+            routerLink="/"
+            class="btn btn-outline-primary ms-4 mt-2 btn-block me-0"
+          >
+            Ana Sayfa
+          </a>
         </div>
       </div>
+    </div>
+  </div>
 </div>
 
 <div *ngIf="basket$ | async as basket">
-  <div class="pb-5">
+  <div class="pb-5" *ngIf="getBasketItemsLength() > 0">
     <div class="container">
-      <div class="row"> <!--Basket listling-->
+      <div class="row">
+        <!--Basket listling-->
         <div class="col-12 py-5 mb-1">
           <div class="table-responsive">
             <table class="table">
@@ -41,7 +45,8 @@
               </thead>
               <tbody>
                 <tr *ngFor="let item of basket.items">
-                  <th scope="row"> <!--Product image and category-->
+                  <th scope="row">
+                    <!--Product image and category-->
                     <div class="p-2">
                       <img
                         class="img-fluid"
@@ -64,18 +69,21 @@
                       </div>
                     </div>
                   </th>
-                  <td class="align-middle"> <!--Product price-->
-                    <strong>{{ item.price | currency }}</strong>
+                  <td class="align-middle">
+                    <!--Product price-->
+                    <strong>{{ item.price | currency: "TRY":"symbol" }}</strong>
                   </td>
-                  <td class="align-middle"> <!--Product quantity-->
+                  <td class="align-middle">
+                    <!--Product quantity-->
                     <div class="d-flex align-items-center">
                       <i
                         (click)="decrementQuantity(item)"
-                        
                         class="fa fa-minus-circle text-warning me-2"
-                        style="cursor: pointer; font-size: 2em;"
+                        style="cursor: pointer; font-size: 2em"
                       ></i>
-                      <span class="font-weight-bold" style="font-size: 1.5em;">{{item.quantity}}</span>
+                      <span class="font-weight-bold" style="font-size: 1.5em">{{
+                        item.quantity
+                      }}</span>
                       <i
                         (click)="incrementQuantity(item)"
                         class="fa fa-plus-circle text-warning mx-2"
@@ -83,14 +91,22 @@
                       ></i>
                     </div>
                   </td>
-                  <td class="align-middle"> <!--Product total-->
+                  <td class="align-middle">
+                    <!--Product total-->
                     <strong>
-                        {{item.price * item.quantity | currency}}
+                      {{
+                        item.price * item.quantity | currency: "TRY":"symbol"
+                      }}
                     </strong>
                   </td>
-                  <td class="align-middle text-center"> <!--Product remove icon-->
+                  <td class="align-middle text-center">
+                    <!--Product remove icon-->
                     <a class="text-danger">
-                        <i (click)="removeBasketItem(item)" class="fa fa-trash" style="font-size: 2em; cursor: pointer;"></i>
+                      <i
+                        (click)="removeBasketItem(item)"
+                        class="fa fa-trash"
+                        style="font-size: 2em; cursor: pointer"
+                      ></i>
                     </a>
                   </td>
                 </tr>
@@ -100,13 +116,40 @@
         </div>
       </div>
       <div class="row">
-        <div class="col-8 offset-4">
-            <app-order-totals></app-order-totals>
-            <div class="d-flex justify-content-end me-4">
-                <a routerLink="/checkout" class="btn btn-outline-primary py-2 btn-block me-0" >
-                    Ödeme Yap
-                </a>
+        <div class="col-6">
+          <div class="bg-light px-4 py-3 text-uppercase font-weight-bold">
+            Teslimat Adresi
+          </div>
+          <div class="overflow-auto address-selector py-2">
+            <div
+              class="btn card address-btn d-block mt-2 mx-2"
+              *ngFor="let address of addresses"
+              [ngClass]="{
+                'address-selected': address.id === selectedAddress.id
+              }"
+              (click)="OnAddressClicked(address)"
+            >
+              <div class="card-body">
+                <h5 class="card-title">
+                  <div class="d-flex justify-content-between">
+                    <p>{{ address.title }}</p>
+                  </div>
+                </h5>
+                <h6 class="card-subtitle mb-2 text-muted">
+                  {{ address.city }}
+                </h6>
+                <p class="card-text">
+                  {{ address.addressDescription }}
+                </p>
+              </div>
             </div>
+          </div>
+        </div>
+        <div class="col-6 d-flex flex-column justify-content-between">
+          <app-order-totals></app-order-totals>
+          <button (click)="OnCheckout()" class="btn btn-success w-100 py-3">
+            Ödeme Yap
+          </button>
         </div>
       </div>
     </div>

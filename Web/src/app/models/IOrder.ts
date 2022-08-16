@@ -1,7 +1,8 @@
 import { IOrderProduct } from './IOrderProduct';
 
 export const OrderStatus = {
-  Created: 'Created',
+  AwaitingPayment: 'AwaitingPayment',
+  AwaitingShipment: 'AwaitingShipment',
   Canceled: 'Canceled',
   Shipped: 'Shipped',
   Returned: 'Returned',
@@ -13,11 +14,13 @@ export interface IOrder {
   customerLastName: string;
   customerPhoneNumber: string;
   sellerIdentityId: string;
+  orderGroupId: string;
   created: Date;
   status: string;
   addressTitle: string;
   addressDescription: string;
   addressCity: string;
-  totalPrice: number;
+  totalProductPrice: number;
+  shipmentPrice: number;
   products: IOrderProduct[];
 }

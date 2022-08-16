@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BehaviorSubject, map, Observable, tap } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { BasketService } from '../basket/basket.service';
 import { IApiResponseSingle } from '../models/IApiResponseSingle';
 import { IAuthData } from '../models/IAuthData';
 import { ICustomerRegister } from '../models/ICustomerRegister';
@@ -17,6 +18,7 @@ export class AuthService {
     private router: Router,
     private route: ActivatedRoute
   ) {}
+
   userSubject = new BehaviorSubject<User>(null!);
   private tokenExpirationTimer: any;
 

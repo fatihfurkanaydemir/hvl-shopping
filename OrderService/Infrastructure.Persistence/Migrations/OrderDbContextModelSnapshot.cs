@@ -79,6 +79,10 @@ namespace OrderService.Infrastructure.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<string>("CheckoutSessionId")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<DateTime>("Created")
                         .HasColumnType("timestamp with time zone");
 
@@ -101,14 +105,25 @@ namespace OrderService.Infrastructure.Persistence.Migrations
                     b.Property<DateTime>("LastModified")
                         .HasColumnType("timestamp with time zone");
 
+                    b.Property<string>("OrderGroupId")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("PaymentIntentId")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<string>("SellerIdentityId")
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<decimal>("ShipmentPrice")
+                        .HasColumnType("numeric(18,6)");
+
                     b.Property<int>("Status")
                         .HasColumnType("integer");
 
-                    b.Property<decimal>("TotalPrice")
+                    b.Property<decimal>("TotalProductPrice")
                         .HasColumnType("numeric(18,6)");
 
                     b.HasKey("Id");
