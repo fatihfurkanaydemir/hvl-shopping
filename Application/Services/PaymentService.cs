@@ -9,7 +9,7 @@ namespace Application.Services;
 
 public class PaymentService
 {
-  public async Task<string> CreateCheckoutSession(CustomerBasket basket)
+  public async Task<Session> CreateCheckoutSession(CustomerBasket basket, decimal shipmentPrice)
   {
     var items = new List<SessionLineItemOptions>();
     foreach(var item in basket.Items)
@@ -18,8 +18,8 @@ public class PaymentService
       {
         PriceData = new SessionLineItemPriceDataOptions
         {
-          UnitAmount = (long)item.Price,
-          Currency = "usd",
+          UnitAmountDecimal = item.Price * 100,
+          Currency = "try",
           ProductData = new SessionLineItemPriceDataProductDataOptions
           {
             Name = item.ProductName,
@@ -31,17 +31,32 @@ public class PaymentService
       });
     }
 
+    items.Add(new SessionLineItemOptions
+    {
+      PriceData = new SessionLineItemPriceDataOptions
+      {
+        UnitAmountDecimal = shipmentPrice * 100,
+        Currency = "try",
+        ProductData = new SessionLineItemPriceDataProductDataOptions
+        {
+          Name = "Kargo Ücreti",
+          Description = "XXXXX kargo"
+        },
+      },
+      Quantity = 1,
+    });
+
     var options = new SessionCreateOptions
     {
       LineItems = items,
       Mode = "payment",
-      SuccessUrl = "http://localhost/payment-success",
-      CancelUrl = "http://localhost/payment-cancel",
+      SuccessUrl = "http://localhost:4200/payment-success?session_id={CHECKOUT_SESSION_ID}",
+      CancelUrl = "http://localhost:4200/payment-cancel",
     };
 
     var service = new SessionService();
     Session session = service.Create(options);
 
-    return session.Url;
+    return session;
   }
 }

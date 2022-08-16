@@ -9,17 +9,17 @@ using MediatR;
 using System.ComponentModel.DataAnnotations;
 using Common.ApplicationEvents;
 using Application.DTOs;
+using Domain.Entities;
+using Application.Services;
 
 namespace Application.Features.Orders.Commands.CreateOrder
 {
-  public class CreateOrderCommand : IRequest<Response<int>>
+  public class CreateOrderCommand : IRequest<Response<string>>
   {
     [Required]
     public string CustomerIdentityId { get; set; }
     [Required]
-    public string SellerIdentityId { get; set; }
-    [Required]
-    public List<OrderProductDTO> Products { get; set; }
+    public decimal ShipmentPrice { get; set; }
     [Required]
     public string AddressTitle { get; set; }
     [Required]
@@ -27,17 +27,21 @@ namespace Application.Features.Orders.Commands.CreateOrder
     [Required]
     public string AddressCity { get; set; }
   }
-  public class CreateOrderCommandHandler : IRequestHandler<CreateOrderCommand, Response<int>>
+  public class CreateOrderCommandHandler : IRequestHandler<CreateOrderCommand, Response<string>>
   {
     private readonly ISellerRepositoryAsync _sellerRepository;
     private readonly ICustomerRepositoryAsync _customerRepository;
     private readonly IProductRepositoryAsync _productRepository;
+    private readonly IBasketRepositoryAsync _basketRepository;
+    private readonly PaymentService _paymentService;
     private readonly IEventBus _eventBus;
     private readonly IMapper _mapper;
     public CreateOrderCommandHandler(
       ISellerRepositoryAsync sellerRepository,
       ICustomerRepositoryAsync customerRepository,
       IProductRepositoryAsync productRepository,
+      IBasketRepositoryAsync basketRepository,
+      PaymentService paymentService,
       IEventBus eventBus,
       IMapper mapper
       )
@@ -45,61 +49,111 @@ namespace Application.Features.Orders.Commands.CreateOrder
       _sellerRepository = sellerRepository;
       _customerRepository = customerRepository;
       _productRepository = productRepository;
+      _basketRepository = basketRepository;
+      _paymentService = paymentService;
       _eventBus = eventBus;
       _mapper = mapper;
     }
 
-    public async Task<Response<int>> Handle(CreateOrderCommand request, CancellationToken cancellationToken)
+    public async Task<Response<string>> Handle(CreateOrderCommand request, CancellationToken cancellationToken)
     {
-      if (request.Products.Count <= 0) throw new ApiException("No products provided");
-
-      var orderEvent = _mapper.Map<CreateOrderEvent>(request);
-
-      var seller = await _sellerRepository.GetByIdentityIdAsync(orderEvent.SellerIdentityId);
-      if (seller == null) throw new ApiException("Seller not found");
-
-      var customer = await _customerRepository.GetByIdentityIdWithRelationsAsync(orderEvent.CustomerIdentityId);
+      var customer = await _customerRepository.GetByIdentityIdWithRelationsAsync(request.CustomerIdentityId);
       if (customer == null) throw new ApiException("Customer not found");
 
-      orderEvent.Products.Clear();
+      var basket = await _basketRepository.GetBasketAsync(request.CustomerIdentityId);
+      if (basket == null) throw new ApiException("Basket not found");
+      if (basket.Items.Count <= 0) throw new ApiException("No products in basket");
 
-      foreach(var p in request.Products)
+      var sellerProductMap = await GetSellerProductMap(basket.Items);
+
+      var orderGroupId = Guid.NewGuid().ToString() + customer.IdentityId;
+      var orderEvents = new List<CreateOrderEvent>();
+
+      foreach(var sellerIdentityId in sellerProductMap.Keys)
       {
-        if(p.Count <= 0) throw new ApiException("Invalid product count");
+        var seller = await _sellerRepository.GetByIdentityIdAsync(sellerIdentityId);
+        if (seller == null) throw new ApiException("Seller not found");
 
-        var product = await _productRepository.GetByIdWithRelationsAsync(p.ProductId);
-        if (product == null) throw new ApiException($"Product ({p.ProductId}) not found");
-
-        if(product.Seller.Id != seller.Id) throw new ApiException($"Seller does not have the product ({product.Name})");
-        if(product.InStock < p.Count) throw new ApiException($"Not enough stock for the product ({product.Name})");
-        if(product.Status == Domain.Enums.ProductStatus.Passive) throw new ApiException($"Product is not active ({product.Name})");
-
-        orderEvent.Products.Add(new OrderProduct
+        var orderEvent = new CreateOrderEvent
         {
-          ProductId = product.Id,
-          ProductName = product.Name,
-          Count = p.Count,
-          PricePerProduct = product.Price
-        });
+          AddressCity = request.AddressCity,
+          AddressDescription = request.AddressDescription,
+          AddressTitle = request.AddressTitle,
+          CustomerFirstName = customer.FirstName,
+          CustomerLastName = customer.LastName,
+          CustomerIdentityId = customer.IdentityId,
+          CustomerPhoneNumber = customer.PhoneNumber,
+          SellerIdentityId = sellerIdentityId,
+          Status = OrderStatus.AwaitingPayment,
+          ShipmentPrice = request.ShipmentPrice,
+          OrderGroupId = orderGroupId,
+          Products = new List<OrderProduct>()
+        };
 
-        orderEvent.TotalPrice += p.Count * product.Price;
+        foreach (var p in sellerProductMap[sellerIdentityId])
+        {
+          if (p.Quantity <= 0) throw new ApiException("Invalid product count");
+
+          var product = await _productRepository.GetByIdWithRelationsAsync(p.Id);
+          if (product == null) throw new ApiException($"Product ({p.ProductName}) not found");
+
+          if (product.Seller.Id != seller.Id) throw new ApiException($"Seller does not have the product ({product.Name})");
+          if (product.InStock < p.Quantity) throw new ApiException($"Not enough stock for the product ({product.Name})");
+          if (product.Status == Domain.Enums.ProductStatus.Passive) throw new ApiException($"Product is not active ({product.Name})");
+
+          orderEvent.Products.Add(new OrderProduct
+          {
+            ProductId = product.Id,
+            ProductName = product.Name,
+            Count = p.Quantity,
+            PricePerProduct = product.Price
+          });
+
+          orderEvent.TotalProductPrice += p.Quantity * product.Price;
+        }
+
+        orderEvents.Add(orderEvent);
+
+        foreach (var p in sellerProductMap[sellerIdentityId])
+        {
+          var product = await _productRepository.GetByIdWithRelationsAsync(p.Id);
+          product.InStock -= p.Quantity;
+          product.Sold += p.Quantity;
+          await _productRepository.UpdateAsync(product);
+        }
       }
 
-      orderEvent.CustomerFirstName = customer.FirstName;
-      orderEvent.CustomerLastName = customer.LastName;
-      orderEvent.CustomerPhoneNumber = customer.PhoneNumber;
+      var session = await _paymentService.CreateCheckoutSession(basket, request.ShipmentPrice);
 
-      _eventBus.Publish(orderEvent);
-
-      foreach (var p in request.Products)
+      foreach (var orderEvent in orderEvents)
       {
-        var product = await _productRepository.GetByIdWithRelationsAsync(p.ProductId);
-        product.InStock -= p.Count;
-        product.Sold += p.Count;
-        await _productRepository.UpdateAsync(product);
+        orderEvent.CheckoutSessionId = session.Id;
+        orderEvent.PaymentIntentId = "";
+        _eventBus.Publish(orderEvent);
       }
 
-      return new Response<int>("Order created");
+      return new Response<string>(session.Url, "Order and checkout session created");
     }
+
+    public async Task<Dictionary<string, List<BasketItem>>> GetSellerProductMap(List<BasketItem> items)
+    {
+      var map = new Dictionary<string, List<BasketItem>>();
+      
+      foreach(var item in items)
+      {
+        if(map.ContainsKey(item.SellerIdentityId))
+        {
+          map[item.SellerIdentityId].Add(item);
+          continue;
+        }
+
+        map[item.SellerIdentityId] = new List<BasketItem>
+        {
+          item
+        };
+      }
+
+      return map;
+    } 
   }
 }

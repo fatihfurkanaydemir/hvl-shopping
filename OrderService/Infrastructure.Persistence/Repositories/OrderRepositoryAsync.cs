@@ -64,4 +64,24 @@ public class OrderRepositoryAsync : GenericRepositoryAsync<Order>, IOrderReposit
           .AsNoTracking()
           .CountAsync();
   }
+
+  public async Task<IReadOnlyList<Order>> GetOrdersByGroupId(string Id)
+  {
+    return await _orders
+          .Include(o => o.Products)
+          .Where(o => o.OrderGroupId == Id)
+          .OrderByDescending(o => o.Created)
+          .AsNoTracking()
+          .ToListAsync();
+  }
+
+  public async Task<IReadOnlyList<Order>> GetOrdersByCheckoutSessionId(string Id)
+  {
+    return await _orders
+          .Include(o => o.Products)
+          .Where(o => o.CheckoutSessionId == Id)
+          .OrderByDescending(o => o.Created)
+          .AsNoTracking()
+          .ToListAsync();
+  }
 }

@@ -22,11 +22,13 @@ namespace Application.Features.Orders.Commands.CreateCheckoutSession
   {
     private readonly IProductRepositoryAsync _productRepository;
     private readonly IBasketRepositoryAsync _basketRepository;
+    private readonly IEventBus _eventBus;
     private readonly PaymentService _paymentService;
     private readonly IMapper _mapper;
     public CreateCheckoutSessionCommandHandler(
       IProductRepositoryAsync productRepository,
       IBasketRepositoryAsync basketRepository,
+      IEventBus eventBus,
       PaymentService paymentService,
       IMapper mapper
       )
@@ -34,6 +36,7 @@ namespace Application.Features.Orders.Commands.CreateCheckoutSession
       _productRepository = productRepository;
       _basketRepository = basketRepository;
       _paymentService = paymentService;
+      _eventBus = eventBus;
 
       _mapper = mapper;
     }
@@ -56,9 +59,9 @@ namespace Application.Features.Orders.Commands.CreateCheckoutSession
         p.Price = product.Price;
       }
 
-      var sessionUrl = await _paymentService.CreateCheckoutSession(basket);
+      var session = await _paymentService.CreateCheckoutSession(basket, 13);
 
-      return new Response<string>(sessionUrl, "Session created");
+      return new Response<string>(session.Url, "Session created");
     }
   }
 }

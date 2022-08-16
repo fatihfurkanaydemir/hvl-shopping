@@ -16,11 +16,11 @@ using StackExchange.Redis;
 using GlobalInfrastructure;
 using Stripe;
 
+var builder = WebApplication.CreateBuilder(args);
+
 var config = new ConfigurationBuilder()
   .AddJsonFile("appsettings.json")
   .Build();
-
-var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllers().ConfigureApiBehaviorOptions(options =>
