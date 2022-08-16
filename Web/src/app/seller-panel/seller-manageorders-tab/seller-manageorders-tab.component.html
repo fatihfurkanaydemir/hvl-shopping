@@ -4,6 +4,7 @@
       <tr>
         <th scope="col">Tarih</th>
         <th scope="col">Ücret</th>
+        <th scope="col">Kargo Ücreti</th>
         <th scope="col">Durum</th>
         <th scope="col">Ürün Çeşidi Sayısı</th>
         <th scope="col">Ürün Sayısı</th>
@@ -14,7 +15,14 @@
       <tr class="align-middle" *ngFor="let order of orders">
         <th scope="row">{{ order.created | date: "mediumDate" }}</th>
         <th>
-          <strong>{{ order.totalPrice | currency: "TRY":"symbol" }} ₺</strong>
+          <strong
+            >{{ order.totalProductPrice | currency: "TRY":"symbol" }} ₺</strong
+          >
+        </th>
+        <th>
+          <strong
+            >{{ order.shipmentPrice | currency: "TRY":"symbol" }} ₺</strong
+          >
         </th>
         <td>{{ ordersService.getStatusTranslation(order.status) }}</td>
         <td>{{ order.products.length }} Farklı Ürün</td>

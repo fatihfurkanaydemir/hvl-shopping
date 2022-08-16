@@ -10,6 +10,11 @@ export class PaymentSuccessPageComponent implements OnInit {
   constructor(private route: ActivatedRoute, private router: Router) {}
 
   ngOnInit(): void {
-    console.log(this.route.snapshot);
+    if (!this.route.snapshot.queryParams['session_id'])
+      this.router.navigate(['/']);
+
+    setTimeout(() => {
+      this.router.navigate(['/']);
+    }, 3000);
   }
 }

@@ -61,6 +61,15 @@ export class BasketService {
       });
   }
 
+  clearItems() {
+    this.basketSource.next({
+      items: [],
+      id: this.getCurrentBasketValue().id,
+    });
+    this.calculateTotals();
+    this.setBasket(this.getCurrentBasketValue());
+  }
+
   getCurrentBasketValue() {
     return this.basketSource.value;
   }
@@ -98,13 +107,6 @@ export class BasketService {
         }
         console.log(basket.items[itemIndex].quantity, stock);
       });
-
-    /*
-    
-    basket.items[itemIndex].quantity++;
-    this.setBasket(basket);
-
-    */
   }
 
   decrementItemQuantity(item: IBasketItem, quantity = 1) {

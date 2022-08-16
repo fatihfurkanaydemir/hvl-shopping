@@ -69,16 +69,14 @@ export class ProductDetailsComponent implements OnInit {
     this.getProductByID();
   }
 
-  addItemToBasket(){
-    this.basketService.addItemToBasket(this.product);
+  addItemToBasket() {
+    this.basketService.addItemToBasket(this.product, this._desiredCount);
   }
 
   getProductByID() {
-    this.productsService.getProduct(this._id).subscribe(
-      (product) => {
-        this.product = product.data;
-      }
-    );
+    this.productsService.getProduct(this._id).subscribe((product) => {
+      this.product = product.data;
+    });
   }
 
   incrementDesiredCount() {
