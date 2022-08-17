@@ -17,11 +17,11 @@ public class OrderRepositoryAsync : GenericRepositoryAsync<Order>, IOrderReposit
   public async Task<IReadOnlyList<Order>> GetPagedReponseWithRelationsAsync(int pageNumber, int pageSize)
   {
     return await _orders
-          .Skip((pageNumber - 1) * pageSize)
-          .Take(pageSize)
           .Include(o => o.Products)
           .OrderByDescending(o => o.Created)
           .AsNoTracking()
+          .Skip((pageNumber - 1) * pageSize)
+          .Take(pageSize)
           .ToListAsync();
   }
 

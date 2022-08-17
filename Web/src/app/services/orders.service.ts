@@ -39,8 +39,10 @@ export class OrdersService {
 
   getStatusTranslation(status: string) {
     switch (status) {
-      case 'Created':
-        return 'Oluşturuldu';
+      case 'AwaitingPayment':
+        return 'Ödeme Bekleniyor';
+      case 'AwaitingShipment':
+        return 'Kargolanacak';
       case 'Shipped':
         return 'Kargolandı';
       case 'Returned':
