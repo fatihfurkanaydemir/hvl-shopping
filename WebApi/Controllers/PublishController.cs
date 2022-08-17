@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using Common.EventBus.Interfaces;
 using Common.ApplicationEvents;
+using Common.ApplicationRPCs;
 
 namespace WebApi.Controllers.v1
 {
@@ -24,5 +25,13 @@ namespace WebApi.Controllers.v1
       _eventBus.Publish<TestEvent>(new TestEvent { message = "Test event" });
       return Ok();
     }
+
+    // POST api/<controller>/TestRPC
+    [HttpPost("TestRPC")]
+    public async Task<IActionResult> TestRPC(string message)
+    {
+      return Ok(await _eventBus.CallRP<TestRPC, string>(new TestRPC { message = "Test RPC" }));
+    }
+
   }
 }
