@@ -4,7 +4,6 @@
       <tr>
         <th scope="col">Tarih</th>
         <th scope="col">Ücret</th>
-        <th scope="col">Kargo Ücreti</th>
         <th scope="col">Durum</th>
         <th scope="col">Ürün Çeşidi Sayısı</th>
         <th scope="col">Ürün Sayısı</th>
@@ -17,11 +16,6 @@
         <th>
           <strong
             >{{ order.totalProductPrice | currency: "TRY":"symbol" }} ₺</strong
-          >
-        </th>
-        <th>
-          <strong
-            >{{ order.shipmentPrice | currency: "TRY":"symbol" }} ₺</strong
           >
         </th>
         <td>{{ ordersService.getStatusTranslation(order.status) }}</td>
