@@ -30,7 +30,7 @@ namespace WebApi.Controllers.v1
     [HttpPost("TestRPC")]
     public async Task<IActionResult> TestRPC(string message)
     {
-      return Ok(await _eventBus.CallRP<TestRPC, string>(new TestRPC { message = "Test RPC" }));
+      return Ok(await _eventBus.CallRP(new TestRPC { message = "Test RPC" }));
     }
 
   }

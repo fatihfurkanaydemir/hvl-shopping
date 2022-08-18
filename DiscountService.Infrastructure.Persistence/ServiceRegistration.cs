@@ -25,6 +25,7 @@ public static class ServiceRegistration
     }
 
     services.AddScoped(typeof(IGenericRepositoryAsync<>), typeof(GenericRepositoryAsync<>));
-    services.AddScoped<IDiscountRepositoryAsync, DiscountRepositoryAsync>();
+    services.AddScoped<ICouponRepositoryAsync, CouponRepositoryAsync>();
+    services.AddScoped<IUsedCouponRepositoryAsync, UsedCouponRepositoryAsync>();
   }
 }

@@ -22,6 +22,7 @@ using OrderService.Application.Features.Orders.EventHandlers.CreateOrder;
 
 // RPC handlers
 using DiscountService.Application.Features.Test;
+using DiscountService.Application.Features.Coupons.RPCHandlers;
 
 namespace GlobalInfrastructure;
 
@@ -35,17 +36,24 @@ public static class DependencyExtension
       return new RabbitMQEventBus(scopeFactory, configuration);
     });
 
+    // Event Handlers
     services.AddTransient<TestEventHandler>();
     services.AddTransient<CreateOrderEventHandler>();
     services.AddTransient<OrderPaymentCompletedEventHandler>();
 
+    // RPC Handlers
     services.AddTransient<TestRPCHandler>();
+    services.AddTransient<GetAllCouponsRPCHandler>();
+    services.AddTransient<GetUsedCouponsByCustomerIdentityIdRPCHandler>();
+    services.AddTransient<UseCouponRPCHandler>();
+    services.AddTransient<CanUseCouponRPCHandler>();
+    services.AddTransient<CreateCouponRPCHandler>();
 
     services.AddTransient<IOrderRepositoryAsync, OrderRepositoryAsync>();
     services.AddDbContext<OrderDbContext>();
 
-    services.AddTransient<IDiscountRepositoryAsync, DiscountRepositoryAsync>();
-    services.AddTransient<IUsedDiscountRepositoryAsync, UsedDiscountRepositoryAsync>();
+    services.AddTransient<ICouponRepositoryAsync, CouponRepositoryAsync>();
+    services.AddTransient<IUsedCouponRepositoryAsync, UsedCouponRepositoryAsync>();
     services.AddDbContext<DiscountDbContext>();
   }
 }

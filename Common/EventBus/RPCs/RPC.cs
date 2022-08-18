@@ -1,6 +1,6 @@
 ﻿namespace Common.EventBus.RPCs;
 
-public abstract class RPC
+public abstract class RPC<TRPCResult>: IBaseRPC
 {
   public DateTime TimeStamp { get; protected set; }
 

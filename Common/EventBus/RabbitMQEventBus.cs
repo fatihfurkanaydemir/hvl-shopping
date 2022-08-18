@@ -55,7 +55,7 @@ public class RabbitMQEventBus: IEventBus
     }
   }
 
-  public async Task<TRPCResult> CallRP<TRPC, TRPCResult>(TRPC rpc) where TRPC : RPC
+  public async Task<TRPCResult> CallRP<TRPCResult>(RPC<TRPCResult> rpc)
   {
     var rpcType = rpc.GetType();
 
@@ -85,7 +85,7 @@ public class RabbitMQEventBus: IEventBus
     }
   }
 
-  public async void RegisterRPC<TRPC, TRPCResult>() where TRPC : RPC
+  public async void RegisterRPC<TRPC, TRPCResult>() where TRPC : RPC<TRPCResult>
   {
     var factory = new ConnectionFactory()
     {
@@ -132,7 +132,7 @@ public class RabbitMQEventBus: IEventBus
   }
 
   public void RegisterRPCHandler<TRPC, TRPCHandler, TRPCResult>()
-    where TRPC : RPC
+    where TRPC : RPC<TRPCResult>
     where TRPCHandler : IRPCHandler<TRPC, TRPCResult>
   {
     var rpcType = typeof(TRPC);

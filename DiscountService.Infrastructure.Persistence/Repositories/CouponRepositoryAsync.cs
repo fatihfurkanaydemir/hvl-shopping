@@ -5,18 +5,18 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DiscountService.Infrastructure.Persistence.Repositories;
 
-public class DiscountRepositoryAsync : GenericRepositoryAsync<Discount>, IDiscountRepositoryAsync
+public class CouponRepositoryAsync : GenericRepositoryAsync<Coupon>, ICouponRepositoryAsync
 {
-  private readonly DbSet<Discount> _discounts;
+  private readonly DbSet<Coupon> _coupons;
 
-  public DiscountRepositoryAsync(DiscountDbContext dbContext) : base(dbContext)
+  public CouponRepositoryAsync(DiscountDbContext dbContext) : base(dbContext)
   {
-    _discounts = dbContext.Discounts;
+    _coupons = dbContext.Coupons;
   }
 
-  public async Task<IReadOnlyList<Discount>> GetPagedReponseWithRelationsAsync(int pageNumber, int pageSize)
+  public async Task<IReadOnlyList<Coupon>> GetPagedReponseWithRelationsAsync(int pageNumber, int pageSize)
   {
-    return await _discounts
+    return await _coupons
           .Skip((pageNumber - 1) * pageSize)
           .Take(pageSize)
           .AsNoTracking()

@@ -2,7 +2,7 @@
 
 namespace Common.ApplicationRPCs;
 
-public class TestRPC: RPC
+public class TestRPC: RPC<string>
 {
   public string message { get; set; }
 }

@@ -11,8 +11,8 @@ public class DiscountDbContext: DbContext
     ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
   }
 
-  public DbSet<Discount> Discounts { get; set; }
-  public DbSet<UsedDiscount> UsedDiscounts { get; set; }
+  public DbSet<Coupon> Coupons { get; set; }
+  public DbSet<UsedCoupon> UsedCoupons { get; set; }
 
   public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
   {

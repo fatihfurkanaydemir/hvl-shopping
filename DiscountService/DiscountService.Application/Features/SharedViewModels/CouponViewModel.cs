@@ -1,10 +1,10 @@
-﻿using Common.Entities;
-using DiscountService.Domain.Enums;
+﻿using Common.Enums;
 
-namespace DiscountService.Domain.Entities;
+namespace DiscountService.Application.Features.SharedViewModels;
 
-public class Discount: AuditableBaseEntity
+public class CouponViewModel
 {
+  public int Id { get; set; }
   public string Code { get; set; }
   public decimal Amount { get; set; }
   public DateTime ExpireDate { get; set; }

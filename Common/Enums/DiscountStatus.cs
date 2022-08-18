@@ -1,4 +1,4 @@
-﻿namespace DiscountService.Domain.Enums;
+﻿namespace Common.Enums;
 
 public enum DiscountStatus
 {

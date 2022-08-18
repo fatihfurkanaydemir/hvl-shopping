@@ -3,8 +3,8 @@ using Common.Enums;
 
 namespace DiscountService.Domain.Entities;
 
-public class UsedDiscount: AuditableBaseEntity
+public class UsedCoupon: AuditableBaseEntity
 {
   public string CustomerIdentityId { get; set; }
-  public Discount Discount { get; set; }
+  public Coupon Coupon { get; set; }
 }
