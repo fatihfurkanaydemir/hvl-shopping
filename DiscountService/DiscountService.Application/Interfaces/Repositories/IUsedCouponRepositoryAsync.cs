@@ -5,6 +5,7 @@ namespace DiscountService.Application.Interfaces.Repositories;
 public interface IUsedCouponRepositoryAsync: IGenericRepositoryAsync<UsedCoupon>
 {
   public Task<IReadOnlyList<UsedCoupon>> GetUsedCouponsByCustomerIdentityId(string id, int pageNumber, int pageSize);
+  public Task<IReadOnlyList<Coupon>> GetUsedCouponsByCustomerIdentityId(string id);
   public Task<int> GetDataCountByCustomerIdentityId(string id);
   public Task<bool> DidCustomerUseCoupon(string customerIdentityId, int discountId);
   //public Task<IReadOnlyList<Order>> GetAllOrdersByCustomerIdentityIdAsync(string Id, int pageNumber, int pageSize);

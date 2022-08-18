@@ -3,8 +3,8 @@ using Common.Wrappers;
 
 namespace Common.ApplicationRPCs;
 
-public class UseCouponRPC: RPC<Response<bool>>
+public class UseCouponRPC: RPC<Response<decimal>>
 {
-  public int DiscountId { get; set; }
+  public string CouponCode { get; set; }
   public string CustomerIdentityId { get; set; }
 }

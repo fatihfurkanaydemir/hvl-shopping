@@ -48,6 +48,8 @@ public static class DependencyExtension
     services.AddTransient<UseCouponRPCHandler>();
     services.AddTransient<CanUseCouponRPCHandler>();
     services.AddTransient<CreateCouponRPCHandler>();
+    services.AddTransient<GetUsableCouponsByCustomerIdentityIdRPCHandler>();
+    services.AddTransient<UpdateCouponRPCHandler>();
 
     services.AddTransient<IOrderRepositoryAsync, OrderRepositoryAsync>();
     services.AddDbContext<OrderDbContext>();

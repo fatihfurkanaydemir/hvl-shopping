@@ -3,8 +3,6 @@ using Microsoft.AspNetCore.Authorization;
 using Common.EventBus.Interfaces;
 using Common.ApplicationEvents;
 using Common.ApplicationRPCs;
-using WebApi.Application.Features.SharedViewModels;
-using Application.Wrappers;
 using Application.Parameters;
 using Application.Exceptions;
 
@@ -40,6 +38,24 @@ namespace WebApi.Controllers.v1
     public async Task<IActionResult> GetCustomerUsedCoupons(string customerIdentityId, [FromQuery] RequestParameter filter)
     {
       var response = await _eventBus.CallRP(new GetUsedCouponsByCustomerIdentityIdRPC { CustomerIdentityId = customerIdentityId, PageNumber = filter.PageNumber, PageSize = filter.PageSize });
+      if (!response.Succeeded) throw new ApiException(response.Message);
+      return Ok(response);
+    }
+
+    // GET api/<controller>/CustomerUsableCoupons/customerIdentityId
+    [HttpGet("CustomerUsableCoupons/{customerIdentityId}")]
+    public async Task<IActionResult> GetCustomerUsableCoupons(string customerIdentityId)
+    {
+      var response = await _eventBus.CallRP(new GetUsableCouponsByCustomerIdentityIdRPC { CustomerIdentityId = customerIdentityId });
+      if (!response.Succeeded) throw new ApiException(response.Message);
+      return Ok(response);
+    }
+
+    // PATCH api/<controller>/
+    [HttpPatch]
+    public async Task<IActionResult> UpdateCoupon(UpdateCouponRPC rpc)
+    {
+      var response = await _eventBus.CallRP(rpc);
       if (!response.Succeeded) throw new ApiException(response.Message);
       return Ok(response);
     }

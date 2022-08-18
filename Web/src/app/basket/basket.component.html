@@ -146,7 +146,56 @@
           </div>
         </div>
         <div class="col-6 d-flex flex-column justify-content-between">
-          <app-order-totals></app-order-totals>
+          <div
+            class="bg-light px-4 py-3 text-uppercase font-weight-bold d-flex justify-content-between"
+          >
+            <span>Sipariş Özeti</span>
+            <button
+              type="button"
+              class="btn btn-outline-primary"
+              (click)="openModal(selectCouponModal)"
+            >
+              Kuponlarım
+            </button>
+          </div>
+          <div class="p-4">
+            <ul
+              class="list-unstyled mb-4"
+              *ngIf="basketTotal$ | async as totals"
+            >
+              <li class="d-flex justify-content-between py-3 border-bottom">
+                <strong class="text-muted">Ürünlerin Toplam Ücreti</strong>
+                <strong>{{
+                  totals.subtotal | currency: "TRY":"symbol"
+                }}</strong>
+              </li>
+              <li class="d-flex justify-content-between py-3 border-bottom">
+                <strong class="text-muted">Kargo ve İşlem Ücreti</strong>
+                <strong>{{
+                  totals.shipping | currency: "TRY":"symbol"
+                }}</strong>
+              </li>
+              <li
+                class="d-flex justify-content-between py-3 border-bottom"
+                *ngIf="selectedCoupon"
+              >
+                <strong class="text-muted"
+                  >Kupon ({{ selectedCoupon.code }})</strong
+                >
+                <strong>{{
+                  -selectedCoupon.amount | currency: "TRY":"symbol"
+                }}</strong>
+              </li>
+              <li class="d-flex justify-content-between py-3 border-bottom">
+                <strong class="text-muted">Toplam</strong>
+                <strong>{{
+                  totals.total - (selectedCoupon ? selectedCoupon.amount : 0)
+                    | currency: "TRY":"symbol"
+                }}</strong>
+              </li>
+            </ul>
+          </div>
+
           <button (click)="OnCheckout()" class="btn btn-success w-100 py-3">
             Ödeme Yap
           </button>
@@ -155,3 +204,42 @@
     </div>
   </div>
 </div>
+
+<ng-template #selectCouponModal let-modal>
+  <div class="modal-header">
+    <h1 class="modal-title" id="modal-basic-title">Kupon Seç</h1>
+    <button
+      type="button"
+      class="btn-close"
+      aria-label="Close"
+      (click)="modal.dismiss('Cross click')"
+    ></button>
+  </div>
+  <div class="modal-body">
+    <div class="coupon-selector overflow-auto">
+      <div
+        class="btn card coupon-btn mx-2 mt-2"
+        *ngFor="let coupon of coupons"
+        (click)="OnCouponClicked(coupon)"
+        [ngClass]="{
+          'coupon-selected': coupon.id === selectedCoupon?.id
+        }"
+      >
+        <div class="row">
+          <div class="col-4">
+            <h6>Kod</h6>
+            <p>{{ coupon.code }}</p>
+          </div>
+          <div class="col-4">
+            <h6>Miktar</h6>
+            <p>{{ coupon.amount | currency: "TRY":"symbol" }}</p>
+          </div>
+          <div class="col-4">
+            <h6>Son Tarih</h6>
+            <p>{{ coupon.expireDate | date: "short" }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>

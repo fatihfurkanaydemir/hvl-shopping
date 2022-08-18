@@ -4,7 +4,7 @@ using Common.Wrappers;
 
 namespace Common.ApplicationRPCs;
 
-public class CreateCouponRPC: RPC<Response<int>>
+public class UpdateCouponRPC: RPC<Response<int>>
 {
   public string Code { get; set; }
   public decimal Amount { get; set; }

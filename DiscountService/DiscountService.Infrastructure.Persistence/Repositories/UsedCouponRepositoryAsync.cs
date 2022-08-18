@@ -25,6 +25,16 @@ public class UsedCouponRepositoryAsync : GenericRepositoryAsync<UsedCoupon>, IUs
           .ToListAsync();
   }
 
+  public async Task<IReadOnlyList<Coupon>> GetUsedCouponsByCustomerIdentityId(string id)
+  {
+    return await _usedCoupons
+          .Include(ud => ud.Coupon)
+          .OrderByDescending(o => o.Created)
+          .Select(ud => ud.Coupon)
+          .AsNoTracking()
+          .ToListAsync();
+  }
+
   public async Task<int> GetDataCountByCustomerIdentityId(string id)
   {
     return await _usedCoupons

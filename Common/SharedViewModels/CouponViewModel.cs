@@ -8,5 +8,5 @@ public class CouponViewModel
   public string Code { get; set; }
   public decimal Amount { get; set; }
   public DateTime ExpireDate { get; set; }
-  public DiscountStatus Status { get; set; }
+  public string Status { get; set; }
 }

@@ -20,4 +20,6 @@ public class Order: AuditableBaseEntity
   public string AddressDescription { get; set; }
   public string AddressCity { get; set; }
   public decimal TotalProductPrice { get; set; } 
+  public string? CouponCode { get; set; }
+  public decimal CouponAmount { get; set; }
 }

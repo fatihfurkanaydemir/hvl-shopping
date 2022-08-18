@@ -19,8 +19,8 @@
 
   <ItemGroup>
 	<ProjectReference Include="..\..\Common\Common.csproj" />
-	<ProjectReference Include="..\..\DiscountService.Infrastructure.Persistence\DiscountService.Infrastructure.Persistence.csproj" />
 	<ProjectReference Include="..\..\Infrastructure\GlobalInfrastructure.csproj" />
 	<ProjectReference Include="..\DiscountService.Application\DiscountService.Application.csproj" />
+	<ProjectReference Include="..\DiscountService.Infrastructure.Persistence\DiscountService.Infrastructure.Persistence.csproj" />
   </ItemGroup>
 </Project>

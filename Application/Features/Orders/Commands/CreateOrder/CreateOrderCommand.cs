@@ -11,6 +11,7 @@ using Common.ApplicationEvents;
 using Application.DTOs;
 using Domain.Entities;
 using Application.Services;
+using Common.ApplicationRPCs;
 
 namespace Application.Features.Orders.Commands.CreateOrder
 {
@@ -26,6 +27,7 @@ namespace Application.Features.Orders.Commands.CreateOrder
     public string AddressDescription { get; set; }
     [Required]
     public string AddressCity { get; set; }
+    public string? CouponCode { get; set; }
   }
   public class CreateOrderCommandHandler : IRequestHandler<CreateOrderCommand, Response<string>>
   {
@@ -113,7 +115,50 @@ namespace Application.Features.Orders.Commands.CreateOrder
         }
 
         orderEvents.Add(orderEvent);
+      }
 
+      Stripe.Checkout.Session session;
+
+      // [TODO] needs refactoring 
+      if (request.CouponCode != null && request.CouponCode != "")
+      {
+        var response = await _eventBus.CallRP(new UseCouponRPC { CustomerIdentityId = request.CustomerIdentityId, CouponCode = request.CouponCode });
+        if (!response.Succeeded) throw new ApiException(response.Message);
+        var couponAmount = response.Data;
+
+        session = await _paymentService.CreateCheckoutSession(basket, request.ShipmentPrice, request.CouponCode, couponAmount);
+        if (session.AmountTotal <= couponAmount)
+        {
+          throw new ApiException("Coupon amount can not be more than total");
+        }
+
+        foreach (var orderEvent in orderEvents)
+        {
+          orderEvent.CheckoutSessionId = session.Id;
+          orderEvent.PaymentIntentId = "";
+          orderEvent.CouponCode = request.CouponCode;
+          orderEvent.CouponAmount = couponAmount;
+
+          _eventBus.Publish(orderEvent);
+        }
+      }
+      else
+      {
+        session = await _paymentService.CreateCheckoutSession(basket, request.ShipmentPrice);
+
+        foreach (var orderEvent in orderEvents)
+        {
+          orderEvent.CheckoutSessionId = session.Id;
+          orderEvent.PaymentIntentId = "";
+          orderEvent.CouponCode = "";
+          orderEvent.CouponAmount = 0;
+
+          _eventBus.Publish(orderEvent);
+        }
+      }
+
+      foreach (var sellerIdentityId in sellerProductMap.Keys)
+      {
         foreach (var p in sellerProductMap[sellerIdentityId])
         {
           var product = await _productRepository.GetByIdWithRelationsAsync(p.Id);
@@ -121,15 +166,6 @@ namespace Application.Features.Orders.Commands.CreateOrder
           product.Sold += p.Quantity;
           await _productRepository.UpdateAsync(product);
         }
-      }
-
-      var session = await _paymentService.CreateCheckoutSession(basket, request.ShipmentPrice);
-
-      foreach (var orderEvent in orderEvents)
-      {
-        orderEvent.CheckoutSessionId = session.Id;
-        orderEvent.PaymentIntentId = "";
-        _eventBus.Publish(orderEvent);
       }
 
       return new Response<string>(session.Url, "Order and checkout session created");

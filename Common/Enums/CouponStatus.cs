@@ -1,6 +1,6 @@
 ﻿namespace Common.Enums;
 
-public enum DiscountStatus
+public enum CouponStatus
 {
   Passive, Active
 }

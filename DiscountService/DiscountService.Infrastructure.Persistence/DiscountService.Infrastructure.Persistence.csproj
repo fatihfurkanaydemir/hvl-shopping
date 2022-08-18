@@ -18,8 +18,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DiscountService\DiscountService.Application\DiscountService.Application.csproj" />
-    <ProjectReference Include="..\DiscountService\DiscountService.Domain\DiscountService.Domain.csproj" />
+    <ProjectReference Include="..\DiscountService.Application\DiscountService.Application.csproj" />
+    <ProjectReference Include="..\DiscountService.Domain\DiscountService.Domain.csproj" />
   </ItemGroup>
 
 </Project>

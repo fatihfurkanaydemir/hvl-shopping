@@ -15,9 +15,11 @@ public static class RPCSubscriptionsExtension
     eventBus.RegisterRPC<TestRPC, string>();
 
     eventBus.RegisterRPC<CanUseCouponRPC, Response<bool>>();
-    eventBus.RegisterRPC<UseCouponRPC, Response<bool>>();
+    eventBus.RegisterRPC<UseCouponRPC, Response<decimal>>();
     eventBus.RegisterRPC<CreateCouponRPC, Response<int>>();
     eventBus.RegisterRPC<GetAllCouponsRPC, PagedResponse<IEnumerable<CouponViewModel>>>();
     eventBus.RegisterRPC<GetUsedCouponsByCustomerIdentityIdRPC, PagedResponse<IEnumerable<CouponViewModel>>>();
+    eventBus.RegisterRPC<GetUsableCouponsByCustomerIdentityIdRPC, Response<IEnumerable<CouponViewModel>>>();
+    eventBus.RegisterRPC<UpdateCouponRPC, Response<int>>();
   }
 }

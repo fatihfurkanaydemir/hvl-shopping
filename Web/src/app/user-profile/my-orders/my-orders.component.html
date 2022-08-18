@@ -33,9 +33,21 @@
                   {{ order.customerPhoneNumber }}
                 </p>
               </div>
+              <div class="col d-inline-block" *ngIf="order.couponCode !== ''">
+                <h1 class="d-inline card-title fs-4">Kupon İndirimi</h1>
+                <p>
+                  {{ -order.couponAmount | currency: "TRY":"symbol" }}
+                </p>
+              </div>
               <div class="col d-inline-block">
                 <h1 class="d-inline card-title fs-4">Tutar</h1>
-                <p>{{ order.totalProductPrice | currency: "TRY":"symbol" }}</p>
+                <p>
+                  {{
+                    order.totalProductPrice -
+                      (order.couponCode !== "" ? order.couponAmount : 0)
+                      | currency: "TRY":"symbol"
+                  }}
+                </p>
               </div>
             </div>
             <div class="row">

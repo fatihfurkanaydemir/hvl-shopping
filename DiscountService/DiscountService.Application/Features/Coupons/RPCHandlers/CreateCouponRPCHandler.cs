@@ -19,6 +19,16 @@ public class CreateCouponRPCHandler : IRPCHandler<CreateCouponRPC, Response<int>
 
   public async Task<Response<int>> Handle(CreateCouponRPC rpc)
   {
+    var existingCoupon = await _couponRepository.GetByCodeAsync(rpc.Code);
+    if(existingCoupon != null)
+    {
+      return new Response<int>
+      {
+        Succeeded = false,
+        Message = "Coupon code already exists"
+      };
+    }
+
     var coupon = await _couponRepository.AddAsync(_mapper.Map<Coupon>(rpc));
 
     return new Response<int>(coupon.Id, "Coupon created");

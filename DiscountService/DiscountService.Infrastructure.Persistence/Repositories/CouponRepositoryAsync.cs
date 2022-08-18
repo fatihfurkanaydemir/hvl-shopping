@@ -22,4 +22,22 @@ public class CouponRepositoryAsync : GenericRepositoryAsync<Coupon>, ICouponRepo
           .AsNoTracking()
           .ToListAsync();
   }
+
+  public async Task<IReadOnlyList<Coupon>> GetUsableCouponsAsync(IEnumerable<Coupon> usedCoupons)
+  {
+    return await _coupons
+          .Where(
+            c => !usedCoupons.Contains(c) && 
+            c.Status != Common.Enums.CouponStatus.Passive && 
+            c.ExpireDate >= DateTime.UtcNow)
+          .AsNoTracking()
+          .ToListAsync();
+  }
+
+  public async Task<Coupon?> GetByCodeAsync(string code)
+  {
+    return await _coupons
+          .AsNoTracking()
+          .SingleOrDefaultAsync(c => c.Code == code);
+  }
 }

@@ -13,8 +13,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Common\Common.csproj" />
-    <ProjectReference Include="..\DiscountService.Infrastructure.Persistence\DiscountService.Infrastructure.Persistence.csproj" />
     <ProjectReference Include="..\DiscountService\DiscountService.Application\DiscountService.Application.csproj" />
+    <ProjectReference Include="..\DiscountService\DiscountService.Infrastructure.Persistence\DiscountService.Infrastructure.Persistence.csproj" />
 	<ProjectReference Include="..\OrderService\Application\OrderService.Application.csproj" />
 	<ProjectReference Include="..\OrderService\Infrastructure.Persistence\OrderService.Infrastructure.Persistence.csproj" />
   </ItemGroup>

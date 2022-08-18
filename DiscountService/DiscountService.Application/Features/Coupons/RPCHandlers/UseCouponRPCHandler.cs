@@ -6,7 +6,7 @@ using Common.Wrappers;
 
 namespace DiscountService.Application.Features.Coupons.RPCHandlers;
 
-public class UseCouponRPCHandler: IRPCHandler<UseCouponRPC, Response<bool>>
+public class UseCouponRPCHandler: IRPCHandler<UseCouponRPC, Response<decimal>>
 {
   private readonly ICouponRepositoryAsync _couponRepository;
   private readonly IUsedCouponRepositoryAsync _usedCouponRepository;
@@ -16,12 +16,12 @@ public class UseCouponRPCHandler: IRPCHandler<UseCouponRPC, Response<bool>>
     _usedCouponRepository = usedCouponRepository;
   }
 
-  public async Task<Response<bool>> Handle(UseCouponRPC rpc)
+  public async Task<Response<decimal>> Handle(UseCouponRPC rpc)
   {
-    var coupon = await _couponRepository.GetByIdAsync(rpc.DiscountId);
+    var coupon = await _couponRepository.GetByCodeAsync(rpc.CouponCode);
     if(coupon == null)
     {
-      return new Response<bool>
+      return new Response<decimal>
       {
         Succeeded = false,
         Message = "Coupon not found.",
@@ -30,34 +30,35 @@ public class UseCouponRPCHandler: IRPCHandler<UseCouponRPC, Response<bool>>
 
     if (coupon.ExpireDate < DateTime.Now)
     {
-      return new Response<bool>
+      return new Response<decimal>
       {
         Succeeded = false,
         Message = "Coupon expired.",
       };
     }
 
-    if (coupon.Status < Common.Enums.DiscountStatus.Passive)
+    if (coupon.Status == Common.Enums.CouponStatus.Passive)
     {
-      return new Response<bool>
+      return new Response<decimal>
       {
         Succeeded = false,
         Message = "Coupon not active.",
       };
     }
 
-    var didUseCoupon = await _usedCouponRepository.DidCustomerUseCoupon(rpc.CustomerIdentityId, rpc.DiscountId);
+    var didUseCoupon = await _usedCouponRepository.DidCustomerUseCoupon(rpc.CustomerIdentityId, coupon.Id);
     if(didUseCoupon)
     {
-      return new Response<bool>
+      return new Response<decimal>
       {
         Succeeded = false,
         Message = "This customer already used this coupon.",
       };
     }
 
+    await _couponRepository.MarkUnchangedAsync(coupon);
     await _usedCouponRepository.AddAsync(new UsedCoupon { CustomerIdentityId = rpc.CustomerIdentityId, Coupon = coupon });
 
-    return new Response<bool>(true, "Coupon used");
+    return new Response<decimal>(coupon.Amount, "Coupon used");
   }
 }

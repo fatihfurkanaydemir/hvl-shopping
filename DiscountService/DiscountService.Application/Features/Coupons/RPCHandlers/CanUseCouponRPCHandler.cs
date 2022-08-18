@@ -17,7 +17,7 @@ public class CanUseCouponRPCHandler: IRPCHandler<CanUseCouponRPC, Response<bool>
 
   public async Task<Response<bool>> Handle(CanUseCouponRPC rpc)
   {
-    var coupon = await _couponRepository.GetByIdAsync(rpc.DiscountId);
+    var coupon = await _couponRepository.GetByCodeAsync(rpc.CouponCode);
     if(coupon == null)
     {
       return new Response<bool>
@@ -27,7 +27,7 @@ public class CanUseCouponRPCHandler: IRPCHandler<CanUseCouponRPC, Response<bool>
       };
     }
 
-    if (coupon.ExpireDate < DateTime.Now)
+    if (coupon.ExpireDate < DateTime.UtcNow)
     {
       return new Response<bool>
       {
@@ -36,7 +36,7 @@ public class CanUseCouponRPCHandler: IRPCHandler<CanUseCouponRPC, Response<bool>
       };
     }
 
-    if (coupon.Status < Common.Enums.DiscountStatus.Passive)
+    if (coupon.Status == Common.Enums.CouponStatus.Passive)
     {
       return new Response<bool>
       {
@@ -45,7 +45,7 @@ public class CanUseCouponRPCHandler: IRPCHandler<CanUseCouponRPC, Response<bool>
       };
     }
 
-    var didUseCoupon = await _usedCouponRepository.DidCustomerUseCoupon(rpc.CustomerIdentityId, rpc.DiscountId);
+    var didUseCoupon = await _usedCouponRepository.DidCustomerUseCoupon(rpc.CustomerIdentityId, coupon.Id);
     if(didUseCoupon)
     {
       return new Response<bool>
