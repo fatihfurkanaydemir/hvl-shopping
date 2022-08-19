@@ -78,5 +78,14 @@ namespace WebApi.Controllers.v1
       return Ok(response);
     }
 
+    // DELETE api/<controller>/couponCode
+    [HttpDelete("{couponCode}")]
+    public async Task<IActionResult> Delete(string couponCode)
+    {
+      var response = await _eventBus.CallRP(new DeleteCouponRPC { Code = couponCode });
+      if (!response.Succeeded) throw new ApiException(response.Message);
+      return Ok(response);
+    }
+
   }
 }

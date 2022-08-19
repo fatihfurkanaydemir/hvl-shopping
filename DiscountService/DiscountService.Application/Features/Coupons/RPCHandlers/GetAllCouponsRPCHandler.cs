@@ -19,7 +19,7 @@ public class GetAllCouponsRPCHandler : IRPCHandler<GetAllCouponsRPC, PagedRespon
 
   public async Task<PagedResponse<IEnumerable<CouponViewModel>>> Handle(GetAllCouponsRPC rpc)
   {
-    var coupons = await _couponRepository.GetPagedReponseAsync(rpc.PageNumber, rpc.PageSize);
+    var coupons = await _couponRepository.GetPagedReponseWithRelationsAsync(rpc.PageNumber, rpc.PageSize);
     var dataCount = await _couponRepository.GetDataCount();
 
     var viewModels = new List<CouponViewModel>();

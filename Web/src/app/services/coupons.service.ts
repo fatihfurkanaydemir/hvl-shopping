@@ -5,6 +5,7 @@ import { environment } from 'src/environments/environment';
 import { IApiResponse } from '../models/IApiResponse';
 import { IApiResponseSingle } from '../models/IApiResponseSingle';
 import { ICreateCoupon } from '../models/ICreateCoupon';
+import { IDeleteCoupon } from '../models/IDeleteCoupon';
 import { IUpdateCoupon } from '../models/IUpdateCoupon';
 
 @Injectable({ providedIn: 'root' })
@@ -37,6 +38,12 @@ export class CouponsService {
     return this.httpClient.patch<IApiResponseSingle>(
       `${environment.apiUrl}/Coupon`,
       coupon
+    );
+  }
+
+  deleteCoupon(coupon: IDeleteCoupon): Observable<IApiResponseSingle> {
+    return this.httpClient.delete<IApiResponseSingle>(
+      `${environment.apiUrl}/Coupon/${coupon.code}`
     );
   }
 }

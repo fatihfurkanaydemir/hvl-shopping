@@ -4,7 +4,6 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 
-
 import { SellerPanelComponent } from './seller-panel/seller-panel.component';
 import { HomePageComponent } from './home-page/home-page.component';
 import { AppRoutingModule } from 'src/app/app-routing.module';
@@ -45,6 +44,10 @@ import { registerLocaleData } from '@angular/common';
 import localeTr from '@angular/common/locales/tr';
 import { OrdersActionsComponent } from './seller-panel/orders-actions/orders-actions.component';
 import { PaymentSuccessPageComponent } from './payment-success-page/payment-success-page.component';
+import { AdminManageCouponsTabComponent } from './admin-panel/admin-manage-coupons-tab/admin-manage-coupons-tab.component';
+import { AdminAddCouponComponent } from './admin-panel/admin-manage-coupons-tab/admin-add-coupon/admin-add-coupon.component';
+import { AdminCouponActionsComponent } from './admin-panel/admin-manage-coupons-tab/admin-coupon-actions/admin-coupon-actions.component';
+import { DatetimePickerComponent } from './shared/datetime-picker/datetime-picker.component';
 
 registerLocaleData(localeTr);
 @NgModule({
@@ -81,6 +84,10 @@ registerLocaleData(localeTr);
     SellerProfileComponent,
     OrdersActionsComponent,
     PaymentSuccessPageComponent,
+    AdminManageCouponsTabComponent,
+    AdminAddCouponComponent,
+    AdminCouponActionsComponent,
+    DatetimePickerComponent,
   ],
   imports: [
     BrowserModule,

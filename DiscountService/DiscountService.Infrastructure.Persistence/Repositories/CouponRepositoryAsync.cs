@@ -17,6 +17,7 @@ public class CouponRepositoryAsync : GenericRepositoryAsync<Coupon>, ICouponRepo
   public async Task<IReadOnlyList<Coupon>> GetPagedReponseWithRelationsAsync(int pageNumber, int pageSize)
   {
     return await _coupons
+          .OrderByDescending(x => x.Created)
           .Skip((pageNumber - 1) * pageSize)
           .Take(pageSize)
           .AsNoTracking()
@@ -30,6 +31,7 @@ public class CouponRepositoryAsync : GenericRepositoryAsync<Coupon>, ICouponRepo
             c => !usedCoupons.Contains(c) && 
             c.Status != Common.Enums.CouponStatus.Passive && 
             c.ExpireDate >= DateTime.UtcNow)
+          .OrderByDescending(x => x.Created)
           .AsNoTracking()
           .ToListAsync();
   }

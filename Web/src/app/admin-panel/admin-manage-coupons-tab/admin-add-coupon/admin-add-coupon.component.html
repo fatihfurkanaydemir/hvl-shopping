@@ -1,0 +1,101 @@
+<div id="add-coupon" class="mt-2">
+  <form>
+    <div class="form-group row">
+      <div class="col-9">
+        <input type="text" class="form-control" placeholder="Kupon Ara" />
+      </div>
+
+      <div class="col-3 btn-group">
+        <button class="btn btn-primary">Ara</button>
+        <button class="btn btn-success" (click)="openModal(modal)">
+          Kupon ekle
+        </button>
+      </div>
+    </div>
+  </form>
+
+  <ng-template #modal let-modal>
+    <form [formGroup]="addCouponForm" (submit)="addCouponSubmit(modal)">
+      <div class="modal-header">
+        <h1 class="modal-title" id="modal-basic-title">Kupon ekle</h1>
+        <button
+          type="button"
+          class="btn-close"
+          aria-label="Close"
+          (click)="modal.dismiss('Cross click')"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <div class="form-outline mb-4 has-validation">
+          <label class="form-label" for="code">Kupon Kodu</label>
+          <input
+            type="text"
+            formControlName="code"
+            id="code"
+            class="form-control form-control-lg py-2"
+            [ngClass]="{
+              'is-invalid': isFormControlInvalid('code'),
+              'is-valid': isFormControlValid('code')
+            }"
+          />
+        </div>
+        <p
+          *ngIf="isFormControlInvalid('code')"
+          class="text-danger error-message"
+        >
+          Bu alan boş bırakılamaz.
+        </p>
+
+        <div class="form-outline mb-4 has-validation">
+          <label class="form-label" for="amount">Miktar</label>
+          <input
+            type="number"
+            formControlName="amount"
+            id="amount"
+            class="form-control form-control-lg py-2"
+            [ngClass]="{
+              'is-invalid': isFormControlInvalid('amount'),
+              'is-valid': isFormControlValid('amount')
+            }"
+          />
+        </div>
+        <p
+          *ngIf="isFormControlInvalid('amount')"
+          class="text-danger error-message"
+        >
+          Bu alan boş bırakılamaz.
+        </p>
+
+        <div class="form-outline mb-4 has-validation">
+          <label class="form-label" for="status">Durum</label>
+          <select class="form-select py-2" formControlName="status" id="status">
+            <option value="Active" selected>Aktif</option>
+            <option value="Passive">Pasif</option>
+          </select>
+        </div>
+        <p
+          *ngIf="isFormControlInvalid('status')"
+          class="text-danger error-message"
+        >
+          Lütfen geçerli bir değer girin.
+        </p>
+
+        <div class="div">
+          <label class="form-label" for="status">Son Tarih</label>
+          <app-datetime-picker
+            (OnDatetimeChanged)="onDatePicked($event)"
+          ></app-datetime-picker>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="submit"
+          class="btn btn-primary w-100"
+          [disabled]="addCouponForm.invalid || !isDateValid()"
+        >
+          Ekle
+        </button>
+      </div>
+    </form>
+  </ng-template>
+</div>

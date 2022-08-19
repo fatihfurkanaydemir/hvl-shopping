@@ -10,6 +10,6 @@ export class AdminPanelComponent implements OnInit {
   constructor(private router: Router, private route: ActivatedRoute) {}
 
   ngOnInit(): void {
-    this.router.navigate(['manage-categories'], { relativeTo: this.route });
+    this.router.navigate(['manage-coupons'], { relativeTo: this.route });
   }
 }

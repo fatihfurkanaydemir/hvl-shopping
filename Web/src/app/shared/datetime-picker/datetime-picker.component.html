@@ -1,0 +1,47 @@
+<div class="input-group has-validation">
+  <input
+    class="form-control py-2"
+    [ngClass]="{
+      'is-invalid': !isDateValid(),
+      'is-valid': isDateValid()
+    }"
+    type="datetime"
+    [ngModel]="dateString | date: 'medium'"
+    disabled
+  />
+
+  <button
+    class="btn btn-outline-secondary"
+    [ngbPopover]="calendarContent"
+    (click)="updateDatetime()"
+    type="button"
+  >
+    <i class="fa fa-calendar"></i>
+  </button>
+</div>
+
+<ng-template #calendarContent>
+  <div class="text-center">
+    <ngb-datepicker
+      id="dp"
+      #dp
+      name="datepicker"
+      [minDate]="getMinDate()"
+      [ngModel]="datetime"
+      (ngModelChange)="onDateChange($event)"
+    ></ngb-datepicker>
+    <div class="mt-auto">
+      <ngb-timepicker
+        #tp
+        name="timepicker"
+        [ngModel]="datetime"
+        (ngModelChange)="onTimeChange($event)"
+        [seconds]="true"
+        [hourStep]="hourStep"
+        [minuteStep]="minuteStep"
+        [secondStep]="secondStep"
+      >
+      </ngb-timepicker>
+    </div>
+  </div>
+</ng-template>
