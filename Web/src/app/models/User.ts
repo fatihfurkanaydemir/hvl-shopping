@@ -24,4 +24,8 @@ export class User {
   get isOnlySeller() {
     return this.roles.find((r) => r === 'Seller') && this.roles.length === 1;
   }
+
+  get isAdmin() {
+    return this.roles.find((r) => r === 'Admin');
+  }
 }

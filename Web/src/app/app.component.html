@@ -46,6 +46,13 @@
     >
       Yönetim Paneli
     </a>
+    <a
+      class="btn btn-light"
+      *ngIf="user?.isAdmin"
+      [routerLink]="['/admin-panel']"
+    >
+      Yönetim Paneli
+    </a>
     <div ngbDropdown class="d-inline p-3">
       <button
         type="button"

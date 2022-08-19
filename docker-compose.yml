@@ -62,6 +62,24 @@ services:
     depends_on:
       - redis
     
+  mongodb:
+    image: mongo:4.2.3-bionic
+    container_name: mongodb
+    ports:
+      - 27017:27017
+    environment:
+      - MONGO_INITDB_DATABASE=hvlshopping
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=admin
+    volumes:
+      # seeding scripts
+      - ./mongo-entrypoint:/docker-entrypoint-initdb.d
+      # named volumes
+      - mongodb:/data/db
+      - mongoconfig:/data/configdb
+    networks:
+      - mongo_net
+      
 networks:
   rabbitmq_api_net:
     driver: bridge
@@ -69,7 +87,12 @@ networks:
   postgres:
     driver: bridge
     
+  mongo_net:
+    driver: bridge
+    
 volumes:
     postgres:
     pgadmin:
     redis-data:
+    mongodb:
+    mongoconfig:
