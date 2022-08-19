@@ -13,7 +13,7 @@ namespace ReviewService.Domain.Entities
 
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
-        public string Id { get; set; }
+        public string Id { get; set; } = ObjectId.GenerateNewId().ToString();
         public int ProductId { get; set; }
 
         [BsonElement("Name")]
