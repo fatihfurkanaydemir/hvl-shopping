@@ -21,6 +21,9 @@ dotnet ef database update --context OrderDbContext --project .\OrderService\Infr
 4)
 dotnet ef database update --context IdentityContext --project .\AuthServer\ --startup-project .\AuthServer\
 
+5)
+dotnet ef database update --context DiscountDbContext --project .\DiscountService\DiscountService.Infrastructure.Persistence\ --startup-project .\DiscountService\DiscountService\
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //
 // Servisler için

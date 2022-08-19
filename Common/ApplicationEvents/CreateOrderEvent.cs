@@ -21,4 +21,6 @@ public class CreateOrderEvent : Event
   public string AddressCity { get; set; }
   public decimal TotalProductPrice { get; set; }
   public decimal ShipmentPrice { get; set; }
+  public string? CouponCode { get; set; }
+  public decimal CouponAmount { get; set; }
 }

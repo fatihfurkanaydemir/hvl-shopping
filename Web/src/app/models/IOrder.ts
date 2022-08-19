@@ -23,4 +23,6 @@ export interface IOrder {
   totalProductPrice: number;
   shipmentPrice: number;
   products: IOrderProduct[];
+  couponCode: string;
+  couponAmount: number;
 }

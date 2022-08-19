@@ -1,0 +1,44 @@
+<app-admin-add-coupon (OnCouponAdded)="getCoupons()"></app-admin-add-coupon>
+<div class="table-container">
+  <table class="table table-hover table-responsive">
+    <thead>
+      <tr>
+        <th scope="col">Id</th>
+        <th scope="col">Kod</th>
+        <th scope="col">Miktar</th>
+        <th scope="col">Son Tarih</th>
+        <th scope="col">Durum</th>
+        <th scope="col">İşlemler</th>
+      </tr>
+    </thead>
+    <tbody class="table-group-divider">
+      <tr class="align-middle" *ngFor="let coupon of coupons">
+        <th scope="row">{{ coupon.id }}</th>
+        <td>{{ coupon.code }}</td>
+        <td>
+          <strong>{{ coupon.amount | currency: "TRY":"symbol" }}</strong>
+        </td>
+        <td>
+          {{ coupon.expireDate | date: "medium" }}
+        </td>
+        <td>
+          {{ coupon.status === "Passive" ? "Pasif" : "Aktif" }}
+        </td>
+        <td>
+          <app-admin-coupon-actions
+            (OnCouponEdited)="getCoupons()"
+            [coupon]="coupon"
+          ></app-admin-coupon-actions>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<div class="d-flex mt-4 justify-content-center">
+  <ngb-pagination
+    [collectionSize]="dataCount"
+    [(page)]="pageNumber"
+    [pageSize]="pageSize"
+    (pageChange)="onPageChange($event)"
+  ></ngb-pagination>
+</div>
