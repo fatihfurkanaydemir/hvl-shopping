@@ -19,3 +19,11 @@ button.nav-link{
     padding-left: 0;
     padding-right: 0;
 }
+
+.rating-color{
+    color:#fbc634 !important;
+}
+
+.rating-count{
+    font-weight: 300;
+}
