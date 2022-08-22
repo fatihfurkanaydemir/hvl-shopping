@@ -49,3 +49,9 @@ Diğer servislerin sırası önemli değil
 !! AuthServer ilk başlatılmalı API nin seed edilebilmesi için. !!
 !!                                                             !!
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+Review Servis için
+use Reviews
+db.createCollection('Comments')
