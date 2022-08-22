@@ -17,22 +17,22 @@ public class OrderRepositoryAsync : GenericRepositoryAsync<Order>, IOrderReposit
   public async Task<IReadOnlyList<Order>> GetPagedReponseWithRelationsAsync(int pageNumber, int pageSize)
   {
     return await _orders
-          .Skip((pageNumber - 1) * pageSize)
-          .Take(pageSize)
           .Include(o => o.Products)
           .OrderByDescending(o => o.Created)
           .AsNoTracking()
+          .Skip((pageNumber - 1) * pageSize)
+          .Take(pageSize)
           .ToListAsync();
   }
 
   public async Task<IReadOnlyList<Order>> GetAllOrdersByCustomerIdentityIdAsync(string Id, int pageNumber, int pageSize)
   {
     return await _orders
+          .OrderByDescending(o => o.Created)
           .Skip((pageNumber - 1) * pageSize)
           .Take(pageSize)
           .Include(o => o.Products)
           .Where(o => o.CustomerIdentityId == Id)
-          .OrderByDescending(o => o.Created)
           .AsNoTracking()
           .ToListAsync();
   }
@@ -40,11 +40,11 @@ public class OrderRepositoryAsync : GenericRepositoryAsync<Order>, IOrderReposit
   public async Task<IReadOnlyList<Order>> GetAllOrdersBySellerIdentityIdAsync(string Id, int pageNumber, int pageSize)
   {
     return await _orders
+          .OrderByDescending(o => o.Created)
           .Skip((pageNumber - 1) * pageSize)
           .Take(pageSize)
           .Include(o => o.Products)
           .Where(o => o.SellerIdentityId == Id)
-          .OrderByDescending(o => o.Created)
           .AsNoTracking()
           .ToListAsync();
   }
@@ -69,8 +69,8 @@ public class OrderRepositoryAsync : GenericRepositoryAsync<Order>, IOrderReposit
   {
     return await _orders
           .Include(o => o.Products)
-          .Where(o => o.OrderGroupId == Id)
           .OrderByDescending(o => o.Created)
+          .Where(o => o.OrderGroupId == Id)
           .AsNoTracking()
           .ToListAsync();
   }
@@ -79,8 +79,8 @@ public class OrderRepositoryAsync : GenericRepositoryAsync<Order>, IOrderReposit
   {
     return await _orders
           .Include(o => o.Products)
-          .Where(o => o.CheckoutSessionId == Id)
           .OrderByDescending(o => o.Created)
+          .Where(o => o.CheckoutSessionId == Id)
           .AsNoTracking()
           .ToListAsync();
   }

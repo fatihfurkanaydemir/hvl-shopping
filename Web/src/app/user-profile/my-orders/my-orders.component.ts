@@ -43,6 +43,7 @@ export class MyOrdersComponent implements OnInit {
         next: (response) => {
           this.orders = response.data;
           this.dataCount = +response.dataCount;
+          console.log(this.orders);
         },
       });
   }

@@ -24,6 +24,7 @@ import { SearchFilterComponent } from './search-filter/search-filter.component';
 import { SellerProfileComponent } from './seller-panel/seller-profile/seller-profile.component';
 import { CustomerAuthGuard } from './services/customerAuth.guard';
 import { PaymentSuccessPageComponent } from './payment-success-page/payment-success-page.component';
+import { AdminManageCouponsTabComponent } from './admin-panel/admin-manage-coupons-tab/admin-manage-coupons-tab.component';
 
 const appRoutes: Routes = [
   { path: 'search', component: SearchFilterComponent },
@@ -69,6 +70,7 @@ const appRoutes: Routes = [
       { path: 'dashboard', component: AdminDashboardTabComponent },
       { path: 'manage-clients', component: AdminManageClientsTabComponent },
       { path: 'manage-sellers', component: AdminManageSellersTabComponent },
+      { path: 'manage-coupons', component: AdminManageCouponsTabComponent },
       {
         path: 'manage-categories',
         component: AdminManageCategoriesTabComponent,

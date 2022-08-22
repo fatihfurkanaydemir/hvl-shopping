@@ -4,15 +4,18 @@ using Newtonsoft.Json;
 using System.Text;
 using Domain.Entities;
 using Stripe.Checkout;
+using Stripe;
 
 namespace Application.Services;
 
 public class PaymentService
 {
-  public async Task<Session> CreateCheckoutSession(CustomerBasket basket, decimal shipmentPrice)
+  public async Task<Session> CreateCheckoutSession(CustomerBasket basket, decimal shipmentPrice, string? couponCode = null, decimal couponAmount = 0)
   {
     var items = new List<SessionLineItemOptions>();
-    foreach(var item in basket.Items)
+    var discounts = new List<SessionDiscountOptions>();
+
+    foreach (var item in basket.Items)
     {
       items.Add(new SessionLineItemOptions
       {
@@ -46,9 +49,23 @@ public class PaymentService
       Quantity = 1,
     });
 
+    if(couponCode != null)
+    {
+      var couponOptions = new CouponCreateOptions { AmountOff = (long)couponAmount * 100, Duration = "once", Currency = "try", Id = couponCode };
+      var couponService = new CouponService();
+      var coupon = couponService.Create(couponOptions);
+
+      discounts.Add(new SessionDiscountOptions
+      {
+        Coupon = coupon.Id,
+      });
+    }
+    
+
     var options = new SessionCreateOptions
     {
       LineItems = items,
+      Discounts = discounts.Count == 0 ? null : discounts,
       Mode = "payment",
       SuccessUrl = "http://localhost:4200/payment-success?session_id={CHECKOUT_SESSION_ID}",
       CancelUrl = "http://localhost:4200/payment-cancel",

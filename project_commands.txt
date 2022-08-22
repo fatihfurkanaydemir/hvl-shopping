@@ -21,6 +21,9 @@ dotnet ef database update --context OrderDbContext --project .\OrderService\Infr
 4)
 dotnet ef database update --context IdentityContext --project .\AuthServer\ --startup-project .\AuthServer\
 
+5)
+dotnet ef database update --context DiscountDbContext --project .\DiscountService\DiscountService.Infrastructure.Persistence\ --startup-project .\DiscountService\DiscountService\
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //
 // Servisler için
@@ -39,7 +42,7 @@ AuthServer
 3)
 Stripe kullanıcı adı : şifre => hvlshopping@gmail.com : HVLshopping123456789.
 .\stripe.exe login 
-.\stripe.exe listen --forward-to localhost:7247/StripeWebhook
+.\stripe.exe listen --forward-to https://localhost:7247/api/StripeWebhook
 
 4)
 Diğer servislerin sırası önemli değil

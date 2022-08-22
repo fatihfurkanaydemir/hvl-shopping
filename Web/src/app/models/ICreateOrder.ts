@@ -4,4 +4,5 @@ export interface ICreateOrder {
   addressDescription: string;
   addressCity: string;
   shipmentPrice: number;
+  couponCode?: string;
 }

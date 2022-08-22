@@ -62,12 +62,19 @@ export class BasketService {
   }
 
   clearItems() {
-    this.basketSource.next({
-      items: [],
-      id: this.getCurrentBasketValue().id,
-    });
-    this.calculateTotals();
-    this.setBasket(this.getCurrentBasketValue());
+    this.authService.userSubject
+      .pipe(
+        take(1),
+        tap((user) => {
+          this.basketSource.next({
+            items: [],
+            id: user.identityId,
+          });
+          this.calculateTotals();
+          this.setBasket(this.getCurrentBasketValue());
+        })
+      )
+      .subscribe();
   }
 
   getCurrentBasketValue() {
