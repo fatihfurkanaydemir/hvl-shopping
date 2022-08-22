@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using ReviewService.Application.DTO_s;
 using ReviewService.Domain.Entities;
 using ReviewService.Infrastructure.Persistence;
 
@@ -31,11 +32,11 @@ namespace ReviewService.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post(Review newComment)
+        public async Task<IActionResult> Post(ReviewDTO newComment)
         {
             await _reviewService.CreateAsync(newComment);
 
-            return CreatedAtAction(nameof(Get), new { id = newComment.Id }, newComment);
+            return CreatedAtAction(nameof(Get) ,newComment);
         }
 
         [HttpPut("{id:length(24)}")]
