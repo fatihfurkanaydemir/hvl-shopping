@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace DiscountService.Controllers.v1;
+namespace NotificationService.Controllers.v1;
 
-public class DiscountController : BaseApiController
+public class NotificationController : BaseApiController
 {
 
   //// GET: api/<controller>
