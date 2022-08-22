@@ -12,5 +12,5 @@ public static class ServiceExtensions
     {
         services.AddAutoMapper(Assembly.GetExecutingAssembly());
         services.AddMediatR(Assembly.GetExecutingAssembly());
-    }
+  }
 }

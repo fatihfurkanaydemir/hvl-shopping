@@ -35,6 +35,12 @@ builder.Services.AddApplicationLayer(config);
 //    });
 //});
 
+builder.Services.AddSignalR(config =>
+{
+  config.EnableDetailedErrors = true;
+});
+
+
 builder.Services.AddGlobalInfrastructure(config);
 
 var app = builder.Build();

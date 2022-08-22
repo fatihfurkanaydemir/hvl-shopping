@@ -114,6 +114,11 @@ builder.Services.AddAuthentication(options =>
   };
 });
 
+builder.Services.AddSignalR(config =>
+{
+  config.EnableDetailedErrors = true;
+});
+
 builder.Services.AddGlobalInfrastructure(config);
 
 StripeConfiguration.ApiKey = config.GetSection("Stripe")["ApiKey"];

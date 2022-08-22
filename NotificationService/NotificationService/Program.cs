@@ -3,6 +3,7 @@ using NotificationService.Infrastructure.Persistence;
 using NotificationService.Application;
 using GlobalInfrastructure;
 using NotificationService.Extensions;
+using NotificationService.Application.Hubs;
 
 var config = new ConfigurationBuilder()
   .AddJsonFile("appsettings.json")
@@ -32,11 +33,16 @@ builder.Services.AddCors(options =>
   options.AddDefaultPolicy(
     builder =>
     {
-      builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
+      builder.AllowAnyHeader().AllowAnyMethod().SetIsOriginAllowed(_ => true).AllowCredentials();
     });
 });
 
 builder.Services.AddGlobalInfrastructure(config);
+
+builder.Services.AddSignalR(config =>
+{
+  config.EnableDetailedErrors = true;
+});
 
 var app = builder.Build();
 
@@ -48,6 +54,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseMiddleware<ErrorHandlerMiddleware>();
+
+app.MapHub<DiscountHub>("/api/discounthub");
 
 app.UseCors();
 app.UseRouting();

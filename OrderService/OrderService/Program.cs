@@ -35,6 +35,11 @@ builder.Services.AddCors(options =>
     });
 });
 
+builder.Services.AddSignalR(config =>
+{
+  config.EnableDetailedErrors = true;
+});
+
 builder.Services.AddGlobalInfrastructure(config);
 
 var app = builder.Build();

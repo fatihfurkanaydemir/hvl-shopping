@@ -19,6 +19,7 @@ using DiscountService.Infrastructure.Persistence.Contexts;
 // Event handlers
 using OrderService.Application.Features.Orders.EventHandlers.OrderPaymentCompleted;
 using OrderService.Application.Features.Orders.EventHandlers.CreateOrder;
+using NotificationService.Application.Features.DiscountCouponNotifications;
 
 // RPC handlers
 using DiscountService.Application.Features.Test;
@@ -40,6 +41,7 @@ public static class DependencyExtension
     services.AddTransient<TestEventHandler>();
     services.AddTransient<CreateOrderEventHandler>();
     services.AddTransient<OrderPaymentCompletedEventHandler>();
+    services.AddTransient<DiscountCouponCreatedEventHandler>();
 
     // RPC Handlers
     services.AddTransient<TestRPCHandler>();

@@ -4,7 +4,9 @@ import { Subscription, take, tap } from 'rxjs';
 import { BasketService } from './basket/basket.service';
 import { User } from './models/User';
 import { AuthService } from './services/auth.service';
-
+import { HubConnection, HubConnectionBuilder } from '@microsoft/signalr';
+import { environment } from 'src/environments/environment';
+import { IDiscountCouponCreatedNotification } from './models/IDiscountCouponCreatedNotification';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -15,11 +17,24 @@ export class AppComponent implements OnInit, OnDestroy {
   userSub?: Subscription;
   user?: User;
 
+  private signalRClient: HubConnection;
+
   constructor(
     private authService: AuthService,
     private router: Router,
     private basketService: BasketService
-  ) {}
+  ) {
+    this.signalRClient = new HubConnectionBuilder()
+      .withUrl(`${environment.notificationServiceUrl}/discounthub`)
+      .build();
+
+    this.signalRClient.on(
+      'Notify_DiscountCouponCreated',
+      (notification: IDiscountCouponCreatedNotification) => {
+        console.log(notification);
+      }
+    );
+  }
 
   ngOnInit(): void {
     this.authService.autoLogin();
@@ -34,6 +49,10 @@ export class AppComponent implements OnInit, OnDestroy {
         console.log('initialised basket');
       });
     }
+  }
+
+  ngAfterContentInit() {
+    this.signalRClient.start();
   }
 
   goToPage(pageName: string) {
