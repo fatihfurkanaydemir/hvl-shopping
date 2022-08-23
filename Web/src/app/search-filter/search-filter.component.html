@@ -15,7 +15,7 @@
       <a [routerLink]="['/product', product.id]" class="nav-link card h-100">
         <img
           class="card-img-top h-75"
-          [src]="product.images[0].url"
+          [src]="product.images[0]?.url"
           alt="Card image cap"
         />
         <div class="card-body">
@@ -24,7 +24,9 @@
             {{ product.description }}
           </p>
           <ngb-rating [rate]="3"></ngb-rating>
-          <div class="text-end">${{ product.price }}</div>
+          <div class="text-end">
+            {{ product.price | currency: "TRY":"symbol" }}
+          </div>
         </div>
       </a>
     </div>

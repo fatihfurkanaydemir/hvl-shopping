@@ -17,6 +17,12 @@ public class PaymentService
 
     foreach (var item in basket.Items)
     {
+      var images = new List<string> {};
+      if(item.PictureUrl != null && item.PictureUrl.Trim() != "")
+        images.Add(item.PictureUrl);
+      else
+        images.Add("https://www.pngitem.com/pimgs/m/27-272007_transparent-product-icon-png-product-vector-icon-png.png");
+      
       items.Add(new SessionLineItemOptions
       {
         PriceData = new SessionLineItemPriceDataOptions
@@ -26,7 +32,7 @@ public class PaymentService
           ProductData = new SessionLineItemPriceDataProductDataOptions
           {
             Name = item.ProductName,
-            Images = new List<string> { item.PictureUrl },
+            Images = images,
             Description = item.CategoryName
           },
         },

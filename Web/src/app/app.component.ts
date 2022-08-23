@@ -1,12 +1,12 @@
+import { CurrencyPipe } from '@angular/common';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription, take, tap } from 'rxjs';
 import { BasketService } from './basket/basket.service';
 import { User } from './models/User';
 import { AuthService } from './services/auth.service';
-import { HubConnection, HubConnectionBuilder } from '@microsoft/signalr';
-import { environment } from 'src/environments/environment';
-import { IDiscountCouponCreatedNotification } from './models/IDiscountCouponCreatedNotification';
+import { DiscountHubService } from './services/discounthub.service';
+import { ToastService } from './services/toast.service';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -17,24 +17,14 @@ export class AppComponent implements OnInit, OnDestroy {
   userSub?: Subscription;
   user?: User;
 
-  private signalRClient: HubConnection;
-
   constructor(
     private authService: AuthService,
     private router: Router,
-    private basketService: BasketService
-  ) {
-    this.signalRClient = new HubConnectionBuilder()
-      .withUrl(`${environment.notificationServiceUrl}/discounthub`)
-      .build();
-
-    this.signalRClient.on(
-      'Notify_DiscountCouponCreated',
-      (notification: IDiscountCouponCreatedNotification) => {
-        console.log(notification);
-      }
-    );
-  }
+    private basketService: BasketService,
+    private discountHubService: DiscountHubService,
+    private toastService: ToastService,
+    private currencyPipe: CurrencyPipe
+  ) {}
 
   ngOnInit(): void {
     this.authService.autoLogin();
@@ -52,7 +42,21 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   ngAfterContentInit() {
-    this.signalRClient.start();
+    this.discountHubService.start();
+
+    this.discountHubService.OnDiscountCouponCreated.subscribe((notification) =>
+      this.toastService.showNotification(
+        'Yeni İndirim Kuponunuz Var!',
+        `<strong class="fs-4">${this.currencyPipe.transform(
+          notification.amount,
+          'TRY',
+          'symbol'
+        )}</strong> değerindeki kupon kodunuz <br /> <strong class="text-primary fs-3">${
+          notification.couponCode
+        }</strong>`,
+        'info'
+      )
+    );
   }
 
   goToPage(pageName: string) {
@@ -62,6 +66,7 @@ export class AppComponent implements OnInit, OnDestroy {
   logout() {
     this.authService.logout();
     this.basketService.logout();
+    this.discountHubService.start();
   }
 
   ngOnDestroy(): void {

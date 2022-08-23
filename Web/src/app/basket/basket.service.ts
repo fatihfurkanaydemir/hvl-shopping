@@ -219,7 +219,7 @@ export class BasketService {
       price: item.price,
       sellerIdentityId: item.seller.identityId,
       quantity,
-      pictureUrl: item.images[0].url,
+      pictureUrl: item.images[0]?.url,
       categoryName: item.category.name,
     };
   }

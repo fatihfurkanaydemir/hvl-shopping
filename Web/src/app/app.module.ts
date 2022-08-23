@@ -40,7 +40,7 @@ import { AddAddressComponent } from './user-profile/add-address/add-address.comp
 import { AddressActionsComponent } from './user-profile/address-actions/address-actions.component';
 import { SellerProfileComponent } from './seller-panel/seller-profile/seller-profile.component';
 
-import { registerLocaleData } from '@angular/common';
+import { CurrencyPipe, registerLocaleData } from '@angular/common';
 import localeTr from '@angular/common/locales/tr';
 import { OrdersActionsComponent } from './seller-panel/orders-actions/orders-actions.component';
 import { PaymentSuccessPageComponent } from './payment-success-page/payment-success-page.component';
@@ -108,6 +108,7 @@ registerLocaleData(localeTr);
       provide: LOCALE_ID,
       useValue: 'tr-TR',
     },
+    CurrencyPipe,
   ],
   bootstrap: [AppComponent],
 })
