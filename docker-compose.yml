@@ -79,12 +79,14 @@ services:
       - mongoconfig:/data/configdb
     networks:
       - mongo_net
-      
 networks:
   rabbitmq_api_net:
     driver: bridge
     
   postgres:
+    driver: bridge
+
+  mongo_net:
     driver: bridge
     
   mongo_net:
