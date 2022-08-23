@@ -1,0 +1,28 @@
+<h1
+  *ngIf="coupons.length <= 0"
+  class="text-center text-primary"
+  style="margin-top: 250px"
+>
+  İndirim kuponunuz bulunmamaktadır.
+</h1>
+<h2 *ngIf="coupons.length > 0" class="text-center text-primary mb-5 mt-5">
+  İndirim Kuponlarım.
+</h2>
+<div class="overflow-auto d-flex flex-column align-items-center">
+  <div class="btn card coupon-btn w-50 mt-4" *ngFor="let coupon of coupons">
+    <div class="row">
+      <div class="col-4">
+        <h4>Kod</h4>
+        <p class="fs-5">{{ coupon.code }}</p>
+      </div>
+      <div class="col-4">
+        <h4>Miktar</h4>
+        <p class="fs-5">{{ coupon.amount | currency: "TRY":"symbol" }}</p>
+      </div>
+      <div class="col-4">
+        <h4>Son Tarih</h4>
+        <p class="fs-5">{{ coupon.expireDate | date: "short" }}</p>
+      </div>
+    </div>
+  </div>
+</div>

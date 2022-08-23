@@ -25,15 +25,29 @@ import { SellerProfileComponent } from './seller-panel/seller-profile/seller-pro
 import { CustomerAuthGuard } from './services/customerAuth.guard';
 import { PaymentSuccessPageComponent } from './payment-success-page/payment-success-page.component';
 import { AdminManageCouponsTabComponent } from './admin-panel/admin-manage-coupons-tab/admin-manage-coupons-tab.component';
+import { MyCouponsComponent } from './user-profile/my-coupons/my-coupons.component';
 
 const appRoutes: Routes = [
   { path: 'search', component: SearchFilterComponent },
-  { path: 'payment-success', component: PaymentSuccessPageComponent },
+  {
+    path: 'payment-success',
+    component: PaymentSuccessPageComponent,
+    canActivate: [AuthGuard, CustomerAuthGuard],
+  },
 
   { path: 'seller-login', component: SellerLoginComponent },
   { path: 'login', component: LoginPageComponent },
   { path: 'register', component: RegisterPageComponent },
-  { path: 'my-orders', component: MyOrdersComponent, canActivate: [AuthGuard] },
+  {
+    path: 'my-orders',
+    component: MyOrdersComponent,
+    canActivate: [AuthGuard, CustomerAuthGuard],
+  },
+  {
+    path: 'my-coupons',
+    component: MyCouponsComponent,
+    canActivate: [AuthGuard, CustomerAuthGuard],
+  },
   {
     path: 'user-profile',
     component: UserProfileComponent,
@@ -45,6 +59,7 @@ const appRoutes: Routes = [
     loadChildren: () =>
       import('./basket/basket.module').then((mod) => mod.BasketModule),
     data: { breadcrumb: 'Basket' },
+    canActivate: [AuthGuard, CustomerAuthGuard],
   },
   { path: '', component: HomePageComponent, pathMatch: 'full' },
   {

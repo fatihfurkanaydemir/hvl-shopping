@@ -49,6 +49,7 @@ import { AdminAddCouponComponent } from './admin-panel/admin-manage-coupons-tab/
 import { AdminCouponActionsComponent } from './admin-panel/admin-manage-coupons-tab/admin-coupon-actions/admin-coupon-actions.component';
 import { DatetimePickerComponent } from './shared/datetime-picker/datetime-picker.component';
 import { CommentsListComponent } from './comments-list/comments-list.component';
+import { MyCouponsComponent } from './user-profile/my-coupons/my-coupons.component';
 
 registerLocaleData(localeTr);
 @NgModule({
@@ -90,6 +91,7 @@ registerLocaleData(localeTr);
     AdminCouponActionsComponent,
     DatetimePickerComponent,
     CommentsListComponent,
+    MyCouponsComponent,
   ],
   imports: [
     BrowserModule,
