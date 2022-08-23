@@ -2,7 +2,7 @@
 
 namespace DiscountService.Controllers.v1;
 
-public class OrderController : BaseApiController
+public class DiscountController : BaseApiController
 {
 
   //// GET: api/<controller>

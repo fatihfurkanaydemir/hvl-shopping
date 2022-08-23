@@ -49,6 +49,7 @@ namespace Application.Features.Sellers.Commands.CreateSeller
     public async Task<Response<string>> Handle(CreateSellerCommand request, CancellationToken cancellationToken)
     {
       var seller = _mapper.Map<Seller>(request);
+      seller.Address.Title = "Dükkan Adresi";
 
       var registerResponse = await _authService.RegisterSeller(request.Email, request.Password, request.ConfirmPassword);
       if (!registerResponse.Succeeded)

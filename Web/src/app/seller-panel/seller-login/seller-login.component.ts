@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
 import { ILogin } from 'src/app/models/ILogin';
 import { ISellerRegister } from 'src/app/models/ISellerRegister';
 import { AuthService } from 'src/app/services/auth.service';
+import { DiscountHubService } from 'src/app/services/discounthub.service';
 import { ToastService } from 'src/app/services/toast.service';
 import { SharedValues } from 'src/app/shared/SharedValues';
 import { ValidationPatterns } from 'src/app/shared/ValidationPatterns';
@@ -27,7 +28,8 @@ export class SellerLoginComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private toastService: ToastService,
-    private router: Router
+    private router: Router,
+    private discountHubService: DiscountHubService
   ) {}
 
   tabId: string = 'login';
@@ -98,17 +100,23 @@ export class SellerLoginComponent implements OnInit {
         this.tabChange('login');
       },
       error: (errorResp) => {
-        this.toastService.showToast({
-          icon: 'error',
-          title: 'Kayıt oluşturulamadı.',
-        });
+        console.log(errorResp);
 
-        errorResp.error.errors.forEach((err: string) => {
+        if (errorResp.error) {
           this.toastService.showToast({
             icon: 'error',
-            title: err,
+            title: errorResp.error?.message ?? 'Kayıt oluşturulamadı.',
           });
-        });
+        }
+
+        if (errorResp.errors?.errors) {
+          errorResp.error.errors.forEach((err: string) => {
+            this.toastService.showToast({
+              icon: 'error',
+              title: err,
+            });
+          });
+        }
       },
     });
   }
@@ -123,6 +131,7 @@ export class SellerLoginComponent implements OnInit {
 
     this.authService.login(loginData).subscribe({
       next: (data) => {
+        this.discountHubService.start();
         this.router.navigate(['/seller-panel']);
       },
       error: (error) => {

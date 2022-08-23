@@ -115,6 +115,14 @@ export class BasketComponent implements OnInit {
   }
 
   OnCheckout() {
+    if (!this.selectedAddress) {
+      this.toastService.showToast({
+        icon: 'error',
+        title: 'Lütfen bir adres seçin veya profil sayfasından ekleyin.',
+      });
+      return;
+    }
+
     const order: ICreateOrder = {
       customerIdentityId: this.customer.identityId,
       addressCity: this.selectedAddress.city,

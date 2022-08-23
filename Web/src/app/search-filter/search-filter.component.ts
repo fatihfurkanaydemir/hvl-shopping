@@ -1,4 +1,9 @@
-import { AfterContentChecked, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import {
+  AfterContentChecked,
+  ChangeDetectorRef,
+  Component,
+  OnInit,
+} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IProduct } from '../models/IProduct';
 import { ProductsService } from '../services/products.service';
@@ -20,9 +25,10 @@ export class SearchFilterComponent implements OnInit, AfterContentChecked {
   constructor(
     private activatedRoute: ActivatedRoute,
     private productsService: ProductsService,
-    private changeDetector: ChangeDetectorRef,
+    private changeDetector: ChangeDetectorRef
   ) {}
-  ngAfterContentChecked(): void {   // solition for NG0100: ExpressionChangedAfterItHasBeenCheckedError
+  ngAfterContentChecked(): void {
+    // solition for NG0100: ExpressionChangedAfterItHasBeenCheckedError
     this.changeDetector.detectChanges();
   }
 

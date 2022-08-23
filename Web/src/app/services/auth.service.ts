@@ -44,6 +44,8 @@ export class AuthService {
   }
 
   login(loginData: ILogin) {
+    console.log(loginData);
+
     return this.httpClient
       .post<IApiResponseSingle>(
         `${this.authUrl}/Account/authenticate`,

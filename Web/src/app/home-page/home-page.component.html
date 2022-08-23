@@ -26,13 +26,10 @@
       class="col-4 col-lg-2 col-md-3 col-sm-4 m-3 mb-5"
       *ngFor="let product of products"
     >
-      <a
-        [routerLink]="['/product', product.id]"
-        class="nav-link card h-100"
-      >
+      <a [routerLink]="['/product', product.id]" class="nav-link card h-100">
         <img
           class="card-img-top h-75"
-          [src]="product.images[0].url"
+          [src]="product.images[0]?.url"
           alt="Card image cap"
         />
         <div class="card-body">
@@ -40,7 +37,9 @@
           <!-- <p class="card-text overflow-hidden" style="height: 50px">{{product.description}}</p> -->
           <p>{{ product.category.name }}</p>
           <ngb-rating [rate]="3"></ngb-rating>
-          <div class="text-end">${{ product.price }}</div>
+          <div class="text-end">
+            {{ product.price | currency: "TRY":"symbol" }}
+          </div>
         </div>
       </a>
     </div>

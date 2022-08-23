@@ -1,14 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { BasketService } from '../basket/basket.service';
 import { ILogin } from '../models/ILogin';
+import { DiscountHubService } from '../services/discounthub.service';
 import { ToastService } from '../services/toast.service';
 
 @Component({
@@ -21,7 +17,8 @@ export class LoginPageComponent implements OnInit {
     private toastService: ToastService,
     private authService: AuthService,
     private basketService: BasketService,
-    private router: Router
+    private router: Router,
+    private discountHubService: DiscountHubService
   ) {}
 
   loginForm!: FormGroup;
@@ -44,10 +41,12 @@ export class LoginPageComponent implements OnInit {
     this.authService.login(loginData).subscribe({
       next: (data) => {
         this.basketService.getBasket(data.id).subscribe();
-
+        this.discountHubService.start();
         this.router.navigate(['/']);
       },
       error: (error) => {
+        console.log(error);
+
         this.toastService.showToast({
           icon: 'error',
           title: error.error.message,
