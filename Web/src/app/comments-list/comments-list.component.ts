@@ -10,21 +10,21 @@ import { ReviewsService } from '../services/reviews.service';
 })
 export class CommentsListComponent implements OnInit {
 
-  // Some initilized values are for testing the service.
+  // Initilized values are for testing the service.
   @Input() productId: number = 0;
   reviewsOfProduct: IReview[] = [];
   everyReview: IReview[] = [];
   review!: IReview;
-  decimalFlag: boolean = true;
+  decimal: number = 0;
 
   reviewCount: number = 0;
   ratingColors: string[] = [];
 
   tempTestingReview: IReview = {
-    productId: 2,
+    productId: 13,
     name: "Harry",
     lastName: "Smiths",
-    comment: "Lorem ipsmilique rerum soluta nulla voluptate eaque odio animi, saepe aperiam, cumque officia nihil consectetur? Non, ipsam ipsa?",
+    comment: "Lorem ipsmilique reiam, cumque officia nihil consectetur? Non, ipsam ipsa?",
     rate: 4
   };
 
@@ -40,6 +40,7 @@ export class CommentsListComponent implements OnInit {
   getEveryReview(){ // For testing purposes.
     this.reviewsService.getAllReviews().subscribe((response) => {
       this.everyReview = response;
+      console.log("Every Review:");
       console.log(this.everyReview);
     })
   }
@@ -48,10 +49,12 @@ export class CommentsListComponent implements OnInit {
     this.reviewsService.getAllReviews().subscribe((response) => {
       this.reviewsOfProduct = response.filter((s: { productId: number; }) => s.productId == this.productId);
       this.reviewCount = this.reviewsOfProduct.length;
+      console.log("Current reviewsOfProduct list count:", this.reviewsOfProduct.length);
+      console.log(this.reviewsOfProduct);
     })
   }
 
-  getReview(){ // For testing purposes.
+  getReview(){ // The value inside is for testing purposes.
     this.reviewsService.getReview('6304ce4ce3214306296638c3').subscribe(
       (response) => {
         this.review = response;
@@ -96,13 +99,11 @@ export class CommentsListComponent implements OnInit {
       return "fa fa-star";
     }
     if(this.averageRatingCount < 1){
-      if(this.averageRatingCount <= 0.5){
+      
         var decimal = this.averageRatingCount - Math.floor(this.averageRatingCount);
         this.averageRatingCount = this.averageRatingCount - decimal;
         return "fa fa-star-half-full";
-      } else {
-        return "fa fa-star";
-      }
+      
     } else {
       this.averageRatingCount = this.averageRatingCount - 1;
       return "fa fa-star";
