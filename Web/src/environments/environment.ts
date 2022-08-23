@@ -6,6 +6,7 @@ export const environment = {
   production: false,
   apiUrl: 'https://localhost:7247/api',
   authUrl: 'https://localhost:7054/api',
+  reviewServiceUrl: 'https://localhost:7052/api',
   orderServiceUrl: 'https://localhost:7047/api',
   notificationServiceUrl: 'https://localhost:7277/api',
 };
