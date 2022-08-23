@@ -1,26 +1,62 @@
-<div class="container">
+
+
+<div class="row">
+  <div class="d-inline-flex p-2 mt-4">
+    <h3>Ürün Değerlendirmeleri</h3>
+  </div>
+</div>
+<hr />
+
+<div class="container" *ngIf="reviewCount != 0">
+  
+<div class="row">
+  <div class="col">
+    <div class="d-inline-flex ms-4 mt-2">
+      <h3>{{getAverageRatingOfProduct()}}</h3>
+    </div>
+    <div class="d-inline-flex ms-3">
+      <div class="ratings" style="font-weight:300;
+      font-size:25px;">
+        <i class="{{shapeAverageRatingStar()}}" [style]="adjustRatingColors(averageRating, 0)"></i
+        ><i class="{{shapeAverageRatingStar()}}" [style]="adjustRatingColors(averageRating, 1)"></i
+        ><i class="{{shapeAverageRatingStar()}}" [style]="adjustRatingColors(averageRating, 2)"></i
+        ><i class="{{shapeAverageRatingStar()}}" [style]="adjustRatingColors(averageRating, 3)"></i>
+        <i class="{{shapeAverageRatingStar()}}" [style]="adjustRatingColors(averageRating, 4)"></i>
+        
+      </div>
+    </div>
+  </div>
+  <div class="col">
+      <div class="d-inline-flex p-2 rating-count">
+          <p>{{reviewCount}} degerlendirme</p>
+      </div>
+  </div>
+</div>
+
+<div class="container" *ngFor="let item of reviewsOfProduct">
+  <hr/>
   <div class="row">
     <div class="col">
       <div class="d-inline-flex me-2">
         <div class="ratings" style="font-weight: 300; font-size: 18px">
-          <i class="fa fa-star rating-color"></i
-          ><i class="fa fa-star rating-color"></i
-          ><i class="fa fa-star rating-color"></i
-          ><i class="fa fa-star rating-color"></i>
-          <i class="fa fa-star"></i>
+          <i class="fa fa-star" [style]="adjustRatingColors(item.rate, 1)"></i
+          ><i class="fa fa-star" [style]="adjustRatingColors(item.rate, 2)"></i
+          ><i class="fa fa-star" [style]="adjustRatingColors(item.rate, 3)"></i
+          ><i class="fa fa-star" [style]="adjustRatingColors(item.rate, 4)"></i>
+          <i class="fa fa-star" [style]="adjustRatingColors(item.rate, 5)"></i>
         </div>
       </div>
       <div class="d-inline-flex">
-        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Rerum voluptate officiis laborum, tenetur, cumque dolore ipsum odit eum earum fugit illo ducimus similique dicta sapiente fuga unde soluta cupiditate ipsa.</p>
+        <p>{{item.comment}}</p>
       </div>
     </div>
-  </div>
-  <div class="row ">
+  </div> 
+  <div class="row">
     <div class="col">
         <div class="d-inline-flex me-2 details">
-            <p class="me-md-2">Burcu Kara</p>
+            <p class="me-md-2">{{item.name}} {{item.lastName}}</p>
             <p class="me-md-2">|</p>
-            <p class="me-md-2">26 Temmuz 2022</p>
+            <p class="me-md-2">26 Temmuz 2022 (temp)</p>
             <p class="me-md-2">|</p>
             <i class="fa fa-check tick" aria-hidden="true"></i>
             <p class="approved">Ürünü Satın Aldı</p>
@@ -29,3 +65,21 @@
     </div>
   </div>
 </div>
+
+</div>
+
+<div class="container" *ngIf="reviewCount == 0" style="margin-bottom: 20px;">
+  <h6>Henüz bir değerlendirme yapılmadı.</h6>
+</div>
+
+<!--
+  <div (click)="addReviewToProduct(); getEveryReview();" class="btn btn-primary">
+  Click to add review
+</div>
+<div (click)="getEveryReview()" class="btn btn-primary">
+  Click to get Every Review
+</div>
+<div (click)="updateReviewById('6304fe45e321430629664625')" class="btn btn-primary">
+  Click to Update Review
+</div>
+-->
