@@ -73,6 +73,13 @@
         >
           Siparişlerim
         </button>
+        <button
+          ngbDropdownItem
+          *ngIf="user?.isOnlyCustomer"
+          [routerLink]="['/my-coupons']"
+        >
+          İndirim Kuponlarım
+        </button>
         <button ngbDropdownItem (click)="logout()">Çıkış yap</button>
       </div>
     </div>
