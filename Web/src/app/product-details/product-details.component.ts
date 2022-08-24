@@ -1,10 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductsService } from 'src/app/services/products.service';
 import { IProduct } from '../models/IProduct';
-import { IImage } from '../models/IImage';
 import { ICategory } from '../models/ICategory';
 import { ActivatedRoute, Router } from '@angular/router';
-import { identifierName } from '@angular/compiler';
 import { ISeller } from '../models/ISeller';
 import { BasketService } from '../basket/basket.service';
 
@@ -56,6 +54,7 @@ export class ProductDetailsComponent implements OnInit {
     seller: this.seller,
     category: this.productCategory,
   };
+
 
   constructor(
     private basketService: BasketService,

@@ -1,3 +1,5 @@
+
+
 .rating-color{
     color:#fbc634 !important;
 }
@@ -23,4 +25,12 @@
 
 .details{
     font-weight: 300;
+}
+
+.rating-count{
+    font-weight: 300;
+}
+
+.fa-star-half-full{
+    color:#fbc634 !important;
 }
