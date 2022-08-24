@@ -5,6 +5,8 @@ import { ICategory } from '../models/ICategory';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ISeller } from '../models/ISeller';
 import { BasketService } from '../basket/basket.service';
+import { environment } from 'src/environments/environment';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-product-details',
@@ -18,6 +20,8 @@ export class ProductDetailsComponent implements OnInit {
   _desiredCount: number = 1;
   isNavActive: string = 'active';
   _urlCount: number = 0;
+
+  currentImage: Subject<string> = new Subject<string>();
 
   productCategory: ICategory = {
     id: 0,
@@ -55,7 +59,6 @@ export class ProductDetailsComponent implements OnInit {
     category: this.productCategory,
   };
 
-
   constructor(
     private basketService: BasketService,
     private productsService: ProductsService,
@@ -72,9 +75,17 @@ export class ProductDetailsComponent implements OnInit {
     this.basketService.addItemToBasket(this.product, this._desiredCount);
   }
 
+  getImageUrl(index: number) {
+    if (!this.product.images[0]?.url.startsWith('http'))
+      return environment.baseUrl + '/' + this.product.images[index]?.url;
+    else return this.product.images[0]?.url;
+  }
+
   getProductByID() {
     this.productsService.getProduct(this._id).subscribe((product) => {
       this.product = product.data;
+
+      this.currentImage.next(this.getImageUrl(this._urlCount));
     });
   }
 
@@ -96,16 +107,20 @@ export class ProductDetailsComponent implements OnInit {
   incrementUrlCount() {
     if (this._urlCount >= this.product.images.length - 1) {
       this._urlCount = 0;
+      this.currentImage.next(this.getImageUrl(this._urlCount));
     } else {
       this._urlCount += 1;
+      this.currentImage.next(this.getImageUrl(this._urlCount));
     }
   }
 
   decrementUrlCount() {
     if (this._urlCount <= 0) {
       this._urlCount = this.product.images.length - 1;
+      this.currentImage.next(this.getImageUrl(this._urlCount));
     } else {
       this._urlCount -= 1;
+      this.currentImage.next(this.getImageUrl(this._urlCount));
     }
   }
 

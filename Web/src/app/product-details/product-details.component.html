@@ -14,7 +14,7 @@
           ></i>
           <img
             style="border-radius: 5px; height: 400px; width: 500px"
-            src="{{ product.images[_urlCount]?.url }}"
+            [src]="currentImage | async"
             class="img-thumbnail"
           />
           <i
@@ -47,13 +47,21 @@
           style="cursor: pointer; font-size: 2em"
         ></i>
         <button
+          *ngIf="product.inStock > 0"
           (click)="addItemToBasket()"
           class="btn btn-outline-secondary btn-lg ml-4 ms-3"
         >
           Sepete Ekle
         </button>
+        <button
+          *ngIf="product.inStock <= 0"
+          class="btn btn-outline-secondary btn-lg ml-4 ms-3"
+          disabled
+        >
+          Ürün Tükendi
+        </button>
       </div>
-      <h5>Stok: {{ product.inStock - _desiredCount }}</h5>
+      <h5>Stok: {{ product.inStock }}</h5>
     </div>
 
     <div class="container mt-2">
@@ -121,7 +129,7 @@
       </div>
     </div>
     <div class="container">
-      <app-comments-list [productId] = "_id"></app-comments-list>
+      <app-comments-list [productId]="_id"></app-comments-list>
     </div>
   </div>
 </div>

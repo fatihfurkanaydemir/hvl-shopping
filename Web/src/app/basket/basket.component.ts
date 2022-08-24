@@ -25,6 +25,7 @@ export class BasketComponent implements OnInit {
   basketItemsLength!: Observable<IBasket>;
 
   customer!: ICustomer;
+  payButtonClicked: boolean = false;
 
   coupons: ICoupon[] = [];
   selectedCoupon?: ICoupon;

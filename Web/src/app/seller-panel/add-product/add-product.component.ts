@@ -6,12 +6,13 @@ import {
   ModalDismissReasons,
   NgbActiveModal,
 } from '@ng-bootstrap/ng-bootstrap';
+import { ImagePickerConf } from 'ngp-image-picker';
 import { exhaustMap, take } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
 
 import { ProductsService } from 'src/app/services/products.service';
 import { ToastService } from 'src/app/services/toast.service';
-import Swal from 'sweetalert2';
+import { UploadService } from 'src/app/services/upload.service';
 import { ICategory } from '../../models/ICategory';
 import { IProductCreate } from '../../models/IProductCreate';
 import { CategoriesService } from '../../services/categories.service';
@@ -25,11 +26,27 @@ export class AddProductComponent implements OnInit {
   @Output('OnProductAdded') productAddedEvent: EventEmitter<boolean> =
     new EventEmitter();
 
+  imagePickerConf: ImagePickerConf = {
+    borderRadius: '4px',
+    language: 'tr',
+    width: '100%',
+    height: '240px',
+    hideDownloadBtn: true,
+    hideEditBtn: true,
+    compressInitial: 90,
+  };
+
   pageNumber: number = 1;
   pageSize: number = 30;
 
   closeResult: string = '';
   categories: ICategory[] = [];
+
+  maxImageCount = 5;
+  selectedImageNames: string[] = Array.from(
+    { length: this.maxImageCount },
+    (v, i) => `img${i}`
+  );
 
   product: IProductCreate = {
     sellerIdentityId: '',
@@ -47,8 +64,17 @@ export class AddProductComponent implements OnInit {
     private categoriesService: CategoriesService,
     private modalService: NgbModal,
     private toastService: ToastService,
-    private authService: AuthService
-  ) {}
+    private authService: AuthService,
+    private uploadService: UploadService
+  ) {
+    this.selectedImageNames.forEach((name) => {
+      sessionStorage.removeItem(name);
+    });
+  }
+
+  onImageChange(event: string, index: number) {
+    sessionStorage.setItem(this.selectedImageNames[index], event);
+  }
 
   onSubmit(addProductForm: NgForm, modal: NgbActiveModal) {
     if (addProductForm.invalid) return;
@@ -58,36 +84,43 @@ export class AddProductComponent implements OnInit {
 
     this.product.categoryId = +addProductForm.value['product-category'];
 
-    this.authService.userSubject
-      .pipe(
-        take(1),
-        exhaustMap((user) => {
-          this.product.sellerIdentityId = user.identityId;
-          return this.productsService.createProduct(this.product);
-        })
-      )
-      .subscribe({
-        next: (response) => {
-          this.toastService.showToast({
-            icon: 'success',
-            title: 'Ürün başarılı bir şekilde eklendi.',
-          });
+    this.uploadService.uploadImages(this.selectedImageNames).subscribe({
+      next: (response) => {
+        this.product.images = response.data;
+        this.authService.userSubject
+          .pipe(
+            take(1),
+            exhaustMap((user) => {
+              this.product.sellerIdentityId = user.identityId;
+              return this.productsService.createProduct(this.product);
+            })
+          )
+          .subscribe({
+            next: (response) => {
+              this.toastService.showToast({
+                icon: 'success',
+                title: 'Ürün başarılı bir şekilde eklendi.',
+              });
 
-          modal.dismiss();
-          addProductForm.reset();
-          this.productAddedEvent.emit(true);
-        },
-        error: (error) => {
-          this.toastService.showToast({
-            icon: 'error',
-            title: 'Ürün eklenirken hata oluştu.',
+              modal.dismiss();
+              addProductForm.reset();
+              this.productAddedEvent.emit(true);
+            },
+            error: (error) => {
+              this.toastService.showToast({
+                icon: 'error',
+                title: 'Ürün eklenirken hata oluştu.',
+              });
+            },
           });
-
-          modal.dismiss();
-          addProductForm.reset();
-          this.productAddedEvent.emit(true);
-        },
-      });
+      },
+      error: (error) => {
+        this.toastService.showToast({
+          icon: 'error',
+          title: 'Resimler yüklenirken hata oluştu.',
+        });
+      },
+    });
   }
 
   ngOnInit() {
@@ -99,6 +132,10 @@ export class AddProductComponent implements OnInit {
   }
 
   open(content: any) {
+    this.selectedImageNames.forEach((name) => {
+      sessionStorage.removeItem(name);
+    });
+
     this.modalService
       .open(content, { ariaLabelledBy: 'modal-basic-title' })
       .result.then(

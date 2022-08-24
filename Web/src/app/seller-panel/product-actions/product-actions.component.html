@@ -20,10 +20,7 @@
 </div>
 
 <ng-template #modal let-modal>
-  <form
-    #updateProductForm="ngForm"
-    (ngSubmit)="onSubmit(updateProductForm, modal)"
-  >
+  <form #updateProductForm="ngForm">
     <div class="modal-header">
       <h1 class="modal-title" id="modal-basic-title">Ürünü düzenle</h1>
       <button
@@ -33,9 +30,9 @@
         (click)="modal.dismiss('Cross click')"
       ></button>
     </div>
+
     <div class="modal-body">
-      <div class="form-group">
-        <label for="product-name">Ürün ismi</label>
+      <div class="form-floating mb-3">
         <input
           type="text"
           id="product-name"
@@ -43,8 +40,10 @@
           [(ngModel)]="product.name"
           name="productname"
           #productName="ngModel"
+          placeholder="Ürün ismi"
           required
         />
+        <label for="product-name">Ürün ismi</label>
       </div>
 
       <p
@@ -56,17 +55,18 @@
         Bu alan boş bırakılamaz.
       </p>
 
-      <div class="form-group">
-        <label for="product-code">Ürün kodu</label>
+      <div class="form-floating mb-3">
         <input
           type="text"
           id="product-code"
           class="form-control"
           [(ngModel)]="product.code"
+          placeholder="Ürün kodu"
           name="product-code"
           required
           #productCode="ngModel"
         />
+        <label for="product-code">Ürün kodu</label>
       </div>
 
       <p
@@ -78,20 +78,43 @@
         Bu alan boş bırakılamaz.
       </p>
 
-      <div class="form-group">
-        <label for="product-category">Kategori</label>
+      <div class="form-floating mb-3">
         <select
           id="product-category"
           name="product-category"
           class="form-control"
           #categoryId="ngModel"
-          [ngModel]="product.categoryId"
+          [ngModel]="1"
         >
           <option *ngFor="let category of categories" [value]="category.id">
             {{ category.name }}
           </option>
         </select>
+        <label for="product-category">Kategori</label>
       </div>
+
+      <div class="form-floating mb-3">
+        <input
+          type="number"
+          id="product-stock"
+          class="form-control"
+          placeholder="0"
+          [(ngModel)]="product.inStock"
+          name="product-stock"
+          placeholder="Stok"
+          required
+          min="0"
+          #inStock="ngModel"
+        />
+        <label for="product-stock">Stok</label>
+      </div>
+
+      <p
+        *ngIf="inStock.invalid && (inStock.dirty || inStock.touched)"
+        class="text-danger error-message"
+      >
+        Bu alan boş bırakılamaz.
+      </p>
 
       <div class="form-floating mb-3">
         <input
@@ -116,38 +139,16 @@
         Bu alan boş bırakılamaz.
       </p>
 
-      <div class="form-group">
-        <label for="product-stock">Stok</label>
-        <input
-          type="number"
-          id="product-stock"
-          class="form-control"
-          placeholder="0"
-          [(ngModel)]="product.inStock"
-          name="product-stock"
-          required
-          min="0"
-          #inStock="ngModel"
-        />
-      </div>
-
-      <p
-        *ngIf="inStock.invalid && (inStock.dirty || inStock.touched)"
-        class="text-danger error-message"
-      >
-        Bu alan boş bırakılamaz.
-      </p>
-
-      <div class="form-group">
+      <div class="form-group mb-3">
         <label for="product-detail">Ürün detayları</label>
         <textarea
           id="product-detail"
           class="form-control"
-          placeholder="Ürün detayları"
           [(ngModel)]="product.description"
           name="product-description"
           required
           #description="ngModel"
+          rows="20"
         ></textarea>
       </div>
 
@@ -162,23 +163,35 @@
 
       <div class="form-group">
         <label for="imagesSelect">Ürün resimleri</label>
-        <input
-          type="file"
-          multiple
-          id="imagesSelect"
-          name="imagesSelect"
-          accept="image/*"
-          name="product-images"
-          class="form-control"
-          ngModel
-          #imagesSelect="ngModel"
-        />
+        <div class="overflow-auto" style="max-height: 500px">
+          <div
+            class="mt-2"
+            *ngFor="
+              let item of [].constructor(this.maxImageCount);
+              let i = index
+            "
+          >
+            <ngp-image-picker
+              *ngIf="product.images[i]"
+              [_imageSrc]="getFullImageUrl(product.images[i])"
+              [_config]="imagePickerConf"
+              ($imageChanged)="onImageChange($event, i)"
+            ></ngp-image-picker>
+
+            <ngp-image-picker
+              *ngIf="!product.images[i]"
+              [_config]="imagePickerConf"
+              ($imageChanged)="onImageChange($event, i)"
+            ></ngp-image-picker>
+          </div>
+        </div>
       </div>
     </div>
     <div class="modal-footer">
       <button
         type="submit"
         class="btn btn-primary w-100"
+        (click)="onSubmit(updateProductForm, modal)"
         [disabled]="updateProductForm.invalid"
       >
         Kaydet
