@@ -2,6 +2,7 @@
 using Common.EventBus.Interfaces;
 using Common.ApplicationEvents;
 using OrderService.Application.Features.Orders.EventHandlers.CreateOrder;
+using OrderService.Application.Features.Orders.EventHandlers.CancelOrder;
 using OrderService.Application.Features.Orders.EventHandlers.OrderPaymentCompleted;
 
 namespace OrderService.Extensions;
@@ -14,5 +15,6 @@ public static class EventSubscriptionsExtension
     eventBus.Subscribe<TestEvent, TestEventHandler>();
     eventBus.Subscribe<CreateOrderEvent, CreateOrderEventHandler>();
     eventBus.Subscribe<OrderPaymentCompletedEvent, OrderPaymentCompletedEventHandler>();
+    eventBus.Subscribe<CancelOrderEvent, CancelOrderEventHandler>();
   }
 }

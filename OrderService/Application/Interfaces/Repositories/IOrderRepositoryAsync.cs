@@ -1,4 +1,5 @@
-﻿using OrderService.Domain.Entities;
+﻿using Common.Entities;
+using OrderService.Domain.Entities;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -13,4 +14,6 @@ public interface IOrderRepositoryAsync: IGenericRepositoryAsync<Order>
   public Task<IReadOnlyList<Order>> GetOrdersByCheckoutSessionId(string Id);
   public Task<int> GetDataCountByCustomerIdentityIdAsync(string Id);
   public Task<int> GetDataCountBySellerIdentityIdAsync(string Id);
+  public Task<Order?> GetByIdWithRelationsAsync(int Id);
+  public Task DeleteOrderProductAsync(OrderProduct product);
 }

@@ -61,5 +61,6 @@ app.UseHttpsRedirection();
 app.MapControllers();
 
 app.SubscribeEvents();
+app.RegisterRPCs();
 
 app.Run();

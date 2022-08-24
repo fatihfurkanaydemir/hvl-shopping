@@ -22,5 +22,6 @@ public static class RPCSubscriptionsExtension
     eventBus.RegisterRPC<GetUsableCouponsByCustomerIdentityIdRPC, Response<IEnumerable<CouponViewModel>>>();
     eventBus.RegisterRPC<UpdateCouponRPC, Response<int>>();
     eventBus.RegisterRPC<DeleteCouponRPC, Response<int>>();
+    eventBus.RegisterRPC<GetOrdersByCheckoutSessionIdRPC, Response<IEnumerable<OrderViewModel>>>();
   }
 }

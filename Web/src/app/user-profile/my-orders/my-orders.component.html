@@ -85,12 +85,19 @@
               <div class="col-6">
                 <div class="row">
                   <h1 class="d-inline card-title fs-4">Durum</h1>
-                  <h2
-                    class="card-subtitle fs-5"
+
+                  <div
                     *ngIf="order.status === OrderStatus.AwaitingPayment"
+                    class="mt-2"
                   >
-                    Ödeme bekleniyor.
-                  </h2>
+                    <h2 class="card-subtitle fs-5">Ödeme bekleniyor.</h2>
+                    <a
+                      [href]="order.checkoutSessionUrl"
+                      class="link-success fs-5 mt-3 d-inline-block"
+                      >Ödeme Ekranına Git &rarr;</a
+                    >
+                  </div>
+
                   <h2
                     class="card-subtitle fs-5"
                     *ngIf="order.status === OrderStatus.AwaitingShipment"

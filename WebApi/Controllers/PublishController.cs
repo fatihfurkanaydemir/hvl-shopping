@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 using Common.EventBus.Interfaces;
 using Common.ApplicationEvents;
 using Common.ApplicationRPCs;
+using Application.Features.Orders.Commands.CreateOrder;
 
 namespace WebApi.Controllers.v1
 {
@@ -31,6 +32,23 @@ namespace WebApi.Controllers.v1
     public async Task<IActionResult> TestRPC(string message)
     {
       return Ok(await _eventBus.CallRP(new TestRPC { message = "Test RPC" }));
+    }
+
+    // POST api/<controller>/TestRPC
+    [HttpGet("orders")]
+    public async Task<IActionResult> GetOrders(string message)
+    {
+      var orders = (await _eventBus.CallRP(new GetOrdersByCheckoutSessionIdRPC
+      {
+        CheckoutSessionId = message,
+      })).Data;
+
+      foreach (var order in orders)
+      {
+        await Mediator.Send(new CancelOrderCommand { Products = order.Products, OrderId = order.Id });
+      }
+
+      return Ok(orders.Count());
     }
 
   }

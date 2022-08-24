@@ -1,14 +1,10 @@
-﻿using Application.Features.Sellers.Commands.CreateSeller;
-using Application.Features.Sellers.Commands.UpdateSeller;
-using Application.Features.Sellers.Queries.GetAllSellers;
-using Application.Features.Sellers.Queries.GetSellerProductsByIdentityId;
-using Application.Features.Sellers.Queries.GetSellerByIdentityId;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Mvc;
 using Common.EventBus.Interfaces;
 using Common.ApplicationEvents;
+using Common.ApplicationRPCs;
 using Stripe;
 using Stripe.Checkout;
+using Application.Features.Orders.Commands.CreateOrder;
 
 namespace WebApi.Controllers.v1
 {
@@ -42,6 +38,20 @@ namespace WebApi.Controllers.v1
             CheckoutSessionId = session.Id,
             PaymentIntentId = session.PaymentIntentId,
           });
+        }
+        else if (stripeEvent.Type == Events.CheckoutSessionExpired)
+        {
+          var session = stripeEvent.Data.Object as Session;
+          // Get products with rpc and restock them, then delete the order
+          var orders = (await _eventBus.CallRP(new GetOrdersByCheckoutSessionIdRPC
+          {
+            CheckoutSessionId = session.Id,
+          })).Data;
+
+          foreach (var order in orders)
+          {
+            await Mediator.Send(new CancelOrderCommand { Products = order.Products, OrderId = order.Id });
+          }
         }
         else
         {

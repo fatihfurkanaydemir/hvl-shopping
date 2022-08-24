@@ -1,5 +1,6 @@
 ﻿using OrderService.Application.Interfaces.Repositories;
 using OrderService.Domain.Entities;
+using Common.Entities;
 using OrderService.Infrastructure.Persistence.Contexts;
 using Microsoft.EntityFrameworkCore;
 
@@ -8,10 +9,12 @@ namespace OrderService.Infrastructure.Persistence.Repositories;
 public class OrderRepositoryAsync : GenericRepositoryAsync<Order>, IOrderRepositoryAsync
 {
   private readonly DbSet<Order> _orders;
+  private readonly OrderDbContext _context;
 
   public OrderRepositoryAsync(OrderDbContext dbContext) : base(dbContext)
   {
     _orders = dbContext.Orders;
+    _context = dbContext;
   }
 
   public async Task<IReadOnlyList<Order>> GetPagedReponseWithRelationsAsync(int pageNumber, int pageSize)
@@ -23,6 +26,12 @@ public class OrderRepositoryAsync : GenericRepositoryAsync<Order>, IOrderReposit
           .Skip((pageNumber - 1) * pageSize)
           .Take(pageSize)
           .ToListAsync();
+  }
+
+  public async Task DeleteOrderProductAsync(OrderProduct product)
+  {
+    _context.Set<OrderProduct>().Remove(product);
+    await _context.SaveChangesAsync();
   }
 
   public async Task<IReadOnlyList<Order>> GetAllOrdersByCustomerIdentityIdAsync(string Id, int pageNumber, int pageSize)
@@ -55,6 +64,14 @@ public class OrderRepositoryAsync : GenericRepositoryAsync<Order>, IOrderReposit
           .Where(o => o.CustomerIdentityId == Id)
           .AsNoTracking()
           .CountAsync();
+  }
+
+  public async Task<Order?> GetByIdWithRelationsAsync(int Id)
+  {
+    return await _orders
+          .Include(o => o.Products)
+          .AsNoTracking()
+          .SingleOrDefaultAsync(o => o.Id == Id);
   }
 
   public async Task<int> GetDataCountBySellerIdentityIdAsync(string Id)
