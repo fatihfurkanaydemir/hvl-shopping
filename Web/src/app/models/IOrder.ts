@@ -13,6 +13,7 @@ export interface IOrder {
   customerFirstName: string;
   customerLastName: string;
   customerPhoneNumber: string;
+  checkoutSessionUrl: string;
   sellerIdentityId: string;
   orderGroupId: string;
   created: Date;

@@ -135,6 +135,7 @@ namespace Application.Features.Orders.Commands.CreateOrder
         foreach (var orderEvent in orderEvents)
         {
           orderEvent.CheckoutSessionId = session.Id;
+          orderEvent.CheckoutSessionUrl = session.Url;
           orderEvent.PaymentIntentId = "";
           orderEvent.CouponCode = request.CouponCode;
           orderEvent.CouponAmount = couponAmount;
@@ -149,6 +150,7 @@ namespace Application.Features.Orders.Commands.CreateOrder
         foreach (var orderEvent in orderEvents)
         {
           orderEvent.CheckoutSessionId = session.Id;
+          orderEvent.CheckoutSessionUrl = session.Url;
           orderEvent.PaymentIntentId = "";
           orderEvent.CouponCode = "";
           orderEvent.CouponAmount = 0;

@@ -8,17 +8,12 @@ import { BasketService } from '../basket/basket.service';
   styleUrls: ['./payment-success-page.component.css'],
 })
 export class PaymentSuccessPageComponent implements OnInit {
-  constructor(
-    private route: ActivatedRoute,
-    private router: Router,
-    private basketService: BasketService
-  ) {}
+  constructor(private route: ActivatedRoute, private router: Router) {}
 
   ngOnInit(): void {
     if (!this.route.snapshot.queryParams['session_id'])
       this.router.navigate(['/']);
     else {
-      this.basketService.clearItems();
       setTimeout(() => {
         this.router.navigate(['/']);
       }, 3000);

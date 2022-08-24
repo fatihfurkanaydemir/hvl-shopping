@@ -12,6 +12,7 @@ public class OrderViewModel
   public string SellerIdentityId { get; set; }
   public string OrderGroupId { get; set; }
   public string CheckoutSessionId { get; set; }
+  public string CheckoutSessionUrl { get; set; }
   public string PaymentIntentId { get; set; }
   public List<OrderProductViewModel> Products { get; set; }
   public DateTime Created { get; set; }

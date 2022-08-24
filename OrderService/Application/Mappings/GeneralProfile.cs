@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using OrderService.Domain.Entities;
 using Common.Entities;
-using OrderService.Application.Features.SharedViewModels;
+using Common.SharedViewModels;
 using Common.ApplicationEvents;
 
 

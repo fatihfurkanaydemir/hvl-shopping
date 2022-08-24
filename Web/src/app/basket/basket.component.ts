@@ -134,6 +134,7 @@ export class BasketComponent implements OnInit {
 
     this.orderService.createOrder(order).subscribe({
       next: (response) => {
+        this.basketService.clearItems();
         document.location = response.data;
       },
       error: (error) => {

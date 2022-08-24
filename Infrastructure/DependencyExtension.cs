@@ -19,11 +19,13 @@ using DiscountService.Infrastructure.Persistence.Contexts;
 // Event handlers
 using OrderService.Application.Features.Orders.EventHandlers.OrderPaymentCompleted;
 using OrderService.Application.Features.Orders.EventHandlers.CreateOrder;
+using OrderService.Application.Features.Orders.EventHandlers.CancelOrder;
 using NotificationService.Application.Features.DiscountCouponNotifications;
 
 // RPC handlers
 using DiscountService.Application.Features.Test;
 using DiscountService.Application.Features.Coupons.RPCHandlers;
+using OrderService.Application.Features.Orders.RPCHandlers;
 
 namespace GlobalInfrastructure;
 
@@ -42,6 +44,7 @@ public static class DependencyExtension
     services.AddTransient<CreateOrderEventHandler>();
     services.AddTransient<OrderPaymentCompletedEventHandler>();
     services.AddTransient<DiscountCouponCreatedEventHandler>();
+    services.AddTransient<CancelOrderEventHandler>();
 
     // RPC Handlers
     services.AddTransient<TestRPCHandler>();
@@ -53,6 +56,7 @@ public static class DependencyExtension
     services.AddTransient<GetUsableCouponsByCustomerIdentityIdRPCHandler>();
     services.AddTransient<UpdateCouponRPCHandler>();
     services.AddTransient<DeleteCouponRPCHandler>();
+    services.AddTransient<GetOrdersByCheckoutSessionIdRPCHandler>();
 
     services.AddTransient<IOrderRepositoryAsync, OrderRepositoryAsync>();
     services.AddDbContext<OrderDbContext>();

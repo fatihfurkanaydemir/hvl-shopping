@@ -9,6 +9,7 @@ public class Order: AuditableBaseEntity
   public string CustomerFirstName { get; set; }
   public string OrderGroupId { get; set; }
   public string CheckoutSessionId { get; set; }
+  public string CheckoutSessionUrl { get; set; }
   public string PaymentIntentId { get; set; }
   public decimal ShipmentPrice { get; set; }
   public string CustomerLastName { get; set; }
