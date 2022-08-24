@@ -25,4 +25,8 @@
 	<ProjectReference Include="..\Infrastructure\GlobalInfrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Resources\Images\" />
+  </ItemGroup>
+
 </Project>

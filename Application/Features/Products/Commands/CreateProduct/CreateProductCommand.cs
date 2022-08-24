@@ -1,4 +1,5 @@
-﻿using Application.Exceptions;
+﻿using Application.DTOs;
+using Application.Exceptions;
 using Application.Interfaces.Repositories;
 using Application.Wrappers;
 using AutoMapper;
@@ -9,18 +10,6 @@ using MediatR;
 
 namespace Application.Features.Products.Commands.CreateProduct
 {
-  // WARN
-  // Temporary DTO class for testing. Will be removed
-  public class ImageDTO
-  {
-    public string Url { get; set; }
-  }
-
-  //public class CategoryDTO
-  //{
-  //  public string Name { get; set; }
-  //}
-
   public class CreateProductCommand : IRequest<Response<int>>
   {
     public string SellerIdentityId { get; set; }

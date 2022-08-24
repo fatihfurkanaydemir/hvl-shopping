@@ -8,7 +8,7 @@
   </form>
 
   <ng-template #modal let-modal>
-    <form #addProductForm="ngForm" (ngSubmit)="onSubmit(addProductForm, modal)">
+    <form #addProductForm="ngForm">
       <div class="modal-header">
         <h1 class="modal-title" id="modal-basic-title">Ürün ekle</h1>
         <button
@@ -126,18 +126,17 @@
           Bu alan boş bırakılamaz.
         </p>
 
-        <div class="form-floating mb-3">
+        <div class="form-group mb-3">
+          <label for="product-detail">Ürün detayları</label>
           <textarea
             id="product-detail"
             class="form-control"
-            placeholder="Ürün detayları"
             [(ngModel)]="product.description"
             name="product-description"
-            placeholder="Ürün detayları"
             required
             #description="ngModel"
+            rows="20"
           ></textarea>
-          <label for="product-detail">Ürün detayları</label>
         </div>
 
         <p
@@ -151,23 +150,27 @@
 
         <div class="form-group">
           <label for="imagesSelect">Ürün resimleri</label>
-          <input
-            type="file"
-            multiple
-            id="imagesSelect"
-            name="imagesSelect"
-            accept="image/*"
-            name="product-images"
-            class="form-control"
-            ngModel
-            #imagesSelect="ngModel"
-          />
+          <div class="overflow-auto" style="max-height: 500px">
+            <div
+              class="mt-2"
+              *ngFor="
+                let item of [].constructor(this.maxImageCount);
+                let i = index
+              "
+            >
+              <ngp-image-picker
+                [_config]="imagePickerConf"
+                ($imageChanged)="onImageChange($event, i)"
+              ></ngp-image-picker>
+            </div>
+          </div>
         </div>
       </div>
       <div class="modal-footer">
         <button
           type="submit"
           class="btn btn-primary w-100"
+          (click)="onSubmit(addProductForm, modal)"
           [disabled]="addProductForm.invalid"
         >
           Ekle

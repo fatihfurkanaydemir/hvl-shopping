@@ -4,6 +4,7 @@ import { IProduct } from '../models/IProduct';
 import { CategoriesService } from '../services/categories.service';
 import { ProductsService } from '../services/products.service';
 import { NgbRatingConfig } from '@ng-bootstrap/ng-bootstrap';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-home-page',
@@ -32,6 +33,12 @@ export class HomePageComponent implements OnInit {
     this.getProducts();
     this.config.max = 5;
     this.config.readonly = true;
+  }
+
+  getImageUrl(product: IProduct) {
+    if (!product.images[0]?.url.startsWith('http'))
+      return environment.baseUrl + '/' + product.images[0].url;
+    else return product.images[0]?.url;
   }
 
   getCategory() {

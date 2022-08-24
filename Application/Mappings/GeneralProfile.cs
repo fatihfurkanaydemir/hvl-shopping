@@ -46,8 +46,7 @@ namespace Application.Mappings
 
       CreateMap<Image, GetAllProductsImageViewModel>();
       // Temporary usage of DTO
-      CreateMap<Image, Features.Products.Commands.CreateProduct.ImageDTO>().ReverseMap();
-      CreateMap<Image, Features.Products.Commands.UpdateProduct.ImageDTO>().ReverseMap();
+      CreateMap<Image, ImageDTO>().ReverseMap();
       CreateMap<Image, GetProductByIdImageViewModel>();
       CreateMap<Image, GetCategoryProductsByIdImageViewModel>();
 

@@ -5,6 +5,7 @@ import {
   OnInit,
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { environment } from 'src/environments/environment';
 import { IProduct } from '../models/IProduct';
 import { ProductsService } from '../services/products.service';
 
@@ -48,6 +49,13 @@ export class SearchFilterComponent implements OnInit, AfterContentChecked {
         });
       });
   }
+
+  getImageUrl(product: IProduct) {
+    if (!product.images[0]?.url.startsWith('http'))
+      return environment.baseUrl + '/' + product.images[0]?.url;
+    else return product.images[0]?.url;
+  }
+
   onPageChange(newPageNumber: number) {
     this.productsPageNumber = newPageNumber;
     this.getProducts();
