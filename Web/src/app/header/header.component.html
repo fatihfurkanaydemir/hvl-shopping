@@ -1,23 +1,25 @@
-<nav class="navbar navbar-expand navbar-light bg-light">
-  <div class="collapse navbar-collapse justify-content-center">
-    <ul class="navbar-nav mr-auto">
-      <li
-        *ngFor="let category of categories; let i = index"
-        class="d-inline nav-item"
-      >
-        <a
-          class="nav-link"
-          [routerLink]="['/', category.name]"
-          routerLinkActive="active"
-          >{{
-            category.name +
-              (i === categories.length - 1 ? "" : "&nbsp;&nbsp;&nbsp;|")
-          }}
-        </a>
-      </li>
-    </ul>
-  </div>
-</nav>
+<ul class="nav px-5 mt-3 justify-content-center">
+  <li *ngFor="let category of categories; let i = index" class="nav-item">
+    <a
+      *ngIf="category.name !== 'Diğer'"
+      class="nav-link link-secondary d-inline"
+      style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis"
+      [routerLink]="['/', category.name]"
+      routerLinkActive="active"
+      >{{ category.name + (i === categories.length - 1 ? "" : "") }}
+    </a>
+    <span *ngIf="category.name !== 'Diğer'">|</span>
+  </li>
+  <li>
+    <a
+      class="nav-link link-secondary d-inline"
+      style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis"
+      [routerLink]="['/Diğer']"
+      routerLinkActive="active"
+      >Diğer
+    </a>
+  </li>
+</ul>
 <div class="d-flex justify-content-center">
   <form class="d-flex m-3 mb-5 w-50">
     <input

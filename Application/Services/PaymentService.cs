@@ -10,7 +10,7 @@ namespace Application.Services;
 
 public class PaymentService
 {
-  public async Task<Session> CreateCheckoutSession(CustomerBasket basket, decimal shipmentPrice, string? couponCode = null, decimal couponAmount = 0)
+  public async Task<Session> CreateCheckoutSession(CustomerBasket basket, decimal shipmentPrice, string imageBaseUrl, string? couponCode = null, decimal couponAmount = 0)
   {
     var items = new List<SessionLineItemOptions>();
     var discounts = new List<SessionDiscountOptions>();
@@ -19,7 +19,14 @@ public class PaymentService
     {
       var images = new List<string> {};
       if(item.PictureUrl != null && item.PictureUrl.Trim() != "")
-        images.Add(item.PictureUrl);
+      {
+        if(item.PictureUrl.Trim().StartsWith("http"))
+          images.Add(item.PictureUrl.Trim());
+        else if(imageBaseUrl.Trim().Contains("localhost"))
+          images.Add("https://www.pngitem.com/pimgs/m/27-272007_transparent-product-icon-png-product-vector-icon-png.png");
+        else
+          images.Add(imageBaseUrl.Trim() + item.PictureUrl.Trim());
+      }
       else
         images.Add("https://www.pngitem.com/pimgs/m/27-272007_transparent-product-icon-png-product-vector-icon-png.png");
       

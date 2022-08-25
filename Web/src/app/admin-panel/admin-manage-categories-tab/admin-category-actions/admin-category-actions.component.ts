@@ -88,6 +88,8 @@ export class AdminCategoryActionsComponent implements OnInit {
         this.categoryUpdatedEvent.emit(true);
       },
       error: (error) => {
+        console.log(error);
+
         modal.dismiss();
         this.categoryUpdatedEvent.emit(true);
 

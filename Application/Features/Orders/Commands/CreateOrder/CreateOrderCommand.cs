@@ -28,6 +28,7 @@ namespace Application.Features.Orders.Commands.CreateOrder
     [Required]
     public string AddressCity { get; set; }
     public string? CouponCode { get; set; }
+    public string ImageBaseUrl { get; set; }
   }
   public class CreateOrderCommandHandler : IRequestHandler<CreateOrderCommand, Response<string>>
   {
@@ -126,7 +127,7 @@ namespace Application.Features.Orders.Commands.CreateOrder
         if (!response.Succeeded) throw new ApiException(response.Message);
         var couponAmount = response.Data;
 
-        session = await _paymentService.CreateCheckoutSession(basket, request.ShipmentPrice, request.CouponCode, couponAmount);
+        session = await _paymentService.CreateCheckoutSession(basket, request.ShipmentPrice, request.ImageBaseUrl, request.CouponCode, couponAmount);
         if (session.AmountTotal <= couponAmount)
         {
           throw new ApiException("Coupon amount can not be more than total");
@@ -145,7 +146,7 @@ namespace Application.Features.Orders.Commands.CreateOrder
       }
       else
       {
-        session = await _paymentService.CreateCheckoutSession(basket, request.ShipmentPrice);
+        session = await _paymentService.CreateCheckoutSession(basket, request.ShipmentPrice, request.ImageBaseUrl);
 
         foreach (var orderEvent in orderEvents)
         {

@@ -40,7 +40,7 @@ export class DiscountHubService {
       .pipe(
         take(1),
         tap(async (user) => {
-          if (!user || !user.token || user.isOnlyCustomer) {
+          if (user.isOnlyCustomer) {
             await this.client.start();
 
             await this.client.send('JoinGroup', 'Customer');

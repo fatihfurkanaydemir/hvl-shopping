@@ -13,6 +13,7 @@ import { ToastService } from '../services/toast.service';
 import { CouponsService } from '../services/coupons.service';
 import { ICoupon } from '../models/ICoupon';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-basket',
@@ -115,6 +116,11 @@ export class BasketComponent implements OnInit {
     return this.basketService.getItemsLength();
   }
 
+  getImageUrl(url: string) {
+    if (!url.startsWith('http')) return environment.baseUrl + '/' + url;
+    else return url;
+  }
+
   OnCheckout() {
     if (!this.selectedAddress) {
       this.toastService.showToast({
@@ -131,6 +137,7 @@ export class BasketComponent implements OnInit {
       addressTitle: this.selectedAddress.title,
       shipmentPrice: 13,
       couponCode: this.selectedCoupon?.code,
+      imageBaseUrl: environment.baseUrl,
     };
 
     this.orderService.createOrder(order).subscribe({
