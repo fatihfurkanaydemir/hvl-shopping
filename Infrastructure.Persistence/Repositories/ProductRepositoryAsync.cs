@@ -8,10 +8,12 @@ namespace Infrastructure.Persistence.Repositories
   internal class ProductRepositoryAsync: GenericRepositoryAsync<Product>, IProductRepositoryAsync
   {
     private readonly DbSet<Product> _products;
+    private readonly ApplicationDbContext _context;
 
     public ProductRepositoryAsync(ApplicationDbContext dbContext) : base(dbContext)
     {
       _products = dbContext.Products;
+      _context = dbContext;
     }
 
     public async Task<IReadOnlyList<Product>> GetPagedReponseWithRelationsAsync(int pageNumber, int pageSize)
@@ -64,6 +66,39 @@ namespace Infrastructure.Persistence.Repositories
         .Take(pageSize)
         .AsNoTracking()
         .ToListAsync();
+    }
+
+    public async Task DeleteImageAsync(Image image)
+    {
+      _context.Set<Image>().Remove(image);
+      await _context.SaveChangesAsync();
+    }
+
+    public async Task<Image> AddImageAsync(Image image)
+    {
+      await _context.Set<Image>().AddAsync(image);
+      await _context.SaveChangesAsync();
+      return image;
+    }
+
+    public async Task<Image?> GetImageByIdAsync(int id)
+    {
+      return await _context.Set<Image>()
+        .AsNoTracking()
+        .SingleOrDefaultAsync(x => x.Id == id);
+    }
+
+    public async Task<Image?> GetImageByUrlAsync(string url)
+    {
+      return await _context.Set<Image>()
+        .AsNoTracking()
+        .SingleOrDefaultAsync(x => x.Url == url);
+    }
+
+    public async Task UpdateImageAsync(Image image)
+    {
+      _context.Entry(image).State = EntityState.Modified;
+      await _context.SaveChangesAsync();
     }
 
     public async Task<int> GetDataCountByCategoryIdAsync(int id)

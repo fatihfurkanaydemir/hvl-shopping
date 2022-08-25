@@ -6,9 +6,13 @@ import {
   ModalDismissReasons,
   NgbActiveModal,
 } from '@ng-bootstrap/ng-bootstrap';
+import { ImagePickerConf } from 'ngp-image-picker';
+import { IImage } from 'src/app/models/IImage';
 
 import { ProductsService } from 'src/app/services/products.service';
 import { ToastService } from 'src/app/services/toast.service';
+import { UploadService } from 'src/app/services/upload.service';
+import { environment } from 'src/environments/environment';
 import { ICategory } from '../../models/ICategory';
 import { IProductUpdate } from '../../models/IProductUpdate';
 import { CategoriesService } from '../../services/categories.service';
@@ -24,6 +28,22 @@ export class ProductActionsComponent implements OnInit {
 
   @Input() productId!: number;
   @Input() productStatus!: string;
+
+  imagePickerConf: ImagePickerConf = {
+    borderRadius: '4px',
+    language: 'tr',
+    width: '100%',
+    height: '240px',
+    hideDownloadBtn: true,
+    hideEditBtn: true,
+    compressInitial: 90,
+  };
+
+  maxImageCount = 5;
+  selectedImageNames: string[] = Array.from(
+    { length: this.maxImageCount },
+    (v, i) => `img${i}`
+  );
 
   // to get categories
   pageNumber: number = 1;
@@ -47,34 +67,49 @@ export class ProductActionsComponent implements OnInit {
     private productsService: ProductsService,
     private categoriesService: CategoriesService,
     private modalService: NgbModal,
-    private toastService: ToastService
-  ) {}
+    private toastService: ToastService,
+    private uploadService: UploadService
+  ) {
+    this.selectedImageNames.forEach((name) => {
+      sessionStorage.removeItem(name);
+    });
+  }
 
   onSubmit(updateProductForm: NgForm, modal: NgbActiveModal) {
     if (updateProductForm.invalid) return;
 
-    if (updateProductForm.value['product-images'])
-      this.product.images.push({
-        url: updateProductForm.value['product-images'],
-      });
-
     this.product.categoryId = +updateProductForm.value['product-category'];
 
-    this.productsService.updateProduct(this.product).subscribe({
+    this.uploadService.uploadImages(this.selectedImageNames).subscribe({
       next: (response) => {
-        this.toastService.showToast({
-          icon: 'success',
-          title: 'Ürün başarılı bir şekilde güncellendi.',
-        });
+        this.product.images.push(...response.data);
+        this.product.images = this.product.images.filter((image) => image);
 
-        modal.dismiss();
-        updateProductForm.reset();
-        this.productUpdatedEvent.emit(true);
+        this.productsService.updateProduct(this.product).subscribe({
+          next: (response) => {
+            this.toastService.showToast({
+              icon: 'success',
+              title: 'Ürün başarılı bir şekilde güncellendi.',
+            });
+
+            modal.dismiss();
+            updateProductForm.reset();
+            this.productUpdatedEvent.emit(true);
+          },
+          error: (error) => {
+            console.log(error);
+
+            this.toastService.showToast({
+              icon: 'error',
+              title: 'Ürün güncellenirken hata oluştu.',
+            });
+          },
+        });
       },
       error: (error) => {
         this.toastService.showToast({
           icon: 'error',
-          title: 'Ürün güncellenirken hata oluştu.',
+          title: 'Resimler yüklenirken hata oluştu.',
         });
       },
     });
@@ -88,7 +123,25 @@ export class ProductActionsComponent implements OnInit {
       });
   }
 
+  onImageChange(event: string, index: number) {
+    if (sessionStorage.getItem(`img${index}`)?.startsWith('unchanged+')) {
+      this.product.images[index] = null!;
+    }
+
+    sessionStorage.setItem(this.selectedImageNames[index], event);
+  }
+
+  getFullImageUrl(image: IImage) {
+    if (!image.url) return '';
+
+    return environment.baseUrl + '/' + image.url;
+  }
+
   openModal(content: any) {
+    this.selectedImageNames.forEach((name) => {
+      sessionStorage.removeItem(name);
+    });
+
     this.getProduct();
 
     this.modalService
@@ -129,6 +182,13 @@ export class ProductActionsComponent implements OnInit {
       this.product.name = response.data.name;
       this.product.inStock = response.data.inStock;
       this.product.price = response.data.price;
+
+      for (let i = 0; i < this.product.images.length; ++i) {
+        sessionStorage.setItem(
+          `img${i}`,
+          'unchanged+' + this.product.images[i].url
+        );
+      }
     });
   }
 

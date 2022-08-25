@@ -15,6 +15,7 @@ using Application.Services;
 using StackExchange.Redis;
 using GlobalInfrastructure;
 using Stripe;
+using Microsoft.Extensions.FileProviders;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -65,6 +66,8 @@ builder.Services.Configure<FormOptions>(o =>
   o.MultipartBodyLengthLimit = int.MaxValue;
   o.MemoryBufferThreshold = int.MaxValue;
 });
+
+builder.Services.AddHealthChecks();
 
 builder.Services.Configure<JWTSettings>(config.GetSection("JWTSettings"));
 
@@ -155,6 +158,21 @@ app.UseCors();
 app.UseRouting();
 app.UseSwagger();
 app.UseSwaggerUI();
+app.UseHealthChecks("/health");
+
+var folderName = Path.Combine("Resources", "Images");
+var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
+if (!Directory.Exists(pathToSave))
+  Directory.CreateDirectory(pathToSave);
+
+app.UseDefaultFiles();
+app.UseStaticFiles();
+app.UseStaticFiles(new StaticFileOptions()
+{
+  FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "Resources")),
+  RequestPath = new PathString("/Resources")
+});
+
 app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();

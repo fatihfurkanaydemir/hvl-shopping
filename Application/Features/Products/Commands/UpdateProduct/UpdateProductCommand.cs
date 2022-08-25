@@ -5,17 +5,11 @@ using AutoMapper;
 using DataAnnotationsExtensions;
 using Domain.Entities;
 using Domain.Enums;
+using Application.DTOs;
 using MediatR;
 
 namespace Application.Features.Products.Commands.UpdateProduct
 {
-  // WARN
-  // Temporary DTO class for testing. Will be removed
-  public class ImageDTO
-  {
-    public string Url { get; set; }
-  }
-
   public class UpdateProductCommand : IRequest<Response<int>>
   {
     public int Id { get; set; }
@@ -50,10 +44,23 @@ namespace Application.Features.Products.Commands.UpdateProduct
 
       var requestProduct = _mapper.Map<Product>(request);
 
+      foreach(var image in product.Images)
+      {
+        await _productRepository.DeleteImageAsync(image);
+      }
+
+      var newImages = new List<Image>();
+      foreach(var requestImage in request.Images)
+      {
+        var mappedImage = _mapper.Map<Image>(requestImage);
+        await _productRepository.AddImageAsync(mappedImage);
+        newImages.Add(mappedImage);
+      }
+
       product.Name = requestProduct.Name;
       product.Code = requestProduct.Code;
       product.Description = requestProduct.Description;
-      product.Images = requestProduct.Images;
+      product.Images = newImages;
       product.InStock = requestProduct.InStock;
       product.Price = requestProduct.Price;
 

@@ -199,7 +199,9 @@
           <button
             (click)="OnCheckout()"
             class="btn btn-success w-100 py-3"
-            >
+            [disabled]="payButtonClicked"
+            (click)="payButtonClicked = true"
+          >
             Ödeme Yap
           </button>
         </div>

@@ -4,6 +4,7 @@ import { ICategory } from '../models/ICategory';
 import { IProduct } from '../models/IProduct';
 import { CategoriesService } from '../services/categories.service';
 import { NgbRatingConfig } from '@ng-bootstrap/ng-bootstrap';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-categories-page',
@@ -68,6 +69,12 @@ export class CategoriesPageComponent implements OnInit {
   onPageChange(newPageNumber: number) {
     this.productsPageNumber = newPageNumber;
     this.getCategoryProducts();
+  }
+
+  getImageUrl(product: IProduct) {
+    if (!product.images[0]?.url.startsWith('http'))
+      return environment.baseUrl + '/' + product.images[0]?.url;
+    else return product.images[0]?.url;
   }
 
   getCategoryIdByName(name: string) {
