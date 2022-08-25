@@ -17,6 +17,8 @@ namespace ReviewService.Application.DTO_s
         public string LastName { get; set; }
         [BsonElement("Comment")]
         public string Comment { get; set; }
+        [BsonElement("CustomerIdentityId")]
+        public string CustomerIdentityId { get; set; }
         [BsonElement("Rate")]
         public int Rate { get; set; }
     }

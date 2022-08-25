@@ -54,6 +54,15 @@ export class OrdersService {
     }
   }
 
+  getDidCustomerBuyProduct(
+    customerIdentityId: string,
+    productId: number
+  ): Observable<IApiResponseSingle> {
+    return this.httpClient.get<IApiResponseSingle>(
+      `${environment.orderServiceUrl}/Order/DidCustomerBuyProduct/${customerIdentityId}/${productId}`
+    );
+  }
+
   getOrderProductCount(order: IOrder) {
     return order.products.reduce((acc, product) => acc + product.count, 0);
   }

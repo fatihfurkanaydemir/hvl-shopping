@@ -31,10 +31,26 @@ namespace ReviewService.Controllers
             return comment;
         }
 
+        [HttpGet("CanAddComment/{customerIdentityId}/{productId}")]
+        public async Task<ActionResult<bool>> GetCanAddComment(string customerIdentityId, int productId)
+        {
+          var result = await _reviewService.GetCanAddCommentAsync(customerIdentityId, productId);
+
+          return result;
+        }
+
         [HttpPost]
         public async Task<IActionResult> Post(ReviewDTO newComment)
         {
-            await _reviewService.CreateAsync(newComment);
+            await _reviewService.CreateAsync(new Review
+            {
+              Comment = newComment.Comment,
+              LastName = newComment.LastName,
+              Name = newComment.Name,
+              Rate = newComment.Rate,
+              ProductId = newComment.ProductId,
+              CustomerIdentityId = newComment.CustomerIdentityId,
+            });
 
             return CreatedAtAction(nameof(Get) ,newComment);
         }

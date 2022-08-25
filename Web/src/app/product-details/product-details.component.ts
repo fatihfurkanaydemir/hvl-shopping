@@ -84,6 +84,7 @@ export class ProductDetailsComponent implements OnInit {
   getProductByID() {
     this.productsService.getProduct(this._id).subscribe((product) => {
       this.product = product.data;
+      this.seller = product.data.seller;
 
       this.currentImage.next(this.getImageUrl(this._urlCount));
     });
