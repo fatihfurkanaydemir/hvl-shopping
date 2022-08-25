@@ -136,20 +136,10 @@
 
                   <div class="mt-4" id="collapseExample" *ngIf="visible">
                     <div>
-                      <div class="mb-1" *ngIf="setStarsFlag">
-                        <i class="fa fa-star rating-star" [style]="ratingStarColors[0]" (mouseover)="adjustHoverColor(1)" (mouseleave)="adjustHoverColor(-1)" (click)="setStarColor(1)"></i>
-                        <i class="fa fa-star rating-star" [style]="ratingStarColors[1]" (mouseover)="adjustHoverColor(2)" (mouseleave)="adjustHoverColor(-2)" (click)="setStarColor(2)"></i>
-                        <i class="fa fa-star rating-star" [style]="ratingStarColors[2]" (mouseover)="adjustHoverColor(3)" (mouseleave)="adjustHoverColor(-3)" (click)="setStarColor(3)"></i>
-                        <i class="fa fa-star rating-star" [style]="ratingStarColors[3]" (mouseover)="adjustHoverColor(4)" (mouseleave)="adjustHoverColor(-4)" (click)="setStarColor(4)"></i>
-                        <i class="fa fa-star rating-star" [style]="ratingStarColors[4]" (mouseover)="adjustHoverColor(5)" (mouseleave)="adjustHoverColor(-5)" (click)="setStarColor(5)"></i>
+                      <div class="rate-stars">
+                        <app-rate-stars (newItemEvent)="changeSetStar($event)"></app-rate-stars>
                       </div>
-                      <div class="mb-1" *ngIf="!setStarsFlag">
-                        <i class="fa fa-star rating-star" [style]="ratingStarColors[0]" (click)="setStarColor(1)"></i>
-                        <i class="fa fa-star rating-star" [style]="ratingStarColors[1]" (click)="setStarColor(2)"></i>
-                        <i class="fa fa-star rating-star" [style]="ratingStarColors[2]" (click)="setStarColor(3)"></i>
-                        <i class="fa fa-star rating-star" [style]="ratingStarColors[3]" (click)="setStarColor(4)"></i>
-                        <i class="fa fa-star rating-star" [style]="ratingStarColors[4]" (click)="setStarColor(5)"></i>
-                      </div>
+                      
                       <div class="form-floating mb-3 has-validation">
                         <div >
                           <form

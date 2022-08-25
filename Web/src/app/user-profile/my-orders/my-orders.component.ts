@@ -46,10 +46,7 @@ export class MyOrdersComponent implements OnInit {
   dataCount: number = 0;
   
   visible = false;
-  ratingStarColors: any[] = [];
-  setStarsFlag: boolean = true;
   setStar: number = 0;
-  leaveArrayInput: number[] = [];
 
   myNewReview!: IReview;
 
@@ -109,51 +106,16 @@ export class MyOrdersComponent implements OnInit {
     this.visible = !this.visible;
   }
 
-  adjustHoverColor(ratingStarIndex: number): void{
-    console.log("hovered")
-    const activate = "color: #fbc634 !important";
-    const disable = "";
-    switch(ratingStarIndex){
-      case(1): this.changeTheRatingStarArray([0], activate); break;
-      case(2): this.changeTheRatingStarArray([0, 1], activate); break;
-      case(3): this.changeTheRatingStarArray([0, 1, 2], activate); break;
-      case(4): this.changeTheRatingStarArray([0, 1, 2, 3], activate); break;
-      case(5): this.changeTheRatingStarArray([0, 1, 2, 3, 4], activate); break;
-      
-      case(-1): if(this.checkIfSet(1)){this.changeTheRatingStarArray([0], disable); break;} else {break;}
-      case(-2): if(this.checkIfSet(2)){this.changeTheRatingStarArray([0, 1], disable); break;} else {break;}
-      case(-3): if(this.checkIfSet(3)){this.changeTheRatingStarArray([0, 1, 2], disable); break;} else {break;}
-      case(-4): if(this.checkIfSet(4)){this.changeTheRatingStarArray([0, 1, 2, 3], disable); break;} else {break;}
-      case(-5): if(this.checkIfSet(5)){this.changeTheRatingStarArray([0, 1, 2, 3, 4], disable); break;} else {break;}
-      }
-    }
-
-    setStarColor(clickedStar: number){
-      const activate = "color: #fbc634 !important";
-      const disable = "";
-      this.setStarsFlag = false;
-      this.setStar = clickedStar;
-      console.log(this.setStar)
-      for(var i=0; i<5; i++){
-        this.ratingStarColors[i] = disable;
-      }
-      
-      for(var i=0; i<clickedStar; i++){
-        this.ratingStarColors[i] = activate;
-      }
-    }
-
-    private checkIfSet(starIndex: number): boolean{
-      if(starIndex >= this.setStar){
-        return true;
-      } else return false;
-    }
-
     onCommentSubmit(order: IOrder){
       this.comment = this.commentForm.value.comment;
       this.mapReviewObject(this.customer, this.comment, order);
       this.addReviewToProduct(this.myNewReview);
-      console.log(this.myNewReview);
+    }
+
+    changeSetStar(rate: string){
+      this.setStar = Number(rate);
+      console.log("returned", rate);
+      console.log(this.setStar);
     }
 
     mapReviewObject(customer: ICustomer, comment: string, order: IOrder)
@@ -166,15 +128,5 @@ export class MyOrdersComponent implements OnInit {
         rate: this.setStar
       }
     }
-
-    private changeTheRatingStarArray(ratingStars: number[], change: string){
-      //var myRatingStars = ratingStars.splice(0, this.setStar-1);
-      ratingStars.forEach(item => {
-        this.ratingStarColors[ratingStars[item]] = change, false;
-      });
-      console.log(this.ratingStarColors);
-    }
-
-    
 }
 
