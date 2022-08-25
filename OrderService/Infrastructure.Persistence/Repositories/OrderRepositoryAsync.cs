@@ -34,7 +34,7 @@ public class OrderRepositoryAsync : GenericRepositoryAsync<Order>, IOrderReposit
     await _context.SaveChangesAsync();
   }
 
-  public async Task<IReadOnlyList<Order>> GetAllOrdersByCustomerIdentityIdAsync(string Id, int pageNumber, int pageSize)
+  public async Task<IReadOnlyList<Order>> GetAllOrdersByCustomerIdentityIdPagedAsync(string Id, int pageNumber, int pageSize)
   {
     return await _orders
           .OrderByDescending(o => o.Created)
@@ -45,6 +45,24 @@ public class OrderRepositoryAsync : GenericRepositoryAsync<Order>, IOrderReposit
           .AsNoTracking()
           .ToListAsync();
   }
+
+  public async Task<IReadOnlyList<Order>> GetAllOrdersByCustomerIdentityIdAsync(string Id)
+  {
+    return await _orders
+          .OrderByDescending(o => o.Created)
+          .Include(o => o.Products)
+          .Where(o => o.CustomerIdentityId == Id)
+          .AsNoTracking()
+          .ToListAsync();
+  }
+
+
+   public async Task<bool> DidCustomerBuyProduct(string identityId, int productId)
+   {
+     return await _orders
+       .Include(o => o.Products)
+       .AnyAsync(o => o.Products.Any(p => p.ProductId == productId));
+   }
 
   public async Task<IReadOnlyList<Order>> GetAllOrdersBySellerIdentityIdAsync(string Id, int pageNumber, int pageSize)
   {

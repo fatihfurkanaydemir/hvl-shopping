@@ -1,74 +1,139 @@
-
-
-<div class="row">
-  <div class="d-inline-flex p-2 mt-4">
+<div class="row mt-4">
+  <div class="col-6">
     <h3>Ürün Değerlendirmeleri</h3>
+  </div>
+  <div class="col-6" *ngIf="canAddComment | async">
+    <button (click)="toggleCollapse()" class="btn btn-primary" type="button">
+      Yorum ekle
+    </button>
+
+    <div class="mt-4" id="collapseExample" *ngIf="visible">
+      <div>
+        <div class="rate-stars">
+          <app-rate-stars
+            (newItemEvent)="changeSetStar($event)"
+          ></app-rate-stars>
+        </div>
+
+        <div class="form-floating mb-3 has-validation">
+          <div>
+            <form
+              id="comment-form"
+              [formGroup]="commentForm"
+              (ngSubmit)="onCommentSubmit(product)"
+            >
+              <input
+                type="text"
+                class="form-control"
+                ngModel
+                name="comment"
+                id="comment"
+                placeholder="Yorum"
+                formControlName="comment"
+              />
+              <label for="firstName"></label>
+              <div class="row">
+                <button
+                  class="btn btn-primary profile-button w-25 ms-3"
+                  type="submit"
+                >
+                  Kaydet
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 <hr />
 
 <div class="container" *ngIf="reviewCount != 0">
-  
-<div class="row">
-  <div class="col">
-    <div class="d-inline-flex ms-4 mt-2">
-      <h3>{{getAverageRatingOfProduct()}}</h3>
-    </div>
-    <div class="d-inline-flex ms-3">
-      <div class="ratings" style="font-weight:300;
-      font-size:25px;">
-        <i class="{{shapeAverageRatingStar()}}" [style]="adjustRatingColors(averageRating, 1)"></i
-        ><i class="{{shapeAverageRatingStar()}}" [style]="adjustRatingColors(averageRating, 2)"></i
-        ><i class="{{shapeAverageRatingStar()}}" [style]="adjustRatingColors(averageRating, 3)"></i
-        ><i class="{{shapeAverageRatingStar()}}" [style]="adjustRatingColors(averageRating, 4)"></i>
-        <i class="{{shapeAverageRatingStar()}}" [style]="adjustRatingColors(averageRating, 5)"></i>
-        
+  <div class="row">
+    <div class="col">
+      <div class="d-inline-flex ms-4 mt-2">
+        <h3>{{ getAverageRatingOfProduct() }}</h3>
+      </div>
+      <div class="d-inline-flex ms-3">
+        <div class="ratings" style="font-weight: 300; font-size: 25px">
+          <i
+            class="{{ shapeAverageRatingStar() }}"
+            [style]="adjustRatingColors(averageRating, 1)"
+          ></i
+          ><i
+            class="{{ shapeAverageRatingStar() }}"
+            [style]="adjustRatingColors(averageRating, 2)"
+          ></i
+          ><i
+            class="{{ shapeAverageRatingStar() }}"
+            [style]="adjustRatingColors(averageRating, 3)"
+          ></i
+          ><i
+            class="{{ shapeAverageRatingStar() }}"
+            [style]="adjustRatingColors(averageRating, 4)"
+          ></i>
+          <i
+            class="{{ shapeAverageRatingStar() }}"
+            [style]="adjustRatingColors(averageRating, 5)"
+          ></i>
+        </div>
       </div>
     </div>
-  </div>
-  <div class="col">
+    <div class="col">
       <div class="d-inline-flex p-2 rating-count">
-          <p>{{reviewCount}} degerlendirme</p>
-      </div>
-  </div>
-</div>
-
-<div class="container" *ngFor="let item of reviewsOfProduct">
-  <hr/>
-  <div class="row">
-    <div class="col">
-      <div class="d-inline-flex me-2">
-        <div class="ratings" style="font-weight: 300; font-size: 18px">
-          <i class="fa fa-star" [style]="adjustRatingColors(item.rate, 1)"></i
-          ><i class="fa fa-star" [style]="adjustRatingColors(item.rate, 2)"></i
-          ><i class="fa fa-star" [style]="adjustRatingColors(item.rate, 3)"></i
-          ><i class="fa fa-star" [style]="adjustRatingColors(item.rate, 4)"></i>
-          <i class="fa fa-star" [style]="adjustRatingColors(item.rate, 5)"></i>
-        </div>
-      </div>
-      <div class="d-inline-flex">
-        <p>{{item.comment}}</p>
+        <p>{{ reviewCount }} degerlendirme</p>
       </div>
     </div>
-  </div> 
-  <div class="row">
-    <div class="col">
+  </div>
+
+  <div class="container" *ngFor="let item of reviewsOfProduct">
+    <hr />
+    <div class="row">
+      <div class="col">
+        <div class="d-inline-flex me-2">
+          <div class="ratings" style="font-weight: 300; font-size: 18px">
+            <i class="fa fa-star" [style]="adjustRatingColors(item.rate, 1)"></i
+            ><i
+              class="fa fa-star"
+              [style]="adjustRatingColors(item.rate, 2)"
+            ></i
+            ><i
+              class="fa fa-star"
+              [style]="adjustRatingColors(item.rate, 3)"
+            ></i
+            ><i
+              class="fa fa-star"
+              [style]="adjustRatingColors(item.rate, 4)"
+            ></i>
+            <i
+              class="fa fa-star"
+              [style]="adjustRatingColors(item.rate, 5)"
+            ></i>
+          </div>
+        </div>
+        <div class="d-inline-flex">
+          <p>{{ item.comment }}</p>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
         <div class="d-inline-flex me-2 details">
-            <p class="me-md-2">{{item.name}} {{item.lastName}}</p>
-            <p class="me-md-2">|</p>
-            <p class="me-md-2">26 Temmuz 2022 (temp)</p>
-            <p class="me-md-2">|</p>
-            <i class="fa fa-check tick" aria-hidden="true"></i>
-            <p class="approved">Ürünü Satın Aldı</p>
-            <p>|</p>
+          <p class="me-md-2">{{ item.name }} {{ item.lastName }}</p>
+          <p class="me-md-2">|</p>
+          <p class="me-md-2">{{ item.date | date: "medium" }}</p>
+          <p class="me-md-2">|</p>
+          <i class="fa fa-check tick" aria-hidden="true"></i>
+          <p class="approved">Ürünü Satın Aldı</p>
+          <p>|</p>
         </div>
+      </div>
     </div>
   </div>
 </div>
 
-</div>
-
-<div class="container" *ngIf="reviewCount == 0" style="margin-bottom: 20px;">
+<div class="container" *ngIf="reviewCount == 0" style="margin-bottom: 20px">
   <h6>Henüz bir değerlendirme yapılmadı.</h6>
 </div>
 

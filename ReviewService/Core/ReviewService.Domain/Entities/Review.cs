@@ -14,8 +14,12 @@ namespace ReviewService.Domain.Entities
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
         public string Id { get; set; } = ObjectId.GenerateNewId().ToString();
+        [BsonElement("Date")]
+        public DateTime Date { get; set; } = DateTime.UtcNow;
         [BsonElement("ProductId")]
         public int ProductId { get; set; }
+        [BsonElement("CustomerIdentityId")]
+        public string CustomerIdentityId { get; set; }
         [BsonElement("Name")]
         public string Name { get; set; }
         [BsonElement("LastName")]

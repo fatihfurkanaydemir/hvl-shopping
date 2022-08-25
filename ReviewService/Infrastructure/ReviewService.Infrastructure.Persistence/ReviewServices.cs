@@ -14,7 +14,6 @@ namespace ReviewService.Infrastructure.Persistence
     public class ReviewServices
     {
         private readonly IMongoCollection<Review> _reviewCollection;
-        private readonly IMongoCollection<ReviewDTO> _reviewCollectionDTO;
 
         public ReviewServices(
             IOptions<ReviewDatabaseSettings> reviewDatabaseSettings)
@@ -27,9 +26,6 @@ namespace ReviewService.Infrastructure.Persistence
 
             _reviewCollection = mongoDatabase.GetCollection<Review>(
                 reviewDatabaseSettings.Value.ReviewCollectionName);
-
-            _reviewCollectionDTO = mongoDatabase.GetCollection<ReviewDTO>(
-            reviewDatabaseSettings.Value.ReviewCollectionName);
         }
 
         public async Task<List<Review>> GetAsync() =>
@@ -38,8 +34,11 @@ namespace ReviewService.Infrastructure.Persistence
         public async Task<Review> GetAsync(string id) =>
             await _reviewCollection.Find(x => x.Id == id).FirstOrDefaultAsync();
 
-        public async Task CreateAsync(ReviewDTO newComment) =>
-            await _reviewCollectionDTO.InsertOneAsync(newComment);
+        public async Task<bool> GetCanAddCommentAsync(string customerIdentityId, int productId) =>
+                !(await _reviewCollection.Find(r => r.CustomerIdentityId == customerIdentityId && r.ProductId == productId).AnyAsync());
+
+        public async Task CreateAsync(Review newComment) =>
+            await _reviewCollection.InsertOneAsync(newComment);
 
         public async Task UpdateAsync(string id, Review updatedComment) =>
             await _reviewCollection.ReplaceOneAsync(x => x.Id == id, updatedComment);

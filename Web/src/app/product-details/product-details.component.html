@@ -82,20 +82,6 @@
             Ürün Açıklaması
           </button>
         </li>
-        <li class="nav-item" id="bilgiler" (click)="tabChange('bilgiler')">
-          <button
-            class="nav-link"
-            data-bs-toggle="tab"
-            id="bilgiler-tab"
-            type="button"
-            data-bs-target="#bilgiler"
-            role="tab"
-            aria-controls="bilgiler"
-            aria-selected="true"
-          >
-            Ürün Bilgileri
-          </button>
-        </li>
 
         <li class="nav-item" id="iletisim" (click)="tabChange('iletisim')">
           <button
@@ -118,18 +104,19 @@
           <h3 class="d-flex justify-content-center mt-3">{{ product.name }}</h3>
           <p>{{ product.description }}</p>
         </div>
-        <div class="content-value" *ngIf="tabId === 'bilgiler'">
-          <h3 class="d-flex justify-content-center mt-3">Ürün Bilgileri</h3>
-          <p>bilgiler</p>
-        </div>
         <div class="content-value" *ngIf="tabId === 'iletisim'">
           <h3 class="d-flex justify-content-center mt-3">Satıcı İletişim</h3>
-          <p>iletisim</p>
+          <p><strong>Satıcı:</strong> {{ seller.shopName }}</p>
+          <p>
+            <strong>Adres:</strong> {{ seller.address.addressDescription }} -
+            {{ seller.address.city }}
+          </p>
+          <p><strong>Telefon:</strong> {{ seller.phoneNumber }}</p>
         </div>
       </div>
     </div>
     <div class="container">
-      <app-comments-list [productId]="_id"></app-comments-list>
+      <app-comments-list [product]="product"></app-comments-list>
     </div>
   </div>
 </div>

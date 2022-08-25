@@ -30,7 +30,7 @@ public class GetAllOrdersByCustomerIdentityIdQueryHandler : IRequestHandler<GetA
   {
     var validFilter = _mapper.Map<GetAllOrdersByCustomerIdentityIdParameter>(request);
     var dataCount = await _orderRepository.GetDataCountByCustomerIdentityIdAsync(request.IdentityId);
-    var orders = await _orderRepository.GetAllOrdersByCustomerIdentityIdAsync(request.IdentityId, request.PageNumber, request.PageSize);
+    var orders = await _orderRepository.GetAllOrdersByCustomerIdentityIdPagedAsync(request.IdentityId, request.PageNumber, request.PageSize);
 
     var orderViewModels = new List<OrderViewModel>();
 

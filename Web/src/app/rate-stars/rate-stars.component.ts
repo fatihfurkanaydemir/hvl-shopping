@@ -3,11 +3,10 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 @Component({
   selector: 'app-rate-stars',
   templateUrl: './rate-stars.component.html',
-  styleUrls: ['./rate-stars.component.css']
+  styleUrls: ['./rate-stars.component.css'],
 })
 export class RateStarsComponent implements OnInit {
-
-  constructor() { }
+  constructor() {}
 
   ratingStarColors: any[] = [];
   setStarsFlag: boolean = true;
@@ -15,15 +14,14 @@ export class RateStarsComponent implements OnInit {
   @Output() setStar: number = 0;
   leaveArrayInput: number[] = [];
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   addNewItem(value: number) {
     this.newItemEvent.emit(value.toString());
   }
 
-  adjustHoverColor(ratingStarIndex: number): void{
-    console.log("hovered")
+  // prettier-ignore
+  adjustHoverColor(ratingStarIndex: number): void{    
     const activate = "color: #fbc634 !important";
     const disable = "";
     switch(ratingStarIndex){
@@ -41,34 +39,32 @@ export class RateStarsComponent implements OnInit {
       }
     }
 
-    setStarColor(clickedStar: number){
-      const activate = "color: #fbc634 !important";
-      const disable = "";
-      this.setStarsFlag = false;
-      this.setStar = clickedStar;
-      this.addNewItem(this.setStar);
+  setStarColor(clickedStar: number) {
+    const activate = 'color: #fbc634 !important';
+    const disable = '';
+    this.setStarsFlag = false;
+    this.setStar = clickedStar;
+    this.addNewItem(this.setStar);
 
-      for(var i=0; i<5; i++){
-        this.ratingStarColors[i] = disable;
-      }
-      
-      for(var i=0; i<clickedStar; i++){
-        this.ratingStarColors[i] = activate;
-      }
+    for (var i = 0; i < 5; i++) {
+      this.ratingStarColors[i] = disable;
     }
 
-    private checkIfSet(starIndex: number): boolean{
-      if(starIndex >= this.setStar){
-        return true;
-      } else return false;
+    for (var i = 0; i < clickedStar; i++) {
+      this.ratingStarColors[i] = activate;
     }
+  }
 
-    private changeTheRatingStarArray(ratingStars: number[], change: string){
-      //var myRatingStars = ratingStars.splice(0, this.setStar-1);
-      ratingStars.forEach(item => {
-        this.ratingStarColors[ratingStars[item]] = change, false;
-      });
-    }
+  private checkIfSet(starIndex: number): boolean {
+    if (starIndex >= this.setStar) {
+      return true;
+    } else return false;
+  }
 
-
+  private changeTheRatingStarArray(ratingStars: number[], change: string) {
+    //var myRatingStars = ratingStars.splice(0, this.setStar-1);
+    ratingStars.forEach((item) => {
+      (this.ratingStarColors[ratingStars[item]] = change), false;
+    });
+  }
 }
