@@ -126,6 +126,53 @@
                 <div class="row"></div>
               </div>
             </div>
+            <div class="container">
+              <div class="row">
+                <div class="col">
+
+                  <button (click)="toggleCollapse()" class="btn btn-primary" type="button">
+                    Button with data-bs-target
+                  </button>
+
+                  <div class="mt-4" id="collapseExample" *ngIf="visible">
+                    <div>
+                      <div class="rate-stars">
+                        <app-rate-stars (newItemEvent)="changeSetStar($event)"></app-rate-stars>
+                      </div>
+                      
+                      <div class="form-floating mb-3 has-validation">
+                        <div >
+                          <form
+                        id = "comment-form"
+                        [formGroup]="commentForm"
+                        (ngSubmit)="onCommentSubmit(order)"
+                        >
+                        <input
+                          type="text"
+                          class="form-control"
+                          ngModel name = "comment"
+                          id="comment"
+                          placeholder="Yorum"
+                          formControlName="comment"
+                        />
+                        <label for="firstName"></label>
+                        <div class="row">
+                          <button
+                        class="btn btn-primary profile-button w-25 ms-3"
+                        type="submit"
+                        >
+                          Kaydet
+                        </button>
+                        </div>
+                        
+                        </form>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>

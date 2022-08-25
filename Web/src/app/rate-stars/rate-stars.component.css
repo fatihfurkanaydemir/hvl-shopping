@@ -1,7 +1,3 @@
-:root {
-    --hoverColor: #fbc634 !important;
-}
-
 .rating-star{
     cursor: pointer;
     font-weight: 300;
