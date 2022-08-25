@@ -84,6 +84,9 @@ export class ProductDetailsComponent implements OnInit {
   getProductByID() {
     this.productsService.getProduct(this._id).subscribe((product) => {
       this.product = product.data;
+
+      if (this.product.status === 'Passive')
+        this.router.navigate(['/'], { relativeTo: this.activateRoute });
       this.seller = product.data.seller;
 
       this.currentImage.next(this.getImageUrl(this._urlCount));

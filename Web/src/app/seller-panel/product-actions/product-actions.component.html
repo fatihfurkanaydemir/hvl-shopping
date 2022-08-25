@@ -84,7 +84,7 @@
           name="product-category"
           class="form-control"
           #categoryId="ngModel"
-          [ngModel]="1"
+          [ngModel]="this.product.categoryId"
         >
           <option *ngFor="let category of categories" [value]="category.id">
             {{ category.name }}

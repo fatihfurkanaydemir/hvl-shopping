@@ -33,15 +33,19 @@ namespace Application.Features.Categories.Commands.DeleteCategory
 
       if(category.Id == othersCategory.Id) throw new ApiException("Others category can not be deleted");
 
+      await _categoryRepository.MarkUnchangedAsync(category);
+
       for(int i = 0; i < category.Products.Count; ++i)
       {
         Product product = category.Products.ElementAt(i);
+        await _productRepository.MarkUnchangedAsync(product);
         product.Category = othersCategory;
         await _productRepository.UpdateAsync(product);
         othersCategory.Products.Add(product);
       }
 
       category.Products.Clear();
+      await _categoryRepository.UpdateAsync(category);
       await _categoryRepository.DeleteAsync(category);
       await _categoryRepository.UpdateAsync(othersCategory);
 

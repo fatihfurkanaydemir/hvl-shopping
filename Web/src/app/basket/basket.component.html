@@ -51,7 +51,7 @@
                       <img
                         class="img-fluid"
                         style="max-height: 50px"
-                        src="{{ item.pictureUrl }}"
+                        [src]="getImageUrl(item.pictureUrl)"
                         alt="{{ item.productName }}"
                       />
                       <div class="ml-3 d-inline-block align-middle ms-3">
