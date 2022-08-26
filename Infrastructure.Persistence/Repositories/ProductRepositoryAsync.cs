@@ -1,5 +1,6 @@
 ﻿using Application.Interfaces.Repositories;
 using Domain.Entities;
+using Domain.Enums;
 using Infrastructure.Persistence.Contexts;
 using Microsoft.EntityFrameworkCore;
 
@@ -48,6 +49,20 @@ namespace Infrastructure.Persistence.Repositories
         .Include(p => p.Seller)
         .ThenInclude(s => s.Address)
         .Where(p => p.Category.Id == id)
+        .Skip((pageNumber - 1) * pageSize)
+        .Take(pageSize)
+        .AsNoTracking()
+        .ToListAsync();
+    }
+
+    public async Task<IReadOnlyList<Product>> GetBySearchFilterWithRelationsAsync(string filterString, int pageNumber, int pageSize)
+    {
+      return await _products
+        .Include(p => p.Images)
+        .Include(p => p.Category)
+        .Include(p => p.Seller)
+        .ThenInclude(s => s.Address)
+        .Where(p => p.Status == ProductStatus.Active && p.Name.ToLower().Contains(filterString.ToLower()))
         .Skip((pageNumber - 1) * pageSize)
         .Take(pageSize)
         .AsNoTracking()
@@ -114,6 +129,13 @@ namespace Infrastructure.Persistence.Repositories
       return await _products
         .Include(p => p.Seller)
         .Where(p => p.Seller.IdentityId == id)
+        .CountAsync();
+    }
+
+    public async Task<int> GetDataCountBySearchFilterAsync(string filterString)
+    {
+      return await _products
+        .Where(p => p.Status == ProductStatus.Active && p.Name.ToLower().Contains(filterString.ToLower()))
         .CountAsync();
     }
   }

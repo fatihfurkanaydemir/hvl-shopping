@@ -10,6 +10,7 @@ using Application.Features.Products.Commands.CreateProduct;
 using Application.Features.Products.Commands.UpdateProduct;
 using Application.Features.Products.Queries.GetAllProducts;
 using Application.Features.Products.Queries.GetProductById;
+using Application.Features.Products.Queries.GetProductsBySearchFilter;
 
 // Customers
 using Application.Features.Customers.Commands.CreateCustomer;
@@ -42,6 +43,7 @@ namespace Application.Mappings
       CreateMap<Product, GetProductByIdViewModel>();
       CreateMap<Product, GetCategoryProductsByIdProductViewModel>();
       CreateMap<GetAllProductsQuery, GetAllProductsParameter>();
+      CreateMap<GetProductsBySearchFilterQuery, GetProductsBySearchFilterParameter>();
 
 
       CreateMap<Image, GetAllProductsImageViewModel>();

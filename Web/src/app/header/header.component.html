@@ -36,6 +36,7 @@
       id="btn-search"
       type="submit"
       (click)="navigateSearch()"
+      [disabled]="!filter"
     >
       Ara
     </button>

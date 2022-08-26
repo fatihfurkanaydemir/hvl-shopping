@@ -7,7 +7,8 @@ using System.Threading.Tasks;
 namespace Application.Features.SharedViewModels
 {
   public class ImageViewModel
-  {
+  { 
+    public int Id { get; set; }
     public string Url { get; set; }
   }
 }
