@@ -43,6 +43,16 @@ export class ProductsService {
     );
   }
 
+  getProductsBySearchFilter(
+    filterString: string,
+    pageNumber: number,
+    pageSize: number
+  ): Observable<IApiResponse> {
+    return this.httpClient.get<IApiResponse>(
+      `${environment.apiUrl}/Product/Search?FilterString=${filterString}&PageNumber=${pageNumber}&PageSize=${pageSize}`
+    );
+  }
+
   updateProduct(product: IProductUpdate): Observable<IApiResponse> {
     return this.httpClient.patch<IApiResponse>(
       environment.apiUrl + '/Product/',

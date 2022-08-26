@@ -2,9 +2,12 @@ import {
   AfterContentChecked,
   ChangeDetectorRef,
   Component,
+  OnDestroy,
   OnInit,
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { exhaustMap, take } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { IProduct } from '../models/IProduct';
 import { ProductsService } from '../services/products.service';
@@ -14,39 +17,47 @@ import { ProductsService } from '../services/products.service';
   templateUrl: './search-filter.component.html',
   styleUrls: ['./search-filter.component.css'],
 })
-export class SearchFilterComponent implements OnInit, AfterContentChecked {
-  filterTerm!: string;
-  filter!: string;
-  filterMetadata = { count: 0 };
+export class SearchFilterComponent implements OnInit, OnDestroy {
   products: IProduct[] = [];
+  filterString: string = '';
   productsDataCount: number = 0;
   productsPageNumber: number = 1;
-  productsPageSize: number = 50;
+  productsPageSize: number = 25;
+
+  paramsSubscription!: Subscription;
 
   constructor(
     private activatedRoute: ActivatedRoute,
-    private productsService: ProductsService,
-    private changeDetector: ChangeDetectorRef
+    private productsService: ProductsService
   ) {}
-  ngAfterContentChecked(): void {
-    // solition for NG0100: ExpressionChangedAfterItHasBeenCheckedError
-    this.changeDetector.detectChanges();
-  }
 
   ngOnInit(): void {
-    this.getProducts();
+    this.paramsSubscription = this.activatedRoute.queryParams.subscribe(
+      (params) => {
+        this.filterString = params['search'];
+        this.getProducts(this.filterString);
+      }
+    );
   }
 
-  getProducts() {
-    this.productsService
-      .getAllProducts(this.productsPageNumber, this.productsPageSize)
-      .subscribe((response) => {
-        this.products = response.data;
-        this.productsDataCount = +response.dataCount;
+  ngOnDestroy() {}
 
-        this.activatedRoute.queryParams.subscribe((params) => {
-          this.filterTerm = params['search'];
-        });
+  getProducts(filterString: string) {
+    this.productsService
+      .getProductsBySearchFilter(
+        filterString,
+        this.productsPageNumber,
+        this.productsPageSize
+      )
+
+      .subscribe({
+        next: (response) => {
+          this.products = response.data;
+          this.productsDataCount = +response.dataCount;
+        },
+        error: (error) => {
+          console.log(error);
+        },
       });
   }
 
@@ -58,6 +69,6 @@ export class SearchFilterComponent implements OnInit, AfterContentChecked {
 
   onPageChange(newPageNumber: number) {
     this.productsPageNumber = newPageNumber;
-    this.getProducts();
+    this.getProducts(this.filterString);
   }
 }

@@ -14,7 +14,6 @@ export class HeaderComponent implements OnInit {
   categoriesPageNumber: number = 1;
   categoriesPageSize: number = 30;
 
-
   filter!: string;
 
   constructor(
@@ -36,6 +35,7 @@ export class HeaderComponent implements OnInit {
         this.categories = response.data;
       });
   }
+
   navigateSearch() {
     this.router.navigate(['/search'], { queryParams: { search: this.filter } });
   }
